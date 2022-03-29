@@ -12,11 +12,11 @@
     "grids"
   ],
   "scripts": {
-    "build": "esbuild src/index.ts --outdir=dist --platform=node --sourcemap=external --target=node14 --format=cjs & tsc --emitDeclarationOnly --pretty --skipLibCheck",
+    "build": "esbuild index.ts --outdir=dist --platform=node --sourcemap=external --target=node14 --format=cjs & tsc --emitDeclarationOnly --pretty --skipLibCheck",
     "prepublish": "pnpm run build",
     "format": "prettier --write ./**/*.ts",
-    "lint": "eslint ./src/**/*.ts -f mo",
-    "lint:fix": "eslint --fix ./src/**/*.ts -f mo",
+    "lint": "eslint ./**/*.ts -f mo",
+    "lint:fix": "eslint --fix ./**/*.ts -f mo",
     "test": "jest --passWithNoTests",
     "prepare": "husky install"
   },
@@ -102,7 +102,7 @@
   "lint-staged": {
     "**/*.ts": [
       "pretty-quick",
-      "eslint --cache --fix ./src/**/*.ts -f mo"
+      "eslint --cache --fix ./**/*.ts -f mo"
     ]
   },
   "commitlint": {
