@@ -1,10 +1,19 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "module": "commonjs",
+    "module": "ESNext",
     "moduleResolution": "node",
+    "esModuleInterop": true,
+    "noEmit": false,
     "declaration": true,
+    "removeComments": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "es6",
+    "sourceMap": true,
     "outDir": "./dist",
-    "strict": true
+    "baseUrl": "./src",
+    "lib": [
+      "es6",
+      "dom"
+    ]
   }
 }
