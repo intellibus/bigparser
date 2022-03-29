@@ -17,7 +17,7 @@
     "format": "prettier --write ./**/*.ts",
     "lint": "eslint ./**/*.ts -f mo",
     "lint:fix": "eslint --fix ./**/*.ts -f mo",
-    "test": "DOTENV_CONFIG_PATH=./.env.test.local jest --passWithNoTests",
+    "test": "DOTENV_CONFIG_PATH=./.env.test.local jest --coverage --passWithNoTests",
     "prepare": "husky install"
   },
   "dependencies": {
@@ -125,6 +125,11 @@
     "testEnvironment": "node",
     "setupFiles": [
       "dotenv/config"
-    ]
+    ],
+    "coverageThreshold": {
+      "global": {
+        "lines": 80
+      }
+    }
   }
 }

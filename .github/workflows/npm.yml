@@ -27,6 +27,5 @@ jobs:
       // Automated Tests — Unit
       // Build & Package
       // Automated Tests — E2E Regression
-      // Coverage Threshold — 95%
       // Authenticate with NPM Registry
       // Deployment to NPM Registry
