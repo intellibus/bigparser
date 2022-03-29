@@ -1,0 +1,32 @@
+name: Deploy bigparser NPM Package as a production NPM to all Registries
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  public-npm:
+    name: Deploy to Public NPM Registry
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+        id: code
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14'
+      - name: Install pnpm
+        run: npm install -g pnpm
+        id: globalInstall
+      - name: Install pnpm Dependencies for Deployment
+        run: pnpm install
+        id: deployInstall
+      // Create .env.test.local
+      // Automated Tests — Unit
+      // Build & Package
+      // Automated Tests — E2E Regression
+      // Coverage Threshold — 95%
+      // Authenticate with NPM Registry
+      // Deployment to NPM Registry
