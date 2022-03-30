@@ -2,6 +2,8 @@
 import axios, { AxiosResponse } from 'axios';
 
 // BigParser Types
+export declare type DataType = 'STRING' | 'NUMBER' | 'DATE' | 'DATE_TIME' | 'BOOLEAN';
+
 export declare type JoinOperator = 'OR' | 'AND';
 
 export declare type GlobalFilterOperator = 'LIKE' | 'NLIKE' | 'EQ' | 'NEQ';
@@ -55,8 +57,74 @@ export declare type Query<GridDataModel> = {
   showColumnNamesInResponse?: boolean;
 };
 
+export declare type RowEntry<GridDataModel> = Partial<GridDataModel>;
+
+export declare type Insert<GridDataModel> = {
+  rows: Array<RowEntry<GridDataModel>>;
+};
+
+export declare type InsertObject<GridDataModel> = {
+  insert: Insert<GridDataModel>;
+};
+
 export declare type QueryObject<GridDataModel> = {
   query: Query<GridDataModel>;
+};
+
+export declare type Distinct<GridDataModel> = {
+  columnNames?: Array<keyof GridDataModel>
+};
+
+export declare type QueryDistinctObject<GridDataModel> = {
+  query: Query<GridDataModel>;
+  distinct: Distinct<GridDataModel>;
+};
+
+export declare type QueryUpdate<GridDataModel> = {
+  columns: RowEntry<GridDataModel>;
+};
+
+export declare type QueryUpdateObject<GridDataModel> = {
+  query: Query<GridDataModel>;
+  update: QueryUpdate<GridDataModel>;
+};
+
+export declare type UpdateRowId<GridDataModel> = {
+  rowId: string;
+  columns: RowEntry<GridDataModel>;
+};
+
+export declare type UpdateRowIds<GridDataModel> = {
+  rows: Array<UpdateRowId<GridDataModel>>;
+};
+
+export declare type UpdateByRowIdObject<GridDataModel> = {
+  update: UpdateRowIds<GridDataModel>;
+};
+
+export declare type UpdateColumnDatatype = {
+  columnName: string;
+  dataType: DataType;
+};
+
+export declare type UpdateColumnDatatypeObject = {
+  columns: Array<UpdateColumnDatatype>;
+};
+
+export declare type DeleteQueryObject<GridDataModel> = {
+  delete: QueryObject<GridDataModel>;
+};
+
+export declare type RowId = {
+  rowId: string
+}
+
+export declare type DeleteRowIds = {
+  rows: Array<RowId>;
+}
+
+export declare type DeleteRowIdObject = {
+  delete: DeleteRowIds;
 };
 
 export declare type APIResponse =
@@ -129,7 +197,7 @@ export async function searchCount<GridDataModel>(
 }
 
 export async function searchDistinct<GridDataModel>(
-  queryObj: QueryObject<GridDataModel>, // TODO: Update Type + Var Name
+  queryDistinctObj: QueryDistinctObject<GridDataModel>,
   gridId: string,
   viewId?: string,
   authId?: string,
@@ -139,7 +207,7 @@ export async function searchDistinct<GridDataModel>(
   try {
     restResponse = await axios.post(
       gridURL('distinct', gridId, viewId, qa),
-      queryObj,
+      queryDistinctObj,
       authId != null ? { headers: { authId } } : config
     );
     return { ...restResponse, error: null };
@@ -149,7 +217,7 @@ export async function searchDistinct<GridDataModel>(
 }
 
 export async function insert<GridDataModel>(
-  queryObj: QueryObject<GridDataModel>, // TODO: Update Type + Var Name
+  insertObj: InsertObject<GridDataModel>,
   gridId: string,
   viewId?: string,
   authId?: string,
@@ -159,7 +227,7 @@ export async function insert<GridDataModel>(
   try {
     restResponse = await axios.post(
       gridURL('rows/create', gridId, viewId, qa),
-      queryObj,
+      insertObj,
       authId != null ? { headers: { authId } } : config
     );
     return { ...restResponse, error: null };
@@ -169,7 +237,7 @@ export async function insert<GridDataModel>(
 }
 
 export async function updateByQuery<GridDataModel>(
-  queryObj: QueryObject<GridDataModel>, // TODO: Update Type + Var Name
+  queryUpdateObj: QueryUpdateObject<GridDataModel>,
   gridId: string,
   viewId?: string,
   authId?: string,
@@ -179,7 +247,7 @@ export async function updateByQuery<GridDataModel>(
   try {
     restResponse = await axios.put(
       gridURL('rows/update_by_queryObj', gridId, viewId, qa),
-      queryObj,
+      queryUpdateObj,
       authId != null ? { headers: { authId } } : config
     );
     return { ...restResponse, error: null };
@@ -188,8 +256,8 @@ export async function updateByQuery<GridDataModel>(
   }
 }
 
-export async function update<GridDataModel>(
-  queryObj: QueryObject<GridDataModel>, // TODO: Update Type + Var Name
+export async function updateByRowId<GridDataModel>(
+  updateByRowIdObj: UpdateByRowIdObject<GridDataModel>,
   gridId: string,
   viewId?: string,
   authId?: string,
@@ -199,7 +267,7 @@ export async function update<GridDataModel>(
   try {
     restResponse = await axios.put(
       gridURL('rows/update_by_rowIds', gridId, viewId, qa),
-      queryObj,
+      updateByRowIdObj,
       authId != null ? { headers: { authId } } : config
     );
     return { ...restResponse, error: null };
@@ -208,8 +276,8 @@ export async function update<GridDataModel>(
   }
 }
 
-export async function updateColumnDatatype<GridDataModel>(
-  queryObj: QueryObject<GridDataModel>, // TODO: Update Type + Var Name
+export async function updateColumnDatatype(
+  updateColumnDatatypeObj: UpdateColumnDatatypeObject, // TODO: Update Type + Var Name
   gridId: string,
   viewId?: string,
   authId?: string,
@@ -219,7 +287,7 @@ export async function updateColumnDatatype<GridDataModel>(
   try {
     restResponse = await axios.put(
       gridURL('update_column_datatype', gridId, viewId, qa),
-      queryObj,
+      updateColumnDatatypeObj,
       authId != null ? { headers: { authId } } : config
     );
     return { ...restResponse, error: null };
@@ -227,6 +295,47 @@ export async function updateColumnDatatype<GridDataModel>(
     return { data: null, error };
   }
 }
+
+export async function deleteByQuery<GridDataModel>(
+  deleteQueryObj: DeleteQueryObject<GridDataModel>,
+  gridId: string,
+  viewId?: string,
+  authId?: string,
+  qa?: boolean
+): Promise<APIResponse> {
+  let restResponse: AxiosResponse;
+  try {
+    restResponse = await axios.put(
+      gridURL('rows/update_by_rowIds', gridId, viewId, qa),
+      deleteQueryObj,
+      authId != null ? { headers: { authId } } : config
+    );
+    return { ...restResponse, error: null };
+  } catch (error) {
+    return { data: null, error };
+  }
+}
+
+export async function deleteByRowId(
+  deleteRowIdObj: DeleteRowIdObject,
+  gridId: string,
+  viewId?: string,
+  authId?: string,
+  qa?: boolean
+): Promise<APIResponse> {
+  let restResponse: AxiosResponse;
+  try {
+    restResponse = await axios.put(
+      gridURL('rows/update_by_queryObj', gridId, viewId, qa),
+      deleteRowIdObj,
+      authId != null ? { headers: { authId } } : config
+    );
+    return { ...restResponse, error: null };
+  } catch (error) {
+    return { data: null, error };
+  }
+}
+
 
 export async function getHeaders(
   gridId: string,
