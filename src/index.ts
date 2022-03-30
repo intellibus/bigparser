@@ -101,33 +101,20 @@ declare interface UpdateColumnDatatypeObject {
   }[];
 }
 
-declare interface DeleteRowIdObject {
-  delete: {
-    rows: {
-      rowId: string;
-    }[];
-  };
-}
-
-declare interface DeleteQueryObject {
-  delete: QueryObject;
-}
-
 const APIURL = `https://${
   process.env.BP_QA ? 'qa' : 'www'
 }.bigparser.com/api/v2`;
 
-const API = axios.create({
-  baseURL: APIURL,
+const config = {
   headers: {
-    authId: `${process.env.BP_AUTH}`,
+    authid: `${process.env.BP_AUTH}`,
   },
-});
+};
 
 function gridURL(action: string, gridId: string, viewId?: string): string {
-  return viewId
-    ? `/grid/${gridId}/share/${viewId}/${action}`
-    : `/grid/${gridId}/${action}`;
+  return `${APIURL}/grid/${
+    viewId ? `${gridId}/share/${viewId}` : `${gridId}`
+  }/${action}`;
 }
 
 export async function search(
@@ -135,122 +122,85 @@ export async function search(
   gridId: string,
   viewId?: string
 ): Promise<AxiosResponse> {
-  return API({
-    method: 'post',
-    url: gridURL('search', gridId, viewId),
-    data: queryObj,
-  });
+  return axios.post(gridURL('search', gridId, viewId), queryObj, config);
 }
 export async function searchCount(
   queryObj: QueryObject,
   gridId: string,
   viewId?: string
 ): Promise<AxiosResponse> {
-  return API({
-    method: 'post',
-    url: gridURL('search_count', gridId, viewId),
-    data: queryObj,
-  });
+  return axios.post(gridURL('search_count', gridId, viewId), queryObj, config);
 }
 export async function searchDistinct(
   queryDistinctObj: QueryDistinctObject,
   gridId: string,
   viewId?: string
 ): Promise<AxiosResponse> {
-  return API({
-    method: 'post',
-    url: gridURL('distinct', gridId, viewId),
-    data: queryDistinctObj,
-  });
+  return axios.post(
+    gridURL('distinct', gridId, viewId),
+    queryDistinctObj,
+    config
+  );
 }
 export async function insert(
   insertObj: InsertObject,
   gridId: string,
   viewId?: string
 ): Promise<AxiosResponse> {
-  return API({
-    method: 'post',
-    url: gridURL('rows/create', gridId, viewId),
-    data: insertObj,
-  });
+  return axios.post(gridURL('rows/create', gridId, viewId), insertObj, config);
 }
 export async function updateByQuery(
   queryUpdateObj: QueryUpdateObject,
   gridId: string,
   viewId?: string
 ): Promise<AxiosResponse> {
-  return API({
-    method: 'put',
-    url: gridURL('rows/update_by_queryObj', gridId, viewId),
-    data: queryUpdateObj,
-  });
+  return axios.put(
+    gridURL('rows/update_by_queryObj', gridId, viewId),
+    queryUpdateObj,
+    config
+  );
 }
 export async function update(
   updateObj: UpdateObject,
   gridId: string,
   viewId?: string
 ): Promise<AxiosResponse> {
-  return API({
-    method: 'put',
-    url: gridURL('rows/update_by_rowIds', gridId, viewId),
-    data: updateObj,
-  });
+  return axios.put(
+    gridURL('rows/update_by_rowIds', gridId, viewId),
+    updateObj,
+    config
+  );
 }
 export async function updateColumnDatatype(
   updateColumnDatatypeObj: UpdateColumnDatatypeObject,
   gridId: string,
   viewId?: string
 ): Promise<AxiosResponse> {
-  return API({
-    method: 'put',
-    url: gridURL('update_column_datatype', gridId, viewId),
-    data: updateColumnDatatypeObj,
-  });
-}
-export async function deleteByRowId(
-  deleteRowIdObj: DeleteRowIdObject,
-  gridId: string,
-  viewId?: string
-): Promise<AxiosResponse> {
-  return API({
-    method: 'delete',
-    url: gridURL('rows/delete_by_rowIds', gridId, viewId),
-    data: deleteRowIdObj,
-  });
-}
-export async function deleteByQuery(
-  deleteQueryObj: DeleteQueryObject,
-  gridId: string,
-  viewId?: string
-): Promise<AxiosResponse> {
-  return API({
-    method: 'delete',
-    url: gridURL('rows/delete_by_queryObj', gridId, viewId),
-    data: deleteQueryObj,
-  });
+  return axios.put(
+    gridURL('update_column_datatype', gridId, viewId),
+    updateColumnDatatypeObj,
+    config
+  );
 }
 export async function getHeaders(
   gridId: string,
   viewId?: string
 ): Promise<AxiosResponse> {
-  return API({
-    method: 'get',
-    url: gridURL('query_metadata', gridId, viewId),
-  });
+  return axios.get(gridURL('query_metadata', gridId, viewId), config);
 }
 export async function getMultisheetMetadata(
   gridId: string,
   viewId?: string
 ): Promise<AxiosResponse> {
-  return API({
-    method: 'get',
-    url: gridURL('query_multisheet_metadata', gridId, viewId),
-  });
+  return axios.get(
+    gridURL('query_multisheet_metadata', gridId, viewId),
+    config
+  );
 }
 export async function bulkCrud(obj: object, gridId: string, viewId?: string) {
-  return API({
-    method: 'post',
-    url: gridURL('rows_columns/bulk_crud', gridId, viewId),
-    data: obj,
-  });
+  return axios.post(
+    gridURL('rows_columns/bulk_crud', gridId, viewId),
+    obj,
+    config
+  );
 }

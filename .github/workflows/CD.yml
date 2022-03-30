@@ -1,0 +1,33 @@
+name: Publish Package
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  continuous-deployment-npm:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+        id: code
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14.x'
+          registry-url: 'https://registry.npmjs.org'
+      - name: Install Package Manager
+        run: npm install -g pnpm
+        id: globalInstall
+      - name: Install Dependencies
+        run: pnpm install
+      - name: Build
+        run: pnpm run build
+      - name: Setup Environment
+        run: echo ${{ secrets.TEST_DOTENV }} > .env.test.local
+      - name: Test
+        run: pnpm run test:ci
+      - name: Publish
+        run: pnpm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

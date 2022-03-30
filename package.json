@@ -7,6 +7,9 @@
   "repository": "intellibus/bigparser",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "engines": {
+    "node": ">=14.0.0"
+  },
   "keywords": [
     "bigparser",
     "grids"
@@ -17,12 +20,13 @@
     "format": "prettier --write ./**/*.ts",
     "lint": "eslint ./**/*.ts -f mo",
     "lint:fix": "eslint --fix ./**/*.ts -f mo",
-    "test": "DOTENV_CONFIG_PATH=./.env.test.local jest --coverage --passWithNoTests",
+    "test": "DOTENV_CONFIG_PATH=./.env.test.local jest --passWithNoTests",
+    "test:coverage": "DOTENV_CONFIG_PATH=./.env.test.local jest --coverage --passWithNoTests",
+    "test:ci": "DOTENV_CONFIG_PATH=./.env.test.local jest --ci --coverage --passWithNoTests",
     "prepare": "husky install"
   },
   "dependencies": {
-    "axios": "^0.26.1",
-    "jest": "^27.5.1"
+    "axios": "^0.26.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^16.2.3",
@@ -45,6 +49,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.0.0",
     "husky": "^7.0.0",
+    "jest": "^27.5.1",
     "lint-staged": "^12.3.7",
     "prettier": "^2.6.1",
     "pretty-quick": "^3.1.3",
@@ -88,6 +93,9 @@
         ],
         "env": {
           "jest": true
+        },
+        "rules": {
+          "node/no-unpublished-import": "off"
         }
       },
       {
@@ -101,7 +109,17 @@
     ],
     "rules": {
       "import/prefer-default-export": "off",
-      "no-underscore-dangle": "off"
+      "no-underscore-dangle": "off",
+      "node/no-missing-import": [
+        "error",
+        {
+          "tryExtensions": [
+            ".ts",
+            ".js",
+            ".json"
+          ]
+        }
+      ]
     }
   },
   "lint-staged": {
@@ -128,7 +146,7 @@
     ],
     "coverageThreshold": {
       "global": {
-        "lines": 80
+        "lines": 95
       }
     }
   }
