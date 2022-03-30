@@ -24,7 +24,9 @@ jobs:
       - name: Build
         run: pnpm run build
       - name: Setup Environment
-        run: echo ${{ secrets.TEST_DOTENV }} > .env.test.local
+        run: echo $DEV_ENV_FILE > .env.test.local
+        env:
+          DEV_ENV_FILE: ${{ secrets.TEST_DOTENV }}
       - name: Test
         run: pnpm run test:ci
       - name: Publish
