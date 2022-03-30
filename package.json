@@ -15,14 +15,14 @@
     "grids"
   ],
   "scripts": {
-    "build": "esbuild index.ts --outdir=dist --platform=node --sourcemap=external --target=node14 --format=cjs & tsc --emitDeclarationOnly --pretty --skipLibCheck",
+    "build": "esbuild index.ts --outdir=dist --platform=node --sourcemap=external --target=node14 --format=cjs & tsc",
     "prepublish": "pnpm run build",
     "format": "prettier --write ./**/*.ts",
     "lint": "eslint ./**/*.ts -f mo",
     "lint:fix": "eslint --fix ./**/*.ts -f mo",
-    "test": "DOTENV_CONFIG_PATH=./.env.test.local jest --passWithNoTests",
-    "test:coverage": "DOTENV_CONFIG_PATH=./.env.test.local jest --coverage --passWithNoTests",
-    "test:ci": "DOTENV_CONFIG_PATH=./.env.test.local jest --ci --coverage --passWithNoTests",
+    "test": "DOTENV_CONFIG_PATH=./.env.test.local jest",
+    "test:coverage": "DOTENV_CONFIG_PATH=./.env.test.local jest --coverage",
+    "test:ci": "DOTENV_CONFIG_PATH=./.env.test.local jest --ci --coverage",
     "prepare": "husky install"
   },
   "dependencies": {

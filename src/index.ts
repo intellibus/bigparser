@@ -2,32 +2,11 @@
 import axios, { AxiosResponse } from 'axios';
 
 // BigParser Types
-declare type BigParserRow = object;
+export declare type JoinOperator = 'OR' | 'AND';
 
-declare type BigParserRows = Array<BigParserRow>;
+export declare type GlobalFilterOperator = 'LIKE' | 'NLIKE' | 'EQ' | 'NEQ';
 
-declare interface BigParserData {
-  rows: BigParserRows;
-}
-
-export declare interface APIResponse {
-  data: {
-    [name: string]: object;
-  };
-  status: number;
-  statusText: string;
-  headers: {
-    [name: string]: object;
-  };
-}
-
-declare type DataType = 'STRING' | 'NUMBER' | 'DATE' | 'DATE_TIME' | 'BOOLEAN';
-
-declare type JoinOperator = 'OR' | 'AND';
-
-declare type GlobalFilterOperator = 'LIKE' | 'NLIKE' | 'EQ' | 'NEQ';
-
-declare type ColumnFilterOperator =
+export declare type ColumnFilterOperator =
   | GlobalFilterOperator
   | 'GT'
   | 'GTE'
@@ -35,172 +14,252 @@ declare type ColumnFilterOperator =
   | 'LTE'
   | 'IN';
 
-declare interface GlobalFilter {
+export declare type GlobalFilter = {
   operator?: GlobalFilterOperator;
   keyword: string;
-}
+};
 
-declare interface ColumnFilter {
-  column: string;
-  operator?: ColumnFilterOperator;
-  keyword: string;
-}
+export declare type ColumnFilter<
+  GridDataModel,
+  K extends keyof GridDataModel = keyof GridDataModel
+> = K extends keyof GridDataModel
+  ? {
+      column: K;
+      operator?: ColumnFilterOperator;
+      keyword: GridDataModel[K];
+    }
+  : never;
 
-declare interface Filter<T> {
+export declare type Filter<T> = {
   filters: Array<T>;
   filtersJoinOperator?: JoinOperator;
-}
+};
 
-declare interface InsertObject {
-  insert: BigParserData;
-}
+export declare type SortType<GridDataModel> = {
+  [key in keyof GridDataModel]: string;
+};
 
-declare interface QueryObject {
-  query: {
-    globalFilter?: Filter<GlobalFilter>;
-    columnFilter?: Filter<ColumnFilter>;
-    globalColumnFilterJoinOperator?: JoinOperator;
-    selectColumnNames?: Array<string>;
-    sort?: {
-      [name: string]: string;
+export declare type Pagination = {
+  startRow: number;
+  rowCount: number;
+};
+
+export declare type Query<GridDataModel> = {
+  globalFilter?: Filter<GlobalFilter>;
+  columnFilter?: Filter<ColumnFilter<GridDataModel>>;
+  globalColumnFilterJoinOperator?: JoinOperator;
+  selectColumnNames?: Array<keyof GridDataModel>;
+  sort?: SortType<GridDataModel>;
+  pagination?: Pagination;
+  sendRowIdsInResponse?: boolean;
+  showColumnNamesInResponse?: boolean;
+};
+
+export declare type QueryObject<GridDataModel> = {
+  query: Query<GridDataModel>;
+};
+
+export declare type APIResponse =
+  | (AxiosResponse & { error: string })
+  | {
+      data: void;
+      error: string;
     };
-    pagination?: {
-      startRow: number;
-      rowCount: number;
-    };
-    sendRowIdsInResponse?: boolean;
-    showColumnNamesInResponse?: boolean;
-  };
-}
 
-declare interface QueryUpdateObject extends QueryObject {
-  update: {
-    columns: BigParserRow;
-  };
-}
-
-declare interface QueryDistinctObject extends QueryObject {
-  distinct: {
-    columnNames?: Array<string>;
-  };
-}
-
-declare interface UpdateObject {
-  update: {
-    rows: {
-      rowId: string;
-      columns: BigParserRow;
-    }[];
-  };
-}
-
-declare interface UpdateColumnDatatypeObject {
-  columns: {
-    columnName: string;
-    dataType: DataType;
-  }[];
-}
-
-const APIURL = `https://${
-  process.env.BP_QA ? 'qa' : 'www'
-}.bigparser.com/api/v2`;
+const getAPIURL = (qa?: boolean) =>
+  qa == null
+    ? `https://${qa ? 'qa' : 'www'}.bigparser.com/api/v2`
+    : `https://${process.env.BP_QA ? 'qa' : 'www'}.bigparser.com/api/v2`;
 
 const config = {
   headers: {
-    authid: `${process.env.BP_AUTH}`,
+    authId: `${process.env.BP_AUTH}`,
   },
 };
 
-function gridURL(action: string, gridId: string, viewId?: string): string {
-  return `${APIURL}/grid/${
+function gridURL(
+  action: string,
+  gridId: string,
+  viewId?: string,
+  qa?: boolean
+): string {
+  return `${getAPIURL(qa)}/grid/${
     viewId ? `${gridId}/share/${viewId}` : `${gridId}`
   }/${action}`;
 }
 
-export async function search(
-  queryObj: QueryObject,
+export async function search<GridDataModel>(
+  queryObj: QueryObject<GridDataModel>,
   gridId: string,
-  viewId?: string
-): Promise<AxiosResponse> {
-  return axios.post(gridURL('search', gridId, viewId), queryObj, config);
+  viewId?: string,
+  authId?: string,
+  qa?: boolean
+): Promise<APIResponse> {
+  let restResponse: AxiosResponse;
+  try {
+    restResponse = await axios.post(
+      gridURL('search', gridId, viewId, qa),
+      queryObj,
+      authId != null ? { headers: { authId } } : config
+    );
+    return { ...restResponse, error: null };
+  } catch (error) {
+    return { data: null, error };
+  }
 }
-export async function searchCount(
-  queryObj: QueryObject,
+
+export async function searchCount<GridDataModel>(
+  queryObj: QueryObject<GridDataModel>,
   gridId: string,
-  viewId?: string
-): Promise<AxiosResponse> {
-  return axios.post(gridURL('search_count', gridId, viewId), queryObj, config);
+  viewId?: string,
+  authId?: string,
+  qa?: boolean
+): Promise<APIResponse> {
+  let restResponse: AxiosResponse;
+  try {
+    restResponse = await axios.post(
+      gridURL('search_count', gridId, viewId, qa),
+      queryObj,
+      authId != null ? { headers: { authId } } : config
+    );
+    return { ...restResponse, error: null };
+  } catch (error) {
+    return { data: null, error };
+  }
 }
-export async function searchDistinct(
-  queryDistinctObj: QueryDistinctObject,
+
+export async function searchDistinct<GridDataModel>(
+  queryObj: QueryObject<GridDataModel>, // TODO: Update Type + Var Name
   gridId: string,
-  viewId?: string
-): Promise<AxiosResponse> {
-  return axios.post(
-    gridURL('distinct', gridId, viewId),
-    queryDistinctObj,
-    config
-  );
+  viewId?: string,
+  authId?: string,
+  qa?: boolean
+): Promise<APIResponse> {
+  let restResponse: AxiosResponse;
+  try {
+    restResponse = await axios.post(
+      gridURL('distinct', gridId, viewId, qa),
+      queryObj,
+      authId != null ? { headers: { authId } } : config
+    );
+    return { ...restResponse, error: null };
+  } catch (error) {
+    return { data: null, error };
+  }
 }
-export async function insert(
-  insertObj: InsertObject,
+
+export async function insert<GridDataModel>(
+  queryObj: QueryObject<GridDataModel>, // TODO: Update Type + Var Name
   gridId: string,
-  viewId?: string
-): Promise<AxiosResponse> {
-  return axios.post(gridURL('rows/create', gridId, viewId), insertObj, config);
+  viewId?: string,
+  authId?: string,
+  qa?: boolean
+): Promise<APIResponse> {
+  let restResponse: AxiosResponse;
+  try {
+    restResponse = await axios.post(
+      gridURL('rows/create', gridId, viewId, qa),
+      queryObj,
+      authId != null ? { headers: { authId } } : config
+    );
+    return { ...restResponse, error: null };
+  } catch (error) {
+    return { data: null, error };
+  }
 }
-export async function updateByQuery(
-  queryUpdateObj: QueryUpdateObject,
+
+export async function updateByQuery<GridDataModel>(
+  queryObj: QueryObject<GridDataModel>, // TODO: Update Type + Var Name
   gridId: string,
-  viewId?: string
-): Promise<AxiosResponse> {
-  return axios.put(
-    gridURL('rows/update_by_queryObj', gridId, viewId),
-    queryUpdateObj,
-    config
-  );
+  viewId?: string,
+  authId?: string,
+  qa?: boolean
+): Promise<APIResponse> {
+  let restResponse: AxiosResponse;
+  try {
+    restResponse = await axios.put(
+      gridURL('rows/update_by_queryObj', gridId, viewId, qa),
+      queryObj,
+      authId != null ? { headers: { authId } } : config
+    );
+    return { ...restResponse, error: null };
+  } catch (error) {
+    return { data: null, error };
+  }
 }
-export async function update(
-  updateObj: UpdateObject,
+
+export async function update<GridDataModel>(
+  queryObj: QueryObject<GridDataModel>, // TODO: Update Type + Var Name
   gridId: string,
-  viewId?: string
-): Promise<AxiosResponse> {
-  return axios.put(
-    gridURL('rows/update_by_rowIds', gridId, viewId),
-    updateObj,
-    config
-  );
+  viewId?: string,
+  authId?: string,
+  qa?: boolean
+): Promise<APIResponse> {
+  let restResponse: AxiosResponse;
+  try {
+    restResponse = await axios.put(
+      gridURL('rows/update_by_rowIds', gridId, viewId, qa),
+      queryObj,
+      authId != null ? { headers: { authId } } : config
+    );
+    return { ...restResponse, error: null };
+  } catch (error) {
+    return { data: null, error };
+  }
 }
-export async function updateColumnDatatype(
-  updateColumnDatatypeObj: UpdateColumnDatatypeObject,
+
+export async function updateColumnDatatype<GridDataModel>(
+  queryObj: QueryObject<GridDataModel>, // TODO: Update Type + Var Name
   gridId: string,
-  viewId?: string
-): Promise<AxiosResponse> {
-  return axios.put(
-    gridURL('update_column_datatype', gridId, viewId),
-    updateColumnDatatypeObj,
-    config
-  );
+  viewId?: string,
+  authId?: string,
+  qa?: boolean
+): Promise<APIResponse> {
+  let restResponse: AxiosResponse;
+  try {
+    restResponse = await axios.put(
+      gridURL('update_column_datatype', gridId, viewId, qa),
+      queryObj,
+      authId != null ? { headers: { authId } } : config
+    );
+    return { ...restResponse, error: null };
+  } catch (error) {
+    return { data: null, error };
+  }
 }
+
 export async function getHeaders(
   gridId: string,
-  viewId?: string
-): Promise<AxiosResponse> {
-  return axios.get(gridURL('query_metadata', gridId, viewId), config);
+  viewId?: string,
+  authId?: string,
+  qa?: boolean
+): Promise<APIResponse> {
+  let restResponse: AxiosResponse;
+  try {
+    restResponse = await axios.get(
+      gridURL('query_metadata', gridId, viewId, qa),
+      authId != null ? { headers: { authId } } : config
+    );
+    return { ...restResponse, error: null };
+  } catch (error) {
+    return { data: null, error };
+  }
 }
+
 export async function getMultisheetMetadata(
   gridId: string,
-  viewId?: string
-): Promise<AxiosResponse> {
-  return axios.get(
-    gridURL('query_multisheet_metadata', gridId, viewId),
-    config
-  );
-}
-export async function bulkCrud(obj: object, gridId: string, viewId?: string) {
-  return axios.post(
-    gridURL('rows_columns/bulk_crud', gridId, viewId),
-    obj,
-    config
-  );
+  viewId?: string,
+  authId?: string,
+  qa?: boolean
+): Promise<APIResponse> {
+  let restResponse: AxiosResponse;
+  try {
+    restResponse = await axios.get(
+      gridURL('query_multisheet_metadata', gridId, viewId, qa),
+      authId != null ? { headers: { authId } } : config
+    );
+    return { ...restResponse, error: null };
+  } catch (error) {
+    return { data: null, error };
+  }
 }

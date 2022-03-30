@@ -4,6 +4,9 @@
     "moduleResolution": "node",
     "esModuleInterop": true,
     "noEmit": false,
+    "emitDeclarationOnly": true,
+    "pretty": true,
+    "skipLibCheck": true,
     "declaration": true,
     "removeComments": true,
     "allowSyntheticDefaultImports": true,
@@ -11,9 +14,6 @@
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./src",
-    "lib": [
-      "es6",
-      "dom"
-    ]
+    "lib": ["es6", "dom"]
   }
 }
