@@ -10,15 +10,15 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
-        id: code
-      - name: Setup Node
+      - name: pnpm Setup
+        uses: pnpm/action-setup@v2.0.1
+        with:
+          version: 6.31.0
+      - name: Setup Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2
         with:
-          node-version: '14.x'
-          registry-url: 'https://registry.npmjs.org'
-      - name: Install Package Manager
-        run: npm install -g pnpm
-        id: globalInstall
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
       - name: Install Dependencies
         run: pnpm install
       - name: Build
