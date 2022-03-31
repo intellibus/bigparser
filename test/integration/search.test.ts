@@ -1,16 +1,5 @@
-import { search } from '../src/index';
-
-interface TestGridModel {
-  _id: string;
-  'String Column': string;
-  'Number Column': number;
-  'Number 2 Column': number;
-  'Boolean Column': boolean;
-  'Date Column': string;
-  'Linked Column': string;
-  'Linked Related Column From Other Grid': string;
-  'Formula Column': number;
-}
+import { search } from '../../src/index';
+import { TestGrid } from '../__grids__/TestGrid';
 
 describe('Search', () => {
   beforeEach(() => {
@@ -40,16 +29,15 @@ describe('Search', () => {
       };
 
       // When
-      const { data: searchData, error: searchError } =
-        await search<TestGridModel>(
-          {
-            query: {
-              sendRowIdsInResponse: true,
-              showColumnNamesInResponse: true,
-            },
+      const { data: searchData, error: searchError } = await search<TestGrid>(
+        {
+          query: {
+            sendRowIdsInResponse: true,
+            showColumnNamesInResponse: true,
           },
-          TEST_GRID_ID
-        );
+        },
+        TEST_GRID_ID
+      );
       // Then
       expect(searchError).toEqual(null);
       expect(searchData).toEqual(gridData);
@@ -58,16 +46,15 @@ describe('Search', () => {
   describe('Negative Test Cases', () => {
     it('Should Reject Invalid Grid Id', async () => {
       // When
-      const { data: searchData, error: searchError } =
-        await search<TestGridModel>(
-          {
-            query: {
-              sendRowIdsInResponse: true,
-              showColumnNamesInResponse: true,
-            },
+      const { data: searchData, error: searchError } = await search<TestGrid>(
+        {
+          query: {
+            sendRowIdsInResponse: true,
+            showColumnNamesInResponse: true,
           },
-          ''
-        );
+        },
+        ''
+      );
       // Then
       expect(searchData).toEqual(null);
       expect(searchError).toBeTruthy();
@@ -76,13 +63,12 @@ describe('Search', () => {
       // Given
       const { TEST_GRID_ID } = process.env;
       // When
-      const { data: searchData, error: searchError } =
-        await search<TestGridModel>(
-          { query: {} },
-          TEST_GRID_ID,
-          '',
-          'INVALID_AUTH_ID'
-        );
+      const { data: searchData, error: searchError } = await search<TestGrid>(
+        { query: {} },
+        TEST_GRID_ID,
+        '',
+        'INVALID_AUTH_ID'
+      );
       // Then
       expect(searchData).toEqual(null);
       expect(searchError).toBeTruthy();

@@ -23,6 +23,7 @@ specifiers:
   eslint-plugin-promise: ^6.0.0
   husky: ^7.0.0
   jest: ^27.5.1
+  jest-mock-axios: ^4.5.0
   lint-staged: ^12.3.7
   prettier: ^2.6.1
   pretty-quick: ^3.1.3
@@ -55,6 +56,7 @@ devDependencies:
   eslint-plugin-promise: 6.0.0_eslint@8.12.0
   husky: 7.0.4
   jest: 27.5.1_ts-node@10.7.0
+  jest-mock-axios: 4.5.0
   lint-staged: 12.3.7
   prettier: 2.6.1
   pretty-quick: 3.1.3_prettier@2.6.1
@@ -3565,6 +3567,12 @@ packages:
       stack-utils: 2.0.5
     dev: true
 
+  /jest-mock-axios/4.5.0:
+    resolution: {integrity: sha512-AVrXkFS4psXtuR63J3SFOIpn6VQJHb3khuWJG+yKmSOAvY3jltAkBivV99QTWE+BA6kBYGGUojk6AGE177F8Gw==}
+    dependencies:
+      synchronous-promise: 2.0.15
+    dev: true
+
   /jest-mock/27.5.1:
     resolution: {integrity: sha512-K4jKbY1d4ENhbrG2zuPWaQBvDly+iZ2yAW+T1fATN78hc0sInwn7wZB8XtlNnvHug5RMwV897Xm4LqmPM4e2Og==}
     engines: {node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0}
@@ -5020,6 +5028,10 @@ packages:
 
   /symbol-tree/3.2.4:
     resolution: {integrity: sha512-9QNk5KwDF+Bvz+PyObkmSYjI5ksVUYtjW7AU22r2NKcfLJcXp96hkDWU3+XndOsUb+AQ9QhfzfCT2O+CNWT5Tw==}
+    dev: true
+
+  /synchronous-promise/2.0.15:
+    resolution: {integrity: sha512-k8uzYIkIVwmT+TcglpdN50pS2y1BDcUnBPK9iJeGu0Pl1lOI8pD6wtzgw91Pjpe+RxtTncw32tLxs/R0yNL2Mg==}
     dev: true
 
   /terminal-link/2.1.1:

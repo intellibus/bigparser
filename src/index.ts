@@ -133,10 +133,10 @@ export declare type DeleteRowIdObject = {
 };
 
 export declare type APIResponse =
-  | (AxiosResponse & { error: string })
+  | (AxiosResponse & { error: void })
   | {
       data: void;
-      error: string;
+      error: Error;
     };
 
 const getAPIURL = (qa?: boolean) =>
@@ -161,16 +161,16 @@ function gridURL(
   }/${action}`;
 }
 
-function to<T, U = Error>(
-  promise: Promise<T>,
+function to(
+  promise: Promise<AxiosResponse>,
   errorExt?: object
-): Promise<{ data: undefined; error: U } | { data: T; error: undefined }> {
+): Promise<APIResponse> {
   return promise
-    .then<{ data: T; error: undefined }>((data: T) => ({
-      data,
+    .then((response: AxiosResponse) => ({
+      ...response,
       error: undefined,
     }))
-    .catch<{ data: undefined; error: U }>((err: U) => {
+    .catch((err: Error) => {
       if (errorExt) {
         const parsedError = { ...err, ...errorExt };
         return { error: parsedError, data: undefined };
