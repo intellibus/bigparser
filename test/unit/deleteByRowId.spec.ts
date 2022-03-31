@@ -22,7 +22,7 @@ describe('DeleteByRowId', () => {
         failedRows: {}
       };
 
-      const deleteObject = {
+      const deleteRowIdObject = {
         delete: {
           rows: [
             {
@@ -33,20 +33,20 @@ describe('DeleteByRowId', () => {
       };
 
       // When
-      const deleteByRowIdPromise = deleteByRowId(deleteObject, TEST_GRID_ID);
+      const deleteByRowIdPromise = deleteByRowId(deleteRowIdObject, TEST_GRID_ID);
       mockAxios.mockResponse({
         data: gridResponse,
       });
       const { data: responseData, error: responseError } = await deleteByRowIdPromise;
 
       // Then
-      expect(mockAxios.post).toHaveBeenCalledWith(
+      expect(mockAxios.delete).toHaveBeenCalledWith(
         `https://www.bigparser.com/api/v2/grid/${TEST_GRID_ID}/delete_by_rowIds`,
-        deleteObject,
         {
           headers: {
             authId: BP_AUTH,
           },
+          data: deleteRowIdObject
         }
       );
       expect(responseError).toEqual(undefined);
@@ -56,7 +56,7 @@ describe('DeleteByRowId', () => {
   describe('Negative Test Cases', () => {
     it('Should Reject Invalid Grid Id', async () => {
       // Given
-      const deleteObject = {
+      const deleteRowIdObject = {
         delete: {
           rows: [
             {
@@ -73,18 +73,18 @@ describe('DeleteByRowId', () => {
       };
 
       // When
-      const deleteByRowIdPromise = deleteByRowId(deleteObject, '');
+      const deleteByRowIdPromise = deleteByRowId(deleteRowIdObject, '');
       mockAxios.mockError(errorObject);
       const { data: responseData, error: responseError } = await deleteByRowIdPromise;
 
       // Then
-      expect(mockAxios.post).toHaveBeenCalledWith(
+      expect(mockAxios.delete).toHaveBeenCalledWith(
         'https://www.bigparser.com/api/v2/grid//delete_by_rowIds',
-        deleteObject,
         {
           headers: {
             authId: BP_AUTH,
           },
+          data: deleteRowIdObject
         }
       );
       expect(responseData).toEqual(undefined);
@@ -92,7 +92,7 @@ describe('DeleteByRowId', () => {
     });
     it('Should Reject Invalid Auth Id', async () => {
       // Given
-      const deleteObject = {
+      const deleteRowIdObject = {
         delete: {
           rows: [
             {
@@ -110,7 +110,7 @@ describe('DeleteByRowId', () => {
 
       // When
       const deleteByRowIdPromise = deleteByRowId(
-        deleteObject,
+        deleteRowIdObject,
         TEST_GRID_ID,
         '',
         'INVALID_AUTHID'
@@ -119,13 +119,13 @@ describe('DeleteByRowId', () => {
       const { data: responseData, error: responseError } = await deleteByRowIdPromise;
 
       // Then
-      expect(mockAxios.post).toHaveBeenCalledWith(
-        `https://www.bigparser.com/api/v2/grid/${TEST_GRID_ID}/search`,
-        deleteObject,
+      expect(mockAxios.delete).toHaveBeenCalledWith(
+        `https://www.bigparser.com/api/v2/grid/${TEST_GRID_ID}/delete_by_rowIds`,
         {
           headers: {
             authId: 'INVALID_AUTHID',
           },
+          data: deleteRowIdObject
         }
       );
       expect(responseData).toEqual(undefined);
