@@ -34,4 +34,4 @@ jobs:
         env:
           TEST_ENV_FILE: ${{ secrets.TEST_DOTENV }}
       - name: Test
-        run: pnpm run test:ci
+        run: pnpm run test:unit:ci
