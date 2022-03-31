@@ -16,7 +16,7 @@
   ],
   "scripts": {
     "build": "pnpm run esbuild & pnpm run typedef",
-    "esbuild": "esbuild src/*.ts --outdir=dist --platform=node --target=node14 --format=cjs",
+    "esbuild": "esbuild src/*.ts --minify --outdir=dist --platform=node --target=node14 --format=cjs",
     "typedef": "tsc -d src/*.ts --declarationDir dist --emitDeclarationOnly",
     "prepublish": "pnpm run build",
     "format": "prettier --write ./**/*.ts",
