@@ -101,6 +101,14 @@ describe('GetHeaders', () => {
             },
             'islinkedColumn': false,
             'isPrimaryLink': false
+          },
+          {
+            columnName: 'Empty Column',
+            columnDesc: '',
+            dataType: 'String',
+            columnIndex: '8',
+            islinkedColumn: false,
+            isPrimaryLink: false
           }
         ],
         sort: {},
