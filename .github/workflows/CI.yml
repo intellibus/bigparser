@@ -9,23 +9,29 @@ jobs:
   continuous-integration:
     name:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14]
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
-        id: code
-      - name: Setup Node
+      - name: pnpm Setup
+        uses: pnpm/action-setup@v2.0.1
+        with:
+          version: 6.32.3
+      - name: Setup Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2
         with:
-          node-version: '14.x'
-      - name: Install Package Manager
-        run: npm install -g pnpm
-        id: globalInstall
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
       - name: Install Dependencies
         run: pnpm install
         id: deployInstall
       - name: Build
         run: pnpm run build
       - name: Setup Environment
-        run: echo ${{ secrets.TEST_DOTENV }} > .env.test.local
+        run: echo $TEST_ENV_FILE | base64 --decode > .env.test.local
+        env:
+          TEST_ENV_FILE: ${{ secrets.TEST_DOTENV }}
       - name: Test
         run: pnpm run test:ci

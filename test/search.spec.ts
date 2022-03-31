@@ -51,8 +51,8 @@ describe('Search', () => {
           TEST_GRID_ID
         );
       // Then
-      expect(searchData).toEqual(gridData);
       expect(searchError).toEqual(null);
+      expect(searchData).toEqual(gridData);
     });
   });
   describe('Negative Test Cases', () => {
