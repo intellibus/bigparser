@@ -15,14 +15,20 @@
     "grids"
   ],
   "scripts": {
-    "build": "esbuild index.ts --outdir=dist --platform=node --sourcemap=external --target=node14 --format=cjs & tsc",
+    "build": "pnpm run esbuild & pnpm run typedef",
+    "esbuild": "esbuild src/*.ts --outdir=dist --platform=node --target=node14 --format=cjs",
+    "typedef": "tsc -d src/*.ts --declarationDir dist",
     "prepublish": "pnpm run build",
     "format": "prettier --write ./**/*.ts",
     "lint": "eslint ./**/*.ts -f mo",
     "lint:fix": "eslint --fix ./**/*.ts -f mo",
-    "test": "DOTENV_CONFIG_PATH=./.env.test.local jest --testPathPattern=test/unit",
-    "test:coverage": "DOTENV_CONFIG_PATH=./.env.test.local jest --coverage --testPathPattern=test/unit",
-    "test:ci": "DOTENV_CONFIG_PATH=./.env.test.local jest --ci --coverage --testPathPattern=test/unit",
+    "test:all": "DOTENV_CONFIG_PATH=./.env.test.local jest --testPathPattern=test/",
+    "test:unit": "DOTENV_CONFIG_PATH=./.env.test.local jest --testPathPattern=test/unit",
+    "test:unit:coverage": "DOTENV_CONFIG_PATH=./.env.test.local jest --coverage --testPathPattern=test/unit",
+    "test:unit:ci": "DOTENV_CONFIG_PATH=./.env.test.local jest --ci --coverage --testPathPattern=test/unit",
+    "test:integration": "DOTENV_CONFIG_PATH=./.env.test.local jest --testPathPattern=test/integration",
+    "test:integration:coverage": "DOTENV_CONFIG_PATH=./.env.test.local jest --coverage --testPathPattern=test/integration",
+    "test:integration:ci": "DOTENV_CONFIG_PATH=./.env.test.local jest --ci --coverage --testPathPattern=test/integration",
     "prepare": "husky install"
   },
   "dependencies": {
@@ -82,7 +88,7 @@
       ]
     },
     "ignorePatterns": [
-      "./dist/**"
+      "**/dist/**"
     ],
     "env": {
       "node": true

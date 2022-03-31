@@ -14,11 +14,9 @@ describe('Delete By Query', () => {
   describe('Positive Test Cases', () => {
     it('Should Return Grid Data', async () => {
       // Given
-      // TODO: This response is objectively worse than the delete_by_rowIds
-      // endpoint's response. This should be brought up with the
-      // BigParser team.
+      // TODO: This response is not consistent with delete_by_rowIds endpoint's response.
       const gridResponse = {
-        noOfRowsDeleted: 1
+        noOfRowsDeleted: 1,
       };
 
       const deleteQueryObject: DeleteQueryObject<TestGrid> = {
@@ -29,20 +27,24 @@ describe('Delete By Query', () => {
                 {
                   column: 'String Column',
                   operator: 'EQ',
-                  keyword: 'Example String'
-                }
-              ]
-            }
-          }
-        }
+                  keyword: 'Example String',
+                },
+              ],
+            },
+          },
+        },
       };
 
       // When
-      const deleteByQueryPromise = deleteByQuery<TestGrid>(deleteQueryObject, TEST_GRID_ID);
+      const deleteByQueryPromise = deleteByQuery<TestGrid>(
+        deleteQueryObject,
+        TEST_GRID_ID
+      );
       mockAxios.mockResponse({
         data: gridResponse,
       });
-      const { data: responseData, error: responseError } = await deleteByQueryPromise;
+      const { data: responseData, error: responseError } =
+        await deleteByQueryPromise;
 
       // Then
       expect(mockAxios.delete).toHaveBeenCalledWith(
@@ -51,7 +53,7 @@ describe('Delete By Query', () => {
           headers: {
             authId: BP_AUTH,
           },
-          data: deleteQueryObject
+          data: deleteQueryObject,
         }
       );
       expect(responseError).toEqual(undefined);
@@ -69,12 +71,12 @@ describe('Delete By Query', () => {
                 {
                   column: 'String Column',
                   operator: 'EQ',
-                  keyword: 'Example String'
-                }
-              ]
-            }
-          }
-        }
+                  keyword: 'Example String',
+                },
+              ],
+            },
+          },
+        },
       };
       const errorObject = {
         err: {
@@ -86,7 +88,8 @@ describe('Delete By Query', () => {
       // When
       const deleteByQueryPromise = deleteByQuery(deleteQueryObject, '');
       mockAxios.mockError(errorObject);
-      const { data: responseData, error: responseError } = await deleteByQueryPromise;
+      const { data: responseData, error: responseError } =
+        await deleteByQueryPromise;
 
       // Then
       expect(mockAxios.delete).toHaveBeenCalledWith(
@@ -95,7 +98,7 @@ describe('Delete By Query', () => {
           headers: {
             authId: BP_AUTH,
           },
-          data: deleteQueryObject
+          data: deleteQueryObject,
         }
       );
       expect(responseData).toEqual(undefined);
@@ -111,12 +114,12 @@ describe('Delete By Query', () => {
                 {
                   column: 'String Column',
                   operator: 'EQ',
-                  keyword: 'Example String'
-                }
-              ]
-            }
-          }
-        }
+                  keyword: 'Example String',
+                },
+              ],
+            },
+          },
+        },
       };
       const errorObject = {
         err: {
@@ -133,7 +136,8 @@ describe('Delete By Query', () => {
         'INVALID_AUTHID'
       );
       mockAxios.mockError(errorObject);
-      const { data: responseData, error: responseError } = await deleteByQueryPromise;
+      const { data: responseData, error: responseError } =
+        await deleteByQueryPromise;
 
       // Then
       expect(mockAxios.delete).toHaveBeenCalledWith(
@@ -142,7 +146,7 @@ describe('Delete By Query', () => {
           headers: {
             authId: 'INVALID_AUTHID',
           },
-          data: deleteQueryObject
+          data: deleteQueryObject,
         }
       );
       expect(responseData).toEqual(undefined);

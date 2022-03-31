@@ -18,51 +18,51 @@ describe('Get Headers', () => {
         description: null,
         columns: [
           {
-              columnName: 'String Column',
-              columnDesc: '',
-              dataType: 'String',
-              columnIndex: '0',
-              islinkedColumn: false,
-              isPrimaryLink: false
+            columnName: 'String Column',
+            columnDesc: '',
+            dataType: 'String',
+            columnIndex: '0',
+            isLinkedColumn: false,
+            isPrimaryLink: false,
           },
           {
-              columnName: 'Number Column',
-              columnDesc: '',
-              dataType: 'Number',
-              columnIndex: '1',
-              islinkedColumn: false,
-              isPrimaryLink: false
+            columnName: 'Number Column',
+            columnDesc: '',
+            dataType: 'Number',
+            columnIndex: '1',
+            isLinkedColumn: false,
+            isPrimaryLink: false,
           },
           {
-              columnName: 'Number 2 Column',
-              columnDesc: '',
-              dataType: 'Number',
-              columnIndex: '2',
-              islinkedColumn: false,
-              isPrimaryLink: false
+            columnName: 'Number 2 Column',
+            columnDesc: '',
+            dataType: 'Number',
+            columnIndex: '2',
+            isLinkedColumn: false,
+            isPrimaryLink: false,
           },
           {
-              columnName: 'Boolean Column',
-              columnDesc: '',
-              dataType: 'Boolean',
-              columnIndex: '3',
-              islinkedColumn: false,
-              isPrimaryLink: false
+            columnName: 'Boolean Column',
+            columnDesc: '',
+            dataType: 'Boolean',
+            columnIndex: '3',
+            isLinkedColumn: false,
+            isPrimaryLink: false,
           },
           {
-              columnName: 'Date Column',
-              columnDesc: '',
-              dataType: 'String',
-              columnIndex: '4',
-              islinkedColumn: false,
-              isPrimaryLink: false
+            columnName: 'Date Column',
+            columnDesc: '',
+            dataType: 'String',
+            columnIndex: '4',
+            isLinkedColumn: false,
+            isPrimaryLink: false,
           },
           {
             columnName: 'Linked Column',
             columnDesc: '',
             dataType: 'STRING',
             columnIndex: '5',
-            islinkedColumn: true,
+            isLinkedColumn: true,
             isPrimaryLink: true,
             linkedColumnInfo: {
               sourceGridId: '6244901dc9d0823617041966',
@@ -72,20 +72,20 @@ describe('Get Headers', () => {
               queryInSourceGrid: null,
               linkedRelatedColumns: [
                 {
-                  'destColName': 'Linked Related Column From Other Grid',
-                  'srcColName': 'Linked Related Column'
-                }
-              ]
-            }
+                  destColName: 'Linked Related Column From Other Grid',
+                  srcColName: 'Linked Related Column',
+                },
+              ],
+            },
           },
           {
-              columnName: 'Linked Related Column From Other Grid',
-              columnDesc: '',
-              dataType: 'STRING',
-              columnIndex: '6',
-              islinkedColumn: true,
-              isPrimaryLink: false,
-              srcColName: 'Linked Related Column'
+            columnName: 'Linked Related Column From Other Grid',
+            columnDesc: '',
+            dataType: 'STRING',
+            columnIndex: '6',
+            isLinkedColumn: true,
+            isPrimaryLink: false,
+            srcColName: 'Linked Related Column',
           },
           {
             columnName: 'Formula Column',
@@ -94,22 +94,19 @@ describe('Get Headers', () => {
             columnIndex: '7',
             columnDataSource: {
               functionType: 'SUM',
-              columnNames: [
-                'Number Column',
-                'Number 2 Column'
-              ]
+              columnNames: ['Number Column', 'Number 2 Column'],
             },
-            'islinkedColumn': false,
-            'isPrimaryLink': false
+            isLinkedColumn: false,
+            isPrimaryLink: false,
           },
           {
             columnName: 'Empty Column',
             columnDesc: '',
             dataType: 'String',
             columnIndex: '8',
-            islinkedColumn: false,
-            isPrimaryLink: false
-          }
+            isLinkedColumn: false,
+            isPrimaryLink: false,
+          },
         ],
         sort: {},
         sortByIndex: {},
@@ -134,20 +131,21 @@ describe('Get Headers', () => {
           lastVisitedDateTime: 1648661217889,
           lastFavoriteDateTime: null,
           deletedDateTime: null,
-          deletedBy: null
+          deletedBy: null,
         },
         tabDescription: null,
         tabName: 'Test Tab',
         showRowId: false,
         owner: true,
         multisheet: true,
-        auditGrid: false
+        auditGrid: false,
       };
 
       // When
       const getHeadersPromise = getHeaders(TEST_GRID_ID);
       mockAxios.mockResponse({ data: gridResponse });
-      const { data: responseData, error: responseError } = await getHeadersPromise;
+      const { data: responseData, error: responseError } =
+        await getHeadersPromise;
 
       // Then
       expect(mockAxios.get).toHaveBeenCalledWith(
@@ -175,7 +173,8 @@ describe('Get Headers', () => {
       // When
       const getHeadersPromise = getHeaders('');
       mockAxios.mockError(errorObject);
-      const { data: responseData, error: responseError } = await getHeadersPromise;
+      const { data: responseData, error: responseError } =
+        await getHeadersPromise;
 
       // Then
       expect(mockAxios.get).toHaveBeenCalledWith(
@@ -199,13 +198,10 @@ describe('Get Headers', () => {
       };
 
       // When
-      const getHeadersPromise = getHeaders(
-        TEST_GRID_ID,
-        '',
-        'INVALID_AUTHID'
-      );
+      const getHeadersPromise = getHeaders(TEST_GRID_ID, '', 'INVALID_AUTHID');
       mockAxios.mockError(errorObject);
-      const { data: responseData, error: responseError } = await getHeadersPromise;
+      const { data: responseData, error: responseError } =
+        await getHeadersPromise;
 
       // Then
       expect(mockAxios.get).toHaveBeenCalledWith(

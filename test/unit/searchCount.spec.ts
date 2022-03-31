@@ -11,7 +11,7 @@ describe('Search Count', () => {
   afterEach(() => {
     mockAxios.reset();
   });
-  describe('Posititve Test Cases', () => {
+  describe('Positive Test Cases', () => {
     it('Should Return Number Of Records In Grid', async () => {
       // Given
       const gridResponse = { totalRowCount: 1 };
@@ -96,7 +96,7 @@ describe('Search Count', () => {
       );
       mockAxios.mockError(errorObject);
       const { data: responseData, error: responseError } = await searchPromise;
-      
+
       // Then
       expect(mockAxios.post).toHaveBeenCalledWith(
         `https://www.bigparser.com/api/v2/grid/${TEST_GRID_ID}/search_count`,

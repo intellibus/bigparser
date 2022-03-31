@@ -1,4 +1,4 @@
-// API Constants
+// Imports
 import axios, { AxiosResponse } from 'axios';
 
 // BigParser Types
@@ -139,14 +139,17 @@ export declare type APIResponse =
       error: Error;
     };
 
+// Package Functionality
 const getAPIURL = (qa?: boolean) =>
-  `https://${qa || process.env.BP_QA ? 'qa' : 'www'}.bigparser.com/api/v2`
+  `https://${
+    (qa != null && qa) || process.env.BP_QA ? 'qa' : 'www'
+  }.bigparser.com/api/v2`;
 
 const config = {
   headers: {
     authId: `${process.env.BP_AUTH}`,
   },
-};  
+};
 
 function gridURL(
   action: string,
@@ -159,17 +162,13 @@ function gridURL(
   }/${action}`;
 }
 
-function to(
-  promise: Promise<AxiosResponse>
-): Promise<APIResponse> {
+async function to(promise: Promise<AxiosResponse>): Promise<APIResponse> {
   return promise
     .then((response: AxiosResponse) => ({
       ...response,
       error: undefined,
     }))
-    .catch((err: Error) => (
-      { error: err, data: undefined }
-    ));
+    .catch((err: Error) => ({ error: err, data: undefined }));
 }
 
 export async function search<GridDataModel>(

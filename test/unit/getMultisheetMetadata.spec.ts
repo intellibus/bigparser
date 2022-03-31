@@ -20,22 +20,23 @@ describe('Get Multisheet Metadata', () => {
             name: 'Test Tab',
             tabName: 'Test Tab',
             tabDescription: null,
-            pinned: false
+            pinned: false,
           },
           {
             gridId: '6244901dc9d0823617041966',
             name: 'Linked Data Tab',
             tabName: 'Linked Data Tab',
             tabDescription: null,
-            pinned: false
-          }
-        ]
+            pinned: false,
+          },
+        ],
       };
 
       // When
       const getMultisheetMetadataPromise = getMultisheetMetadata(TEST_GRID_ID);
       mockAxios.mockResponse({ data: gridResponse });
-      const { data: responseData, error: responseError } = await getMultisheetMetadataPromise;
+      const { data: responseData, error: responseError } =
+        await getMultisheetMetadataPromise;
 
       // Then
       expect(mockAxios.get).toHaveBeenCalledWith(
@@ -63,7 +64,8 @@ describe('Get Multisheet Metadata', () => {
       // When
       const getMultisheetMetadataPromise = getMultisheetMetadata('');
       mockAxios.mockError(errorObject);
-      const { data: responseData, error: responseError } = await getMultisheetMetadataPromise;
+      const { data: responseData, error: responseError } =
+        await getMultisheetMetadataPromise;
 
       // Then
       expect(mockAxios.get).toHaveBeenCalledWith(
@@ -93,7 +95,8 @@ describe('Get Multisheet Metadata', () => {
         'INVALID_AUTHID'
       );
       mockAxios.mockError(errorObject);
-      const { data: responseData, error: responseError } = await getMultisheetMetadataPromise;
+      const { data: responseData, error: responseError } =
+        await getMultisheetMetadataPromise;
 
       // Then
       expect(mockAxios.get).toHaveBeenCalledWith(

@@ -28,7 +28,7 @@ describe('Search', () => {
             'Linked Column': '20171',
             'Linked Related Column From Other Grid': 'Related Column Value 4',
             'Formula Column': null,
-            'Empty Column': ''
+            'Empty Column': '',
           },
         ],
       };
@@ -76,7 +76,7 @@ describe('Search', () => {
             'Linked Column': '20171',
             'Linked Related Column From Other Grid': 'Related Column Value 4',
             'Formula Column': null,
-            'Empty Column': ''
+            'Empty Column': '',
           },
         ],
       };
