@@ -103,7 +103,7 @@ export declare type UpdateRowIds<GridDataModel> = {
   rows: Array<UpdateRowId<GridDataModel>>;
 };
 
-export declare type UpdateByRowIdObject<GridDataModel> = {
+export declare type UpdateRowIdObject<GridDataModel> = {
   update: UpdateRowIds<GridDataModel>;
 };
 
@@ -260,7 +260,7 @@ export async function updateByQuery<GridDataModel>(
 }
 
 export async function updateByRowId<GridDataModel>(
-  updateByRowIdObj: UpdateByRowIdObject<GridDataModel>,
+  updateByRowIdObj: UpdateRowIdObject<GridDataModel>,
   gridId: string,
   viewId?: string,
   authId?: string,
