@@ -3,7 +3,7 @@ import { getHeaders } from '../../src/index';
 
 const { TEST_GRID_ID, BP_AUTH } = process.env;
 
-describe('GetHeaders', () => {
+describe('Get Headers', () => {
   beforeEach(() => {
     jest.resetModules();
   });

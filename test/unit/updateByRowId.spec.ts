@@ -4,7 +4,7 @@ import { TestGrid } from "../__grids__/TestGrid";
 
 const { TEST_GRID_ID, BP_AUTH } = process.env;
 
-describe("DeleteByQuery", () => {
+describe("Update By Row Id", () => {
   beforeEach(() => {
     jest.resetModules();
   });

@@ -3,7 +3,7 @@ import { deleteByRowId } from "../../src/index";
 
 const { TEST_GRID_ID, BP_AUTH } = process.env;
 
-describe("DeleteByRowId", () => {
+describe("Delete By Row Id", () => {
   beforeEach(() => {
     jest.resetModules();
   });

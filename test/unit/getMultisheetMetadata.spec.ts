@@ -3,7 +3,7 @@ import { getMultisheetMetadata } from '../../src/index';
 
 const { TEST_GRID_ID, BP_AUTH } = process.env;
 
-describe('GetMultisheetMetadata', () => {
+describe('Get Multisheet Metadata', () => {
   beforeEach(() => {
     jest.resetModules();
   });
