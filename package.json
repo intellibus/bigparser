@@ -20,9 +20,9 @@
     "format": "prettier --write ./**/*.ts",
     "lint": "eslint ./**/*.ts -f mo",
     "lint:fix": "eslint --fix ./**/*.ts -f mo",
-    "test": "DOTENV_CONFIG_PATH=./.env.test.local jest",
-    "test:coverage": "DOTENV_CONFIG_PATH=./.env.test.local jest --coverage",
-    "test:ci": "DOTENV_CONFIG_PATH=./.env.test.local jest --ci --coverage",
+    "test": "DOTENV_CONFIG_PATH=./.env.test.local jest --runInBand",
+    "test:coverage": "DOTENV_CONFIG_PATH=./.env.test.local jest --coverage --runInBand",
+    "test:ci": "DOTENV_CONFIG_PATH=./.env.test.local jest --ci --coverage --runInBand",
     "prepare": "husky install"
   },
   "dependencies": {
