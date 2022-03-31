@@ -2,7 +2,12 @@
 import axios, { AxiosResponse } from 'axios';
 
 // BigParser Types
-export declare type DataType = 'STRING' | 'NUMBER' | 'DATE' | 'DATE_TIME' | 'BOOLEAN';
+export declare type DataType =
+  | 'STRING'
+  | 'NUMBER'
+  | 'DATE'
+  | 'DATE_TIME'
+  | 'BOOLEAN';
 
 export declare type JoinOperator = 'OR' | 'AND';
 
@@ -38,7 +43,7 @@ export declare type Filter<T> = {
 };
 
 export declare type SortType<GridDataModel> = {
-  [key in keyof GridDataModel]: string;
+  [key in keyof GridDataModel]: 'asc' | 'desc';
 };
 
 export declare type Pagination = {
@@ -72,7 +77,7 @@ export declare type QueryObject<GridDataModel> = {
 };
 
 export declare type Distinct<GridDataModel> = {
-  columnNames?: Array<keyof GridDataModel>
+  columnNames?: Array<keyof GridDataModel>;
 };
 
 export declare type QueryDistinctObject<GridDataModel> = {
@@ -102,13 +107,13 @@ export declare type UpdateByRowIdObject<GridDataModel> = {
   update: UpdateRowIds<GridDataModel>;
 };
 
-export declare type UpdateColumnDatatype = {
-  columnName: string;
+export declare type UpdateColumnDatatype<GridDataModel> = {
+  columnName: keyof GridDataModel;
   dataType: DataType;
 };
 
-export declare type UpdateColumnDatatypeObject = {
-  columns: Array<UpdateColumnDatatype>;
+export declare type UpdateColumnDatatypeObject<GridDataModel> = {
+  columns: Array<UpdateColumnDatatype<GridDataModel>>;
 };
 
 export declare type DeleteQueryObject<GridDataModel> = {
@@ -116,12 +121,12 @@ export declare type DeleteQueryObject<GridDataModel> = {
 };
 
 export declare type RowId = {
-  rowId: string
-}
+  rowId: string;
+};
 
 export declare type DeleteRowIds = {
   rows: Array<RowId>;
-}
+};
 
 export declare type DeleteRowIdObject = {
   delete: DeleteRowIds;
@@ -156,6 +161,24 @@ function gridURL(
   }/${action}`;
 }
 
+function to<T, U = Error>(
+  promise: Promise<T>,
+  errorExt?: object
+): Promise<{ data: undefined; error: U } | { data: T; error: undefined }> {
+  return promise
+    .then<{ data: T; error: undefined }>((data: T) => ({
+      data,
+      error: undefined,
+    }))
+    .catch<{ data: undefined; error: U }>((err: U) => {
+      if (errorExt) {
+        const parsedError = { ...err, ...errorExt };
+        return { error: parsedError, data: undefined };
+      }
+      return { error: err, data: undefined };
+    });
+}
+
 export async function search<GridDataModel>(
   queryObj: QueryObject<GridDataModel>,
   gridId: string,
@@ -163,17 +186,13 @@ export async function search<GridDataModel>(
   authId?: string,
   qa?: boolean
 ): Promise<APIResponse> {
-  let restResponse: AxiosResponse;
-  try {
-    restResponse = await axios.post(
+  return to(
+    axios.post(
       gridURL('search', gridId, viewId, qa),
       queryObj,
       authId != null ? { headers: { authId } } : config
-    );
-    return { ...restResponse, error: null };
-  } catch (error) {
-    return { data: null, error };
-  }
+    )
+  );
 }
 
 export async function searchCount<GridDataModel>(
@@ -183,17 +202,13 @@ export async function searchCount<GridDataModel>(
   authId?: string,
   qa?: boolean
 ): Promise<APIResponse> {
-  let restResponse: AxiosResponse;
-  try {
-    restResponse = await axios.post(
+  return to(
+    axios.post(
       gridURL('search_count', gridId, viewId, qa),
       queryObj,
       authId != null ? { headers: { authId } } : config
-    );
-    return { ...restResponse, error: null };
-  } catch (error) {
-    return { data: null, error };
-  }
+    )
+  );
 }
 
 export async function searchDistinct<GridDataModel>(
@@ -203,17 +218,13 @@ export async function searchDistinct<GridDataModel>(
   authId?: string,
   qa?: boolean
 ): Promise<APIResponse> {
-  let restResponse: AxiosResponse;
-  try {
-    restResponse = await axios.post(
+  return to(
+    axios.post(
       gridURL('distinct', gridId, viewId, qa),
       queryDistinctObj,
       authId != null ? { headers: { authId } } : config
-    );
-    return { ...restResponse, error: null };
-  } catch (error) {
-    return { data: null, error };
-  }
+    )
+  );
 }
 
 export async function insert<GridDataModel>(
@@ -223,17 +234,13 @@ export async function insert<GridDataModel>(
   authId?: string,
   qa?: boolean
 ): Promise<APIResponse> {
-  let restResponse: AxiosResponse;
-  try {
-    restResponse = await axios.post(
+  return to(
+    axios.post(
       gridURL('rows/create', gridId, viewId, qa),
       insertObj,
       authId != null ? { headers: { authId } } : config
-    );
-    return { ...restResponse, error: null };
-  } catch (error) {
-    return { data: null, error };
-  }
+    )
+  );
 }
 
 export async function updateByQuery<GridDataModel>(
@@ -243,17 +250,13 @@ export async function updateByQuery<GridDataModel>(
   authId?: string,
   qa?: boolean
 ): Promise<APIResponse> {
-  let restResponse: AxiosResponse;
-  try {
-    restResponse = await axios.put(
+  return to(
+    axios.put(
       gridURL('rows/update_by_queryObj', gridId, viewId, qa),
       queryUpdateObj,
       authId != null ? { headers: { authId } } : config
-    );
-    return { ...restResponse, error: null };
-  } catch (error) {
-    return { data: null, error };
-  }
+    )
+  );
 }
 
 export async function updateByRowId<GridDataModel>(
@@ -263,37 +266,29 @@ export async function updateByRowId<GridDataModel>(
   authId?: string,
   qa?: boolean
 ): Promise<APIResponse> {
-  let restResponse: AxiosResponse;
-  try {
-    restResponse = await axios.put(
+  return to(
+    axios.put(
       gridURL('rows/update_by_rowIds', gridId, viewId, qa),
       updateByRowIdObj,
       authId != null ? { headers: { authId } } : config
-    );
-    return { ...restResponse, error: null };
-  } catch (error) {
-    return { data: null, error };
-  }
+    )
+  );
 }
 
-export async function updateColumnDatatype(
-  updateColumnDatatypeObj: UpdateColumnDatatypeObject, // TODO: Update Type + Var Name
+export async function updateColumnDatatype<GridDataModel>(
+  updateColumnDatatypeObj: UpdateColumnDatatypeObject<GridDataModel>,
   gridId: string,
   viewId?: string,
   authId?: string,
   qa?: boolean
 ): Promise<APIResponse> {
-  let restResponse: AxiosResponse;
-  try {
-    restResponse = await axios.put(
+  return to(
+    axios.put(
       gridURL('update_column_datatype', gridId, viewId, qa),
       updateColumnDatatypeObj,
       authId != null ? { headers: { authId } } : config
-    );
-    return { ...restResponse, error: null };
-  } catch (error) {
-    return { data: null, error };
-  }
+    )
+  );
 }
 
 export async function deleteByQuery<GridDataModel>(
@@ -303,17 +298,14 @@ export async function deleteByQuery<GridDataModel>(
   authId?: string,
   qa?: boolean
 ): Promise<APIResponse> {
-  let restResponse: AxiosResponse;
-  try {
-    restResponse = await axios.put(
-      gridURL('rows/update_by_rowIds', gridId, viewId, qa),
-      deleteQueryObj,
-      authId != null ? { headers: { authId } } : config
-    );
-    return { ...restResponse, error: null };
-  } catch (error) {
-    return { data: null, error };
-  }
+  return to(
+    axios.delete(
+      gridURL('rows/delete_by_queryObj', gridId, viewId, qa),
+      authId != null
+        ? { headers: { authId }, data: deleteQueryObj }
+        : { ...config, data: deleteQueryObj }
+    )
+  );
 }
 
 export async function deleteByRowId(
@@ -323,19 +315,15 @@ export async function deleteByRowId(
   authId?: string,
   qa?: boolean
 ): Promise<APIResponse> {
-  let restResponse: AxiosResponse;
-  try {
-    restResponse = await axios.put(
-      gridURL('rows/update_by_queryObj', gridId, viewId, qa),
-      deleteRowIdObj,
-      authId != null ? { headers: { authId } } : config
-    );
-    return { ...restResponse, error: null };
-  } catch (error) {
-    return { data: null, error };
-  }
+  return to(
+    axios.delete(
+      gridURL('rows/delete_by_rowIds', gridId, viewId, qa),
+      authId != null
+        ? { headers: { authId }, data: deleteRowIdObj }
+        : { ...config, data: deleteRowIdObj }
+    )
+  );
 }
-
 
 export async function getHeaders(
   gridId: string,
@@ -343,16 +331,12 @@ export async function getHeaders(
   authId?: string,
   qa?: boolean
 ): Promise<APIResponse> {
-  let restResponse: AxiosResponse;
-  try {
-    restResponse = await axios.get(
+  return to(
+    axios.get(
       gridURL('query_metadata', gridId, viewId, qa),
       authId != null ? { headers: { authId } } : config
-    );
-    return { ...restResponse, error: null };
-  } catch (error) {
-    return { data: null, error };
-  }
+    )
+  );
 }
 
 export async function getMultisheetMetadata(
@@ -361,14 +345,10 @@ export async function getMultisheetMetadata(
   authId?: string,
   qa?: boolean
 ): Promise<APIResponse> {
-  let restResponse: AxiosResponse;
-  try {
-    restResponse = await axios.get(
+  return to(
+    axios.get(
       gridURL('query_multisheet_metadata', gridId, viewId, qa),
       authId != null ? { headers: { authId } } : config
-    );
-    return { ...restResponse, error: null };
-  } catch (error) {
-    return { data: null, error };
-  }
+    )
+  );
 }
