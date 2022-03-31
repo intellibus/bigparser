@@ -162,21 +162,16 @@ function gridURL(
 }
 
 function to(
-  promise: Promise<AxiosResponse>,
-  errorExt?: object
+  promise: Promise<AxiosResponse>
 ): Promise<APIResponse> {
   return promise
     .then((response: AxiosResponse) => ({
       ...response,
       error: undefined,
     }))
-    .catch((err: Error) => {
-      if (errorExt) {
-        const parsedError = { ...err, ...errorExt };
-        return { error: parsedError, data: undefined };
-      }
-      return { error: err, data: undefined };
-    });
+    .catch((err: Error) => (
+      { error: err, data: undefined }
+    ));
 }
 
 export async function search<GridDataModel>(
