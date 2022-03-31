@@ -103,7 +103,7 @@ describe('Search', () => {
 
       // Then
       expect(mockAxios.post).toHaveBeenCalledWith(
-        `https://www.bigparser.com/api/v2/grid/${TEST_GRID_ID}/search`,
+        `https://qa.bigparser.com/api/v2/grid/${TEST_GRID_ID}/search`,
         queryObject,
         {
           headers: {
@@ -175,7 +175,7 @@ describe('Search', () => {
 
       // Then
       expect(mockAxios.post).toHaveBeenCalledWith(
-        'https://www.bigparser.com/api/v2/grid//search',
+        `https://qa.bigparser.com/api/v2/grid/${TEST_GRID_ID}/share/INVALID_VIEW_ID/search`,
         queryObject,
         {
           headers: {
