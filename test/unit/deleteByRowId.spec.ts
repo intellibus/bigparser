@@ -41,7 +41,7 @@ describe('DeleteByRowId', () => {
 
       // Then
       expect(mockAxios.delete).toHaveBeenCalledWith(
-        `https://www.bigparser.com/api/v2/grid/${TEST_GRID_ID}/delete_by_rowIds`,
+        `https://www.bigparser.com/api/v2/grid/${TEST_GRID_ID}/rows/delete_by_rowIds`,
         {
           headers: {
             authId: BP_AUTH,
@@ -79,7 +79,7 @@ describe('DeleteByRowId', () => {
 
       // Then
       expect(mockAxios.delete).toHaveBeenCalledWith(
-        'https://www.bigparser.com/api/v2/grid//delete_by_rowIds',
+        'https://www.bigparser.com/api/v2/grid//rows/delete_by_rowIds',
         {
           headers: {
             authId: BP_AUTH,
@@ -120,7 +120,7 @@ describe('DeleteByRowId', () => {
 
       // Then
       expect(mockAxios.delete).toHaveBeenCalledWith(
-        `https://www.bigparser.com/api/v2/grid/${TEST_GRID_ID}/delete_by_rowIds`,
+        `https://www.bigparser.com/api/v2/grid/${TEST_GRID_ID}/rows/delete_by_rowIds`,
         {
           headers: {
             authId: 'INVALID_AUTHID',
