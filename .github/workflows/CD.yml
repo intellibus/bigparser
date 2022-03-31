@@ -28,7 +28,11 @@ jobs:
         env:
           TEST_ENV_FILE: ${{ secrets.TEST_DOTENV }}
       - name: Run Unit Tests
-        run: pnpm run test:unit:ci
+        uses: paambaati/codeclimate-action@v3.0.0
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+        with:
+          coverageCommand: pnpm run test:unit:ci
       # - name: Run Integration Tests
       #   run: pnpm run test:integration:ci
       - name: Publish

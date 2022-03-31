@@ -137,3 +137,5 @@ export declare type APIResponse =
       data: void;
       error: Error;
     };
+
+export { AxiosResponse };

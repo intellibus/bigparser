@@ -10,7 +10,7 @@
     <b>bigparser</b>
   </p>
   <p>
-     <i>This project is amazing, you should write some lines about it.</i>
+     <i>Use the npm module with the BigParser APIs.</i>
   </p>
   <p>
 
@@ -69,7 +69,7 @@ You have a small project or you'll like to share the API of your project ? This 
 
 ## Contributing 🍰
 
-Please make sure to read the [Contributing Guide]() before making a pull request.
+Please make sure to read the [Contributing Guide](CONTRIBUTING.md) before making a pull request.
 
 Thank you to all the people who already contributed to this project!
 
@@ -77,7 +77,7 @@ Thank you to all the people who already contributed to this project!
 
 <table>
   <tr>
-    <td align="center"><a href="https://lucastostee.now.sh/"><img src="https://avatars3.githubusercontent.com/u/22588842?s=460&v=4" width="100px;" alt="Anubis"/><br /><sub><b>Anubis</b></sub></a><br /><a href="#" title="Code">💻</a></td>
+    <!-- <td align="center"><a href="https://lucastostee.now.sh/"><img src="https://avatars3.githubusercontent.com/u/22588842?s=460&v=4" width="100px;" alt="Anubis"/><br /><sub><b>Anubis</b></sub></a><br /><a href="#" title="Code">💻</a></td> -->
   </tr>
 </table>
 
