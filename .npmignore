@@ -5,5 +5,4 @@ test/
 .env.example
 LICENSE
 pnpm-lock.yaml
-README.md
 tsconfig.json
