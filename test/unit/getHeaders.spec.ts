@@ -142,7 +142,7 @@ describe('Get Headers', () => {
       };
 
       // When
-      const getHeadersPromise = getHeaders(TEST_GRID_ID);
+      const getHeadersPromise = getHeaders(null, TEST_GRID_ID);
       mockAxios.mockResponse({ data: gridResponse });
       const { data: responseData, error: responseError } =
         await getHeadersPromise;
@@ -171,7 +171,7 @@ describe('Get Headers', () => {
       };
 
       // When
-      const getHeadersPromise = getHeaders('');
+      const getHeadersPromise = getHeaders(null, '');
       mockAxios.mockError(errorObject);
       const { data: responseData, error: responseError } =
         await getHeadersPromise;
@@ -198,7 +198,12 @@ describe('Get Headers', () => {
       };
 
       // When
-      const getHeadersPromise = getHeaders(TEST_GRID_ID, '', 'INVALID_AUTHID');
+      const getHeadersPromise = getHeaders(
+        null,
+        TEST_GRID_ID,
+        '',
+        'INVALID_AUTHID'
+      );
       mockAxios.mockError(errorObject);
       const { data: responseData, error: responseError } =
         await getHeadersPromise;

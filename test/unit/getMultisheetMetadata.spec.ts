@@ -33,7 +33,10 @@ describe('Get Multisheet Metadata', () => {
       };
 
       // When
-      const getMultisheetMetadataPromise = getMultisheetMetadata(TEST_GRID_ID);
+      const getMultisheetMetadataPromise = getMultisheetMetadata(
+        null,
+        TEST_GRID_ID
+      );
       mockAxios.mockResponse({ data: gridResponse });
       const { data: responseData, error: responseError } =
         await getMultisheetMetadataPromise;
@@ -62,7 +65,7 @@ describe('Get Multisheet Metadata', () => {
       };
 
       // When
-      const getMultisheetMetadataPromise = getMultisheetMetadata('');
+      const getMultisheetMetadataPromise = getMultisheetMetadata(null, '');
       mockAxios.mockError(errorObject);
       const { data: responseData, error: responseError } =
         await getMultisheetMetadataPromise;
@@ -90,6 +93,7 @@ describe('Get Multisheet Metadata', () => {
 
       // When
       const getMultisheetMetadataPromise = getMultisheetMetadata(
+        null,
         TEST_GRID_ID,
         '',
         'INVALID_AUTHID'
