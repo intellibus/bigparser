@@ -171,7 +171,7 @@ describe('GetHeaders', () => {
 
       // Then
       expect(mockAxios.get).toHaveBeenCalledWith(
-        'https://www.bigparser.com/api/v2/grid//search',
+        'https://www.bigparser.com/api/v2/grid//query_metadata',
         {
           headers: {
             authId: BP_AUTH,
@@ -201,7 +201,7 @@ describe('GetHeaders', () => {
 
       // Then
       expect(mockAxios.get).toHaveBeenCalledWith(
-        `https://www.bigparser.com/api/v2/grid/${TEST_GRID_ID}/search`,
+        `https://www.bigparser.com/api/v2/grid/${TEST_GRID_ID}/query_metadata`,
         {
           headers: {
             authId: 'INVALID_AUTHID',
