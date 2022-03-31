@@ -8,4 +8,5 @@ export declare interface TestGrid {
   'Linked Column': string;
   'Linked Related Column From Other Grid': string;
   'Formula Column': number;
+  'Empty Column': string;
 }

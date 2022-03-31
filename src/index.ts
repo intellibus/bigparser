@@ -103,7 +103,7 @@ export declare type UpdateRowIds<GridDataModel> = {
   rows: Array<UpdateRowId<GridDataModel>>;
 };
 
-export declare type UpdateByRowIdObject<GridDataModel> = {
+export declare type UpdateRowIdObject<GridDataModel> = {
   update: UpdateRowIds<GridDataModel>;
 };
 
@@ -140,15 +140,13 @@ export declare type APIResponse =
     };
 
 const getAPIURL = (qa?: boolean) =>
-  qa == null
-    ? `https://${qa ? 'qa' : 'www'}.bigparser.com/api/v2`
-    : `https://${process.env.BP_QA ? 'qa' : 'www'}.bigparser.com/api/v2`;
+  `https://${qa || process.env.BP_QA ? 'qa' : 'www'}.bigparser.com/api/v2`
 
 const config = {
   headers: {
     authId: `${process.env.BP_AUTH}`,
   },
-};
+};  
 
 function gridURL(
   action: string,
@@ -162,21 +160,16 @@ function gridURL(
 }
 
 function to(
-  promise: Promise<AxiosResponse>,
-  errorExt?: object
+  promise: Promise<AxiosResponse>
 ): Promise<APIResponse> {
   return promise
     .then((response: AxiosResponse) => ({
       ...response,
       error: undefined,
     }))
-    .catch((err: Error) => {
-      if (errorExt) {
-        const parsedError = { ...err, ...errorExt };
-        return { error: parsedError, data: undefined };
-      }
-      return { error: err, data: undefined };
-    });
+    .catch((err: Error) => (
+      { error: err, data: undefined }
+    ));
 }
 
 export async function search<GridDataModel>(
@@ -260,7 +253,7 @@ export async function updateByQuery<GridDataModel>(
 }
 
 export async function updateByRowId<GridDataModel>(
-  updateByRowIdObj: UpdateByRowIdObject<GridDataModel>,
+  updateByRowIdObj: UpdateRowIdObject<GridDataModel>,
   gridId: string,
   viewId?: string,
   authId?: string,
