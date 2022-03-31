@@ -75,40 +75,6 @@ describe('Search Count', () => {
       expect(responseData).toEqual(undefined);
       expect(responseError).toEqual(errorObject);
     });
-    it('Should Reject Invalid View Id', async () => {
-      // Given
-      const queryObject = {
-        query: {},
-      };
-      const errorObject = {
-        err: {
-          message: 'Invalid View Id',
-          statusCode: 404,
-        },
-      };
-
-      // When
-      const searchPromise = searchCount<TestGrid>(
-        queryObject,
-        TEST_GRID_ID,
-        ''
-      );
-      mockAxios.mockError(errorObject);
-      const { data: responseData, error: responseError } = await searchPromise;
-
-      // Then
-      expect(mockAxios.post).toHaveBeenCalledWith(
-        `https://www.bigparser.com/api/v2/grid/${TEST_GRID_ID}/search_count`,
-        queryObject,
-        {
-          headers: {
-            authId: BP_AUTH,
-          },
-        }
-      );
-      expect(responseData).toEqual(undefined);
-      expect(responseError).toEqual(errorObject);
-    });
     it('Should Reject Invalid Auth Id', async () => {
       // Given
       const queryObject = {
