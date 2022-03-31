@@ -3,7 +3,7 @@ import { getMultisheetMetadata } from '../../src/index';
 
 const { TEST_GRID_ID, BP_AUTH } = process.env;
 
-describe('GetHeaders', () => {
+describe('GetMultisheetMetadata', () => {
   beforeEach(() => {
     jest.resetModules();
   });
@@ -30,12 +30,12 @@ describe('GetHeaders', () => {
             pinned: false
           }
         ]
-      }
+      };
 
       // When
-      const searchPromise = getMultisheetMetadata(TEST_GRID_ID);
+      const getMultisheetMetadataPromise = getMultisheetMetadata(TEST_GRID_ID);
       mockAxios.mockResponse({ data: gridResponse });
-      const { data: searchData, error: searchError } = await searchPromise;
+      const { data: responseData, error: responseError } = await getMultisheetMetadataPromise;
 
       // Then
       expect(mockAxios.get).toHaveBeenCalledWith(
@@ -46,8 +46,8 @@ describe('GetHeaders', () => {
           },
         }
       );
-      expect(searchError).toEqual(undefined);
-      expect(searchData).toEqual(gridResponse);
+      expect(responseError).toEqual(undefined);
+      expect(responseData).toEqual(gridResponse);
     });
   });
   describe('Negative Test Cases', () => {
@@ -61,9 +61,9 @@ describe('GetHeaders', () => {
       };
 
       // When
-      const searchPromise = getMultisheetMetadata('');
+      const getMultisheetMetadataPromise = getMultisheetMetadata('');
       mockAxios.mockError(errorObject);
-      const { data: searchData, error: searchError } = await searchPromise;
+      const { data: responseData, error: responseError } = await getMultisheetMetadataPromise;
 
       // Then
       expect(mockAxios.get).toHaveBeenCalledWith(
@@ -74,8 +74,8 @@ describe('GetHeaders', () => {
           },
         }
       );
-      expect(searchData).toEqual(undefined);
-      expect(searchError).toEqual(errorObject);
+      expect(responseData).toEqual(undefined);
+      expect(responseError).toEqual(errorObject);
     });
     it('Should Reject Invalid Auth Id', async () => {
       // Given
@@ -87,13 +87,13 @@ describe('GetHeaders', () => {
       };
 
       // When
-      const searchPromise = getMultisheetMetadata(
+      const getMultisheetMetadataPromise = getMultisheetMetadata(
         TEST_GRID_ID,
         '',
         'INVALID_AUTHID'
       );
       mockAxios.mockError(errorObject);
-      const { data: searchData, error: searchError } = await searchPromise;
+      const { data: responseData, error: responseError } = await getMultisheetMetadataPromise;
 
       // Then
       expect(mockAxios.get).toHaveBeenCalledWith(
@@ -104,8 +104,8 @@ describe('GetHeaders', () => {
           },
         }
       );
-      expect(searchData).toEqual(undefined);
-      expect(searchError).toEqual(errorObject);
+      expect(responseData).toEqual(undefined);
+      expect(responseError).toEqual(errorObject);
     });
   });
 });

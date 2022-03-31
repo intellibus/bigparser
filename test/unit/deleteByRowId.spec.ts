@@ -1,10 +1,9 @@
 import mockAxios from 'jest-mock-axios';
-import { search } from '../../src/index';
-import { TestGrid } from '../__grids__/TestGrid';
+import { deleteByRowId } from '../../src/index';
 
 const { TEST_GRID_ID, BP_AUTH } = process.env;
 
-describe('Search', () => {
+describe('DeleteByRowId', () => {
   beforeEach(() => {
     jest.resetModules();
   });
@@ -14,42 +13,36 @@ describe('Search', () => {
   describe('Positive Test Cases', () => {
     it('Should Return Grid Data', async () => {
       // Given
-      const gridData = {
-        totalRowCount: 1,
-        rows: [
-          {
-            _id: '6243cd4ec9d082361703ea4e',
-            'String Column': 'Example String',
-            'Number Column': 1337,
-            'Number 2 Column': 1234.5678,
-            'Boolean Column': true,
-            'Date Column':
-              'Tue Mar 29 2022 23:20:30 GMT-0400 (Eastern Daylight Time)',
-            'Linked Column': '20171',
-            'Linked Related Column From Other Grid': 'Related Column Value 4',
-            'Formula Column': null,
-          },
+      const gridResponse = {
+        noOfRowsDeleted: 1,
+        noOfRowsFailed: 0,
+        deletedRows: [
+            '6243cd4ec9d082361703ea4e'
         ],
+        failedRows: {}
       };
 
-      const queryObject = {
-        query: {
-          sendRowIdsInResponse: true,
-          showColumnNamesInResponse: true,
-        },
+      const deleteObject = {
+        delete: {
+          rows: [
+            {
+              rowId: '6243cd4ec9d082361703ea4e'
+            }
+          ]
+        }
       };
 
       // When
-      const searchPromise = search<TestGrid>(queryObject, TEST_GRID_ID);
+      const deleteByRowIdPromise = deleteByRowId(deleteObject, TEST_GRID_ID);
       mockAxios.mockResponse({
-        data: gridData,
+        data: gridResponse,
       });
-      const { data: responseData, error: responseError } = await searchPromise;
+      const { data: responseData, error: responseError } = await deleteByRowIdPromise;
 
       // Then
       expect(mockAxios.post).toHaveBeenCalledWith(
-        `https://www.bigparser.com/api/v2/grid/${TEST_GRID_ID}/search`,
-        queryObject,
+        `https://www.bigparser.com/api/v2/grid/${TEST_GRID_ID}/delete_by_rowIds`,
+        deleteObject,
         {
           headers: {
             authId: BP_AUTH,
@@ -57,17 +50,20 @@ describe('Search', () => {
         }
       );
       expect(responseError).toEqual(undefined);
-      expect(responseData).toEqual(gridData);
+      expect(responseData).toEqual(gridResponse);
     });
   });
   describe('Negative Test Cases', () => {
     it('Should Reject Invalid Grid Id', async () => {
       // Given
-      const queryObject = {
-        query: {
-          sendRowIdsInResponse: true,
-          showColumnNamesInResponse: true,
-        },
+      const deleteObject = {
+        delete: {
+          rows: [
+            {
+              rowId: '6243cd4ec9d082361703ea4e'
+            }
+          ]
+        }
       };
       const errorObject = {
         err: {
@@ -77,14 +73,14 @@ describe('Search', () => {
       };
 
       // When
-      const searchPromise = search<TestGrid>(queryObject, '');
+      const deleteByRowIdPromise = deleteByRowId(deleteObject, '');
       mockAxios.mockError(errorObject);
-      const { data: responseData, error: responseError } = await searchPromise;
+      const { data: responseData, error: responseError } = await deleteByRowIdPromise;
 
       // Then
       expect(mockAxios.post).toHaveBeenCalledWith(
-        'https://www.bigparser.com/api/v2/grid//search',
-        queryObject,
+        'https://www.bigparser.com/api/v2/grid//delete_by_rowIds',
+        deleteObject,
         {
           headers: {
             authId: BP_AUTH,
@@ -96,11 +92,14 @@ describe('Search', () => {
     });
     it('Should Reject Invalid Auth Id', async () => {
       // Given
-      const queryObject = {
-        query: {
-          sendRowIdsInResponse: true,
-          showColumnNamesInResponse: true,
-        },
+      const deleteObject = {
+        delete: {
+          rows: [
+            {
+              rowId: '6243cd4ec9d082361703ea4e'
+            }
+          ]
+        }
       };
       const errorObject = {
         err: {
@@ -110,19 +109,19 @@ describe('Search', () => {
       };
 
       // When
-      const searchPromise = search<TestGrid>(
-        queryObject,
+      const deleteByRowIdPromise = deleteByRowId(
+        deleteObject,
         TEST_GRID_ID,
         '',
         'INVALID_AUTHID'
       );
       mockAxios.mockError(errorObject);
-      const { data: responseData, error: responseError } = await searchPromise;
+      const { data: responseData, error: responseError } = await deleteByRowIdPromise;
 
       // Then
       expect(mockAxios.post).toHaveBeenCalledWith(
         `https://www.bigparser.com/api/v2/grid/${TEST_GRID_ID}/search`,
-        queryObject,
+        deleteObject,
         {
           headers: {
             authId: 'INVALID_AUTHID',

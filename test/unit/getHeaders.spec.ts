@@ -134,12 +134,12 @@ describe('GetHeaders', () => {
         owner: true,
         multisheet: true,
         auditGrid: false
-      }
+      };
 
       // When
-      const searchPromise = getHeaders(TEST_GRID_ID);
+      const getHeadersPromise = getHeaders(TEST_GRID_ID);
       mockAxios.mockResponse({ data: gridResponse });
-      const { data: searchData, error: searchError } = await searchPromise;
+      const { data: responseData, error: responseError } = await getHeadersPromise;
 
       // Then
       expect(mockAxios.get).toHaveBeenCalledWith(
@@ -150,8 +150,8 @@ describe('GetHeaders', () => {
           },
         }
       );
-      expect(searchError).toEqual(undefined);
-      expect(searchData).toEqual(gridResponse);
+      expect(responseError).toEqual(undefined);
+      expect(responseData).toEqual(gridResponse);
     });
   });
   describe('Negative Test Cases', () => {
@@ -165,9 +165,9 @@ describe('GetHeaders', () => {
       };
 
       // When
-      const searchPromise = getHeaders('');
+      const getHeadersPromise = getHeaders('');
       mockAxios.mockError(errorObject);
-      const { data: searchData, error: searchError } = await searchPromise;
+      const { data: responseData, error: responseError } = await getHeadersPromise;
 
       // Then
       expect(mockAxios.get).toHaveBeenCalledWith(
@@ -178,8 +178,8 @@ describe('GetHeaders', () => {
           },
         }
       );
-      expect(searchData).toEqual(undefined);
-      expect(searchError).toEqual(errorObject);
+      expect(responseData).toEqual(undefined);
+      expect(responseError).toEqual(errorObject);
     });
     it('Should Reject Invalid Auth Id', async () => {
       // Given
@@ -191,13 +191,13 @@ describe('GetHeaders', () => {
       };
 
       // When
-      const searchPromise = getHeaders(
+      const getHeadersPromise = getHeaders(
         TEST_GRID_ID,
         '',
         'INVALID_AUTHID'
       );
       mockAxios.mockError(errorObject);
-      const { data: searchData, error: searchError } = await searchPromise;
+      const { data: responseData, error: responseError } = await getHeadersPromise;
 
       // Then
       expect(mockAxios.get).toHaveBeenCalledWith(
@@ -208,8 +208,8 @@ describe('GetHeaders', () => {
           },
         }
       );
-      expect(searchData).toEqual(undefined);
-      expect(searchError).toEqual(errorObject);
+      expect(responseData).toEqual(undefined);
+      expect(responseError).toEqual(errorObject);
     });
   });
 });
