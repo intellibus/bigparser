@@ -140,9 +140,7 @@ export declare type APIResponse =
     };
 
 const getAPIURL = (qa?: boolean) =>
-  qa != null
-    ? `https://${qa ? 'qa' : 'www'}.bigparser.com/api/v2`
-    : `https://${process.env.BP_QA ? 'qa' : 'www'}.bigparser.com/api/v2`;
+  `https://${qa || process.env.BP_QA ? 'qa' : 'www'}.bigparser.com/api/v2`
 
 const config = {
   headers: {
