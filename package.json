@@ -4,7 +4,11 @@
   "version": "0.5.1",
   "description": "BigParser API NPM Module",
   "license": "MIT",
-  "repository": "intellibus/bigparser",
+  "homepage": "https://github.com/intellibus/bigparser#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/intellibus/bigparser.git"
+  },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "engines": {
