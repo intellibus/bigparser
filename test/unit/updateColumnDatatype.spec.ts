@@ -79,7 +79,7 @@ describe('Update Column Datatype', () => {
       // When
       const updateColumnDatatypePromise = updateColumnDatatype<TestGrid>(
         updateColumnDatatypeObject,
-        ''
+        'INVALID_GRID_ID'
       );
       mockAxios.mockError(errorObject);
       const { data: responseData, error: responseError } =
@@ -87,7 +87,7 @@ describe('Update Column Datatype', () => {
 
       // Then
       expect(mockAxios.put).toHaveBeenCalledWith(
-        'https://www.bigparser.com/api/v2/grid//update_column_datatype',
+        'https://www.bigparser.com/api/v2/grid/INVALID_GRID_ID/update_column_datatype',
         updateColumnDatatypeObject,
         {
           headers: {
@@ -119,8 +119,7 @@ describe('Update Column Datatype', () => {
       const updateColumnDatatypePromise = updateColumnDatatype<TestGrid>(
         updateColumnDatatypeObject,
         TEST_GRID_ID,
-        '',
-        'INVALID_AUTHID'
+        { authId: 'INVALID_AUTHID' }
       );
       mockAxios.mockError(errorObject);
       const { data: responseData, error: responseError } =

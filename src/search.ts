@@ -5,13 +5,14 @@ import { APIResponse, MethodConfig, QueryObject } from './types';
 export async function search<GridDataModel>(
   queryObj: QueryObject<GridDataModel>,
   gridId: string,
-  config?: MethodConfig
+  config: MethodConfig = {}
 ): Promise<APIResponse> {
+  const { viewId, qa, authId } = config;
   return to(
     axios.post(
-      gridURL('search', gridId, config?.viewId, config?.qa),
+      gridURL('search', gridId, viewId, qa),
       queryObj,
-      config?.authId != null ? { headers: { authId: config?.authId } } : CONFIG
+      authId != null ? { headers: { authId } } : CONFIG
     )
   );
 }

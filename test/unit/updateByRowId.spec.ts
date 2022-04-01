@@ -84,7 +84,7 @@ describe('Update By Row Id', () => {
       // When
       const updateByRowIdPromise = updateByRowId<TestGrid>(
         updateRowIdObject,
-        ''
+        'INVALID_GRID_ID'
       );
       mockAxios.mockError(errorObject);
       const { data: responseData, error: responseError } =
@@ -92,7 +92,7 @@ describe('Update By Row Id', () => {
 
       // Then
       expect(mockAxios.put).toHaveBeenCalledWith(
-        'https://www.bigparser.com/api/v2/grid//rows/update_by_rowIds',
+        'https://www.bigparser.com/api/v2/grid/INVALID_GRID_ID/rows/update_by_rowIds',
         updateRowIdObject,
         {
           headers: {
@@ -128,8 +128,7 @@ describe('Update By Row Id', () => {
       const updateByRowIdPromise = updateByRowId<TestGrid>(
         updateRowIdObject,
         TEST_GRID_ID,
-        '',
-        'INVALID_AUTHID'
+        { authId: 'INVALID_AUTHID' }
       );
       mockAxios.mockError(errorObject);
       const { data: responseData, error: responseError } =

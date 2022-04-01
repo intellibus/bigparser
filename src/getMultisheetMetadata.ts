@@ -1,13 +1,12 @@
 import axios from 'axios';
 import { gridURL, to, CONFIG } from './utils';
-import { APIResponse } from './types';
+import { APIResponse, MethodConfig } from './types';
 
 export async function getMultisheetMetadata(
   gridId: string,
-  viewId?: string,
-  authId?: string,
-  qa?: boolean
+  config: MethodConfig = {}
 ): Promise<APIResponse> {
+  const { viewId, qa, authId } = config;
   return to(
     axios.get(
       gridURL('query_multisheet_metadata', gridId, viewId, qa),

@@ -86,14 +86,17 @@ describe('Delete By Query', () => {
       };
 
       // When
-      const deleteByQueryPromise = deleteByQuery(deleteQueryObject, '');
+      const deleteByQueryPromise = deleteByQuery(
+        deleteQueryObject,
+        'INVALID_GRID_ID'
+      );
       mockAxios.mockError(errorObject);
       const { data: responseData, error: responseError } =
         await deleteByQueryPromise;
 
       // Then
       expect(mockAxios.delete).toHaveBeenCalledWith(
-        'https://www.bigparser.com/api/v2/grid//rows/delete_by_queryObj',
+        'https://www.bigparser.com/api/v2/grid/INVALID_GRID_ID/rows/delete_by_queryObj',
         {
           headers: {
             authId: BP_AUTH,
@@ -132,8 +135,7 @@ describe('Delete By Query', () => {
       const deleteByQueryPromise = deleteByQuery(
         deleteQueryObject,
         TEST_GRID_ID,
-        '',
-        'INVALID_AUTHID'
+        { authId: 'INVALID_AUTHID' }
       );
       mockAxios.mockError(errorObject);
       const { data: responseData, error: responseError } =

@@ -75,13 +75,13 @@ describe('Insert', () => {
       };
 
       // When
-      const insertPromise = insert<TestGrid>(insertObject, '');
+      const insertPromise = insert<TestGrid>(insertObject, 'INVALID_GRID_ID');
       mockAxios.mockError(errorObject);
       const { data: responseData, error: responseError } = await insertPromise;
 
       // Then
       expect(mockAxios.post).toHaveBeenCalledWith(
-        'https://www.bigparser.com/api/v2/grid//rows/create',
+        'https://www.bigparser.com/api/v2/grid/INVALID_GRID_ID/rows/create',
         insertObject,
         {
           headers: {
@@ -112,13 +112,15 @@ describe('Insert', () => {
       };
 
       // When
-      const insertPromise = insert<TestGrid>(insertObject, TEST_GRID_ID, '');
+      const insertPromise = insert<TestGrid>(insertObject, TEST_GRID_ID, {
+        viewId: 'INVALID_VIEW_ID',
+      });
       mockAxios.mockError(errorObject);
       const { data: responseData, error: responseError } = await insertPromise;
 
       // Then
       expect(mockAxios.post).toHaveBeenCalledWith(
-        `https://www.bigparser.com/api/v2/grid/${TEST_GRID_ID}/rows/create`,
+        `https://www.bigparser.com/api/v2/grid/${TEST_GRID_ID}/share/INVALID_VIEW_ID/rows/create`,
         insertObject,
         {
           headers: {
@@ -149,12 +151,9 @@ describe('Insert', () => {
       };
 
       // When
-      const insertPromise = insert<TestGrid>(
-        insertObject,
-        TEST_GRID_ID,
-        '',
-        'INVALID_AUTHID'
-      );
+      const insertPromise = insert<TestGrid>(insertObject, TEST_GRID_ID, {
+        authId: 'INVALID_AUTHID',
+      });
       mockAxios.mockError(errorObject);
       const { data: responseData, error: responseError } = await insertPromise;
       // Then

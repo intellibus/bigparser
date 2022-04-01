@@ -87,14 +87,17 @@ describe('Search Distinct', () => {
       };
 
       // When
-      const searchDistinctPromise = searchDistinct<TestGrid>(queryObject, '');
+      const searchDistinctPromise = searchDistinct<TestGrid>(
+        queryObject,
+        'INVALID_GRID_ID'
+      );
       mockAxios.mockError(errorObject);
       const { data: responseData, error: responseError } =
         await searchDistinctPromise;
 
       // Then
       expect(mockAxios.post).toHaveBeenCalledWith(
-        `https://www.bigparser.com/api/v2/grid//distinct`,
+        `https://www.bigparser.com/api/v2/grid/INVALID_GRID_ID/distinct`,
         queryObject,
         {
           headers: {
@@ -134,8 +137,7 @@ describe('Search Distinct', () => {
       const searchDistinctPromise = searchDistinct<TestGrid>(
         queryObject,
         TEST_GRID_ID,
-        '',
-        'INVALID_AUTHID'
+        { authId: 'INVALID_AUTHID' }
       );
       mockAxios.mockError(errorObject);
       const { data: responseData, error: responseError } =

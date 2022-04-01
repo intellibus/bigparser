@@ -171,14 +171,14 @@ describe('Get Headers', () => {
       };
 
       // When
-      const getHeadersPromise = getHeaders('');
+      const getHeadersPromise = getHeaders('INVALID_GRID_ID');
       mockAxios.mockError(errorObject);
       const { data: responseData, error: responseError } =
         await getHeadersPromise;
 
       // Then
       expect(mockAxios.get).toHaveBeenCalledWith(
-        'https://www.bigparser.com/api/v2/grid//query_metadata',
+        'https://www.bigparser.com/api/v2/grid/INVALID_GRID_ID/query_metadata',
         {
           headers: {
             authId: BP_AUTH,
@@ -198,7 +198,9 @@ describe('Get Headers', () => {
       };
 
       // When
-      const getHeadersPromise = getHeaders(TEST_GRID_ID, '', 'INVALID_AUTHID');
+      const getHeadersPromise = getHeaders(TEST_GRID_ID, {
+        authId: 'INVALID_AUTHID',
+      });
       mockAxios.mockError(errorObject);
       const { data: responseData, error: responseError } =
         await getHeadersPromise;

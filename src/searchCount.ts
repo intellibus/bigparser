@@ -1,14 +1,13 @@
 import axios from 'axios';
 import { gridURL, to, CONFIG } from './utils';
-import { APIResponse, QueryObject } from './types';
+import { APIResponse, MethodConfig, QueryObject } from './types';
 
 export async function searchCount<GridDataModel>(
   queryObj: QueryObject<GridDataModel>,
   gridId: string,
-  viewId?: string,
-  authId?: string,
-  qa?: boolean
+  config: MethodConfig = {}
 ): Promise<APIResponse> {
+  const { viewId, qa, authId } = config;
   return to(
     axios.post(
       gridURL('search_count', gridId, viewId, qa),

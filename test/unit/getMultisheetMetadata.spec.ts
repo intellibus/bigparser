@@ -62,14 +62,15 @@ describe('Get Multisheet Metadata', () => {
       };
 
       // When
-      const getMultisheetMetadataPromise = getMultisheetMetadata('');
+      const getMultisheetMetadataPromise =
+        getMultisheetMetadata('INVALID_GRID_ID');
       mockAxios.mockError(errorObject);
       const { data: responseData, error: responseError } =
         await getMultisheetMetadataPromise;
 
       // Then
       expect(mockAxios.get).toHaveBeenCalledWith(
-        'https://www.bigparser.com/api/v2/grid//query_multisheet_metadata',
+        'https://www.bigparser.com/api/v2/grid/INVALID_GRID_ID/query_multisheet_metadata',
         {
           headers: {
             authId: BP_AUTH,
@@ -89,11 +90,9 @@ describe('Get Multisheet Metadata', () => {
       };
 
       // When
-      const getMultisheetMetadataPromise = getMultisheetMetadata(
-        TEST_GRID_ID,
-        '',
-        'INVALID_AUTHID'
-      );
+      const getMultisheetMetadataPromise = getMultisheetMetadata(TEST_GRID_ID, {
+        authId: 'INVALID_AUTHID',
+      });
       mockAxios.mockError(errorObject);
       const { data: responseData, error: responseError } =
         await getMultisheetMetadataPromise;

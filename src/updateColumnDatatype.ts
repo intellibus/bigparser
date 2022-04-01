@@ -1,14 +1,13 @@
 import axios from 'axios';
 import { gridURL, to, CONFIG } from './utils';
-import { APIResponse, UpdateColumnDatatypeObject } from './types';
+import { APIResponse, MethodConfig, UpdateColumnDatatypeObject } from './types';
 
 export async function updateColumnDatatype<GridDataModel>(
   updateColumnDatatypeObj: UpdateColumnDatatypeObject<GridDataModel>,
   gridId: string,
-  viewId?: string,
-  authId?: string,
-  qa?: boolean
+  config: MethodConfig = {}
 ): Promise<APIResponse> {
+  const { viewId, qa, authId } = config;
   return to(
     axios.put(
       gridURL('update_column_datatype', gridId, viewId, qa),

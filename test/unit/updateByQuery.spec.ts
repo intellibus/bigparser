@@ -90,14 +90,17 @@ describe('Update By Query', () => {
       };
 
       // When
-      const updateByQueryPromise = updateByQuery<TestGrid>(queryObject, '');
+      const updateByQueryPromise = updateByQuery<TestGrid>(
+        queryObject,
+        'INVALID_GRID_ID'
+      );
       mockAxios.mockError(errorObject);
       const { data: responseData, error: responseError } =
         await updateByQueryPromise;
 
       // Then
       expect(mockAxios.put).toHaveBeenCalledWith(
-        `https://www.bigparser.com/api/v2/grid//rows/update_by_queryObj`,
+        `https://www.bigparser.com/api/v2/grid/INVALID_GRID_ID/rows/update_by_queryObj`,
         queryObject,
         {
           headers: {
@@ -138,8 +141,7 @@ describe('Update By Query', () => {
       const updateByQueryPromise = updateByQuery<TestGrid>(
         queryObject,
         TEST_GRID_ID,
-        '',
-        'INVALID_AUTHID'
+        { authId: 'INVALID_AUTHID' }
       );
       mockAxios.mockError(errorObject);
       const { data: responseData, error: responseError } =

@@ -1,14 +1,13 @@
 import axios from 'axios';
 import { gridURL, to, CONFIG } from './utils';
-import { APIResponse, InsertObject } from './types';
+import { APIResponse, InsertObject, MethodConfig } from './types';
 
 export async function insert<GridDataModel>(
   insertObj: InsertObject<GridDataModel>,
   gridId: string,
-  viewId?: string,
-  authId?: string,
-  qa?: boolean
+  config: MethodConfig = {}
 ): Promise<APIResponse> {
+  const { viewId, qa, authId } = config;
   return to(
     axios.post(
       gridURL('rows/create', gridId, viewId, qa),

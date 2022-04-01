@@ -58,13 +58,16 @@ describe('Search Count', () => {
       };
 
       // When
-      const searchPromise = searchCount<TestGrid>(queryObject, '');
+      const searchPromise = searchCount<TestGrid>(
+        queryObject,
+        'INVALID_GRID_ID'
+      );
       mockAxios.mockError(errorObject);
       const { data: responseData, error: responseError } = await searchPromise;
 
       // Then
       expect(mockAxios.post).toHaveBeenCalledWith(
-        'https://www.bigparser.com/api/v2/grid//search_count',
+        'https://www.bigparser.com/api/v2/grid/INVALID_GRID_ID/search_count',
         queryObject,
         {
           headers: {
@@ -88,12 +91,9 @@ describe('Search Count', () => {
       };
 
       // When
-      const searchPromise = searchCount<TestGrid>(
-        queryObject,
-        TEST_GRID_ID,
-        '',
-        'INVALID_AUTHID'
-      );
+      const searchPromise = searchCount<TestGrid>(queryObject, TEST_GRID_ID, {
+        authId: 'INVALID_AUTHID',
+      });
       mockAxios.mockError(errorObject);
       const { data: responseData, error: responseError } = await searchPromise;
 
