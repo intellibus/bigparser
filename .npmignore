@@ -2,7 +2,11 @@ src/
 test/
 .husky/
 .github/
-.env.example
+coverage/
+assets/
+cc-reporter*
+.env.*
+.markdownlint.json
 LICENSE
 pnpm-lock.yaml
 tsconfig.json
