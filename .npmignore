@@ -10,3 +10,5 @@ cc-reporter*
 LICENSE
 pnpm-lock.yaml
 tsconfig.json
+.eslintcache
+CONTRIBUTING.md
