@@ -21,7 +21,6 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/64436d03e7566e8e9bee/maintainability)](https://codeclimate.com/github/intellibus/bigparser/maintainability)
 [![Contributors](https://img.shields.io/github/contributors-anon/intellibus/bigparser?style=flat-square)](https:/github.com/intellibus/bigparser/graphs/contributors)
 [![Package size](https://img.shields.io/bundlephobia/min/bigparser?style=flat-square)](https://bundlephobia.com/package/bigparser)
-[![Dependencies](https://img.shields.io/librariesio/github/intellibus/bigparser?style=flat-square)](https://libraries.io/npm/bigparser)
 [![Version Support](https://img.shields.io/node/v/bigparser?style=flat-square)](https://npmjs.com/package/bigparser)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
