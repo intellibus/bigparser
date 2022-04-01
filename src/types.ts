@@ -138,4 +138,10 @@ export declare type APIResponse =
       error: Error;
     };
 
+export declare type MethodConfig = {
+  viewId?: string;
+  authId?: string;
+  qa?: boolean;
+};
+
 export { AxiosResponse };

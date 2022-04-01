@@ -1,19 +1,17 @@
 import axios from 'axios';
 import { gridURL, to, CONFIG } from './utils';
-import { APIResponse, QueryObject } from './types';
+import { APIResponse, MethodConfig, QueryObject } from './types';
 
 export async function search<GridDataModel>(
   queryObj: QueryObject<GridDataModel>,
   gridId: string,
-  viewId?: string,
-  authId?: string,
-  qa?: boolean
+  config?: MethodConfig
 ): Promise<APIResponse> {
   return to(
     axios.post(
-      gridURL('search', gridId, viewId, qa),
+      gridURL('search', gridId, config?.viewId, config?.qa),
       queryObj,
-      authId != null ? { headers: { authId } } : CONFIG
+      config?.authId != null ? { headers: { authId: config?.authId } } : CONFIG
     )
   );
 }

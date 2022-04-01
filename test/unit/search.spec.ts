@@ -89,13 +89,9 @@ describe('Search', () => {
       };
 
       // When
-      const searchPromise = search<TestGrid>(
-        queryObject,
-        TEST_GRID_ID,
-        null,
-        null,
-        true
-      );
+      const searchPromise = search<TestGrid>(queryObject, TEST_GRID_ID, {
+        qa: true,
+      });
       mockAxios.mockResponse({
         data: gridData,
       });
@@ -165,11 +161,9 @@ describe('Search', () => {
       };
 
       // When
-      const searchPromise = search<TestGrid>(
-        queryObject,
-        TEST_GRID_ID,
-        'INVALID_VIEW_ID'
-      );
+      const searchPromise = search<TestGrid>(queryObject, TEST_GRID_ID, {
+        viewId: 'INVALID_VIEW_ID',
+      });
       mockAxios.mockError(errorObject);
       const { data: responseData, error: responseError } = await searchPromise;
 
@@ -202,12 +196,9 @@ describe('Search', () => {
       };
 
       // When
-      const searchPromise = search<TestGrid>(
-        queryObject,
-        TEST_GRID_ID,
-        '',
-        'INVALID_AUTHID'
-      );
+      const searchPromise = search<TestGrid>(queryObject, TEST_GRID_ID, {
+        authId: 'INVALID_AUTHID',
+      });
       mockAxios.mockError(errorObject);
       const { data: responseData, error: responseError } = await searchPromise;
 
