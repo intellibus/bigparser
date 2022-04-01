@@ -193,15 +193,9 @@ Thank you to all the people who already contributed to this project!
 
 <table>
   <tr>
-    <td align="center"><a href="https://anubis.me/"><img src="https://avatars3.githubusercontent.com/u/22588842?s=460&v=4" width="100px;" alt="Anubis"/><br /><sub><b>Anubis</b></sub></a><br /><a href="#" title="Code">💻</a></td>
-  </tr>
-  <tr>
+    <td align="center"><a href="https://anubis.me/"><img src="https://avatars3.githubusercontent.com/u/15962062?s=460&v=4" width="100px;" alt="Anubis"/><br /><sub><b>Anubis</b></sub></a><br /><a href="#" title="Code">💻</a></td>
     <td align="center"><a href=""><img src="https://avatars3.githubusercontent.com/u/93603340?s=460&v=4" width="100px;" alt="jkeegan2"/><br /><sub><b>jkeegan2</b></sub></a><br /><a href="#" title="Code">💻</a></td>
-  </tr>
-  <tr>
     <td align="center"><a href=""><img src="https://avatars3.githubusercontent.com/u/37832457?s=460&v=4" width="100px;" alt="Hasna Hena Mow"/><br /><sub><b>Hasna Hena Mow</b></sub></a><br /><a href="#" title="Code">💻</a></td>
-  </tr>
-  <tr>
     <td align="center"><a href=""><img src="https://avatars3.githubusercontent.com/u/61206601?s=460&v=4" width="100px;" alt="Dinu"/><br /><sub><b>Dinu</b></sub></a><br /><a href="#" title="Code">💻</a></td>
   </tr>
 </table>
