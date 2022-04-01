@@ -20,9 +20,9 @@
 [![Code Coverage](https://img.shields.io/codeclimate/coverage/intellibus/bigparser?style=flat-square)](https://codeclimate.com/github/intellibus/bigparser)
 [![Code Quality](https://img.shields.io/codeclimate/maintainability-percentage/intellibus/bigparser?style=flat-square)](https://codeclimate.com/github/intellibus/bigparser)
 [![Contributors](https://img.shields.io/github/contributors-anon/intellibus/bigparser?style=flat-square)](https:/github.com/intellibus/bigparser/graphs/contributors)
-[![Package size](https://img.shields.io/bundlephobia/min/bigparser)](https://bundlephobia.com/package/bigparser?style=flat-square)
-[![Dependencies](https://img.shields.io/librariesio/github/intellibus/bigparser)](https://libraries.io/npm/bigparser?style=flat-square)
-[![Version Support](https://img.shields.io/node/v/bigparser)](https://npmjs.com/package/bigparser)
+[![Package size](https://img.shields.io/bundlephobia/min/bigparser?style=flat-square)](https://bundlephobia.com/package/bigparser)
+[![Dependencies](https://img.shields.io/librariesio/github/intellibus/bigparser?style=flat-square)](https://libraries.io/npm/bigparser)
+[![Version Support](https://img.shields.io/node/v/bigparser?style=flat-square)](https://npmjs.com/package/bigparser)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
   </p>
