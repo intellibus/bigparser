@@ -49,8 +49,8 @@
 - Delete Data in Existing Grids (using `deleteByQuery` & `deleteByRowId`)
 - Update Column Data Types (using `updateColumnDatatype`)
 - Get Grid Metadata (using `getHeaders` & `getMultisheetMetadata`)
-- Create New Grids from a Data Model (Coming Soon)
-- Generate Data Model Types from BigParser Grid (Coming Soon)
+- Create New Grids from a Data Model (`Coming Soon`)
+- Generate Data Model Types from BigParser Grid (`Coming Soon`)
 
 ## Install 🐙
 
