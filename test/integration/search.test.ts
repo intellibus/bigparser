@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import {
   search,
   insert
@@ -12,6 +12,9 @@ import {
 import {
   QueryObject
 } from '../../src/types'
+
+jest.disableAutomock();
+jest.unmock('axios');
 
 const { BP_AUTH } = process.env;
 
@@ -187,7 +190,7 @@ const insertValues = async () => {
     },
     testGridTab1Id
   );
-  [row1Id, /* row2Id */] = insertResponse.data.createdRows;
+  ({ 0: row1Id, /* 1: row2Id */} = insertResponse.data.createdRows);
 }
 
 const populateGrids = async () => {
@@ -198,6 +201,7 @@ const populateGrids = async () => {
 }
 
 const createGrids = async () => {
+
   const createResponse = await axios.post('https://www.bigparser.com/api/v2/grid/create_grid', {
     gridName: 'integrationTestGrid',
     gridTabs: [
@@ -247,7 +251,7 @@ const removeGrids = async () => {
         return file.id;
       }
       return '';
-    });
+    }, '');
     startIndex += 10;
   }
   if (fileId) {
@@ -262,14 +266,14 @@ const removeGrids = async () => {
   }
 }
 
+const beforeEachWrapper = async () => {
+  jest.resetModules();
+  await createGrids();
+}
+
 describe('Search', () => {
-  beforeEach(async () => {
-    jest.resetModules();
-    await createGrids();
-  });
-  afterEach(async () => {
-    await removeGrids();
-  });
+  beforeEach(() => beforeEachWrapper());
+  afterEach(() => removeGrids());
   describe('Positive Test Cases', () => {
     it('Should Return Grid Data', async () => {
       // Given
@@ -314,12 +318,12 @@ describe('Search', () => {
 
       // Then
       expect(responseData).toEqual(undefined);
-      expect(responseError).toEqual(errorObject);
+      expect((responseError as AxiosError).response.data).toEqual(errorObject);
     });
     it('Should Reject Invalid View Id', async () => {
       // Given
       const errorObject = {
-        errorMessage: 'share Id is invalid',
+        errorMessage: 'share Id invalid',
         otherDetails: {},
         errorType: 'DATAERROR',
         recoverable: true
@@ -331,7 +335,7 @@ describe('Search', () => {
       });
       // Then
       expect(responseData).toEqual(undefined);
-      expect(responseError).toEqual(errorObject);
+      expect((responseError as AxiosError).response.data).toEqual(errorObject);
     });
     it('Should Reject Invalid Auth Id (prod)', async () => {
       // Given
@@ -349,7 +353,7 @@ describe('Search', () => {
 
       // Then
       expect(responseData).toEqual(undefined);
-      expect(responseError).toEqual(errorObject);
+      expect((responseError as AxiosError).response.data).toEqual(errorObject);
     });
     it('Should Reject Invalid Auth Id (qa)', async () => {
       // Given
@@ -368,7 +372,7 @@ describe('Search', () => {
 
       // Then
       expect(responseData).toEqual(undefined);
-      expect(responseError).toEqual(errorObject);
+      expect((responseError as AxiosError).response.data).toEqual(errorObject);
     });
   });
 });

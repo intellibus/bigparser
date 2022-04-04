@@ -37,7 +37,8 @@
     "semantic-release": "semantic-release"
   },
   "dependencies": {
-    "axios": "^0.26.1"
+    "axios": "^0.26.1",
+    "jest-mock-axios": "^4.5.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^16.2.3",
@@ -61,7 +62,6 @@
     "eslint-plugin-promise": "^6.0.0",
     "husky": "^7.0.0",
     "jest": "^27.5.1",
-    "jest-mock-axios": "^4.5.0",
     "lint-staged": "^12.3.7",
     "prettier": "^2.6.1",
     "pretty-quick": "^3.1.3",
