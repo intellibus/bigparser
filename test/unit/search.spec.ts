@@ -128,13 +128,13 @@ describe('Search', () => {
       };
 
       // When
-      const searchPromise = search<TestGrid>(queryObject, '');
+      const searchPromise = search<TestGrid>(queryObject, 'INVALID_GRID_ID');
       mockAxios.mockError(errorObject);
       const { data: responseData, error: responseError } = await searchPromise;
 
       // Then
       expect(mockAxios.post).toHaveBeenCalledWith(
-        'https://www.bigparser.com/api/v2/grid//search',
+        'https://www.bigparser.com/api/v2/grid/INVALID_GRID_ID/search',
         queryObject,
         {
           headers: {
