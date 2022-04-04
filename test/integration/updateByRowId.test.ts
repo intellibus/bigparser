@@ -198,7 +198,6 @@ const populateGrids = async () => {
 }
 
 const createGrids = async () => {
-
   const createResponse = await axios.post('https://www.bigparser.com/api/v2/grid/create_grid', {
     gridName: 'integrationTestGrid',
     gridTabs: [

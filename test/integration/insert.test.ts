@@ -191,7 +191,6 @@ const populateGrids = async () => {
 }
 
 const createGrids = async () => {
-
   const createResponse = await axios.post('https://www.bigparser.com/api/v2/grid/create_grid', {
     gridName: 'integrationTestGrid',
     gridTabs: [
@@ -270,9 +269,7 @@ describe('Insert', () => {
       const gridData = {
         noOfRowsCreated: 1,
         noOfRowsFailed: 0,
-        createdRows: {
-            0: '624b6294c9d082361705c6f3'
-        },
+        // Also contains a createdRows key
         failedRows: {}
       };
 
@@ -281,7 +278,7 @@ describe('Insert', () => {
 
       // Then
       expect(responseError).toEqual(undefined);
-      expect(responseData).toEqual(gridData);
+      expect(responseData).toMatchObject(gridData);
     });
   });
   describe('Negative Test Cases', () => {

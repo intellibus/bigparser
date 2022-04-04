@@ -191,7 +191,6 @@ const populateGrids = async () => {
 }
 
 const createGrids = async () => {
-
   const createResponse = await axios.post('https://www.bigparser.com/api/v2/grid/create_grid', {
     gridName: 'integrationTestGrid',
     gridTabs: [
@@ -268,6 +267,7 @@ describe('Update Column Datatype', () => {
     it('Should Return 200 OK', async () => {
       // Given
       const gridData = {
+        // Also contains dataFixId key
         message: 'Please use \'fix_data_type_of_existing_data/status\' api to check the status.'
       };
 
