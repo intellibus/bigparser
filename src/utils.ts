@@ -8,7 +8,7 @@ export const getBaseURL = (qa?: boolean) =>
 export function getGridURL(
   action: string,
   gridId: string,
-  config: MethodConfig = {}
+  config: MethodConfig
 ): string {
   const { shareId, qa } = config;
   return `${getBaseURL(qa)}/grid/${
@@ -18,23 +18,23 @@ export function getGridURL(
 
 export function getAPIURL(
   action: string,
-  config: MethodConfig = { qa: false }
+  config: MethodConfig
 ): string {
   return `${getBaseURL(config.qa)}/grid/${action}`;
 }
 
 export const HEADERS = {
   headers: {
-    authId: `${process.env.BP_AUTH}`,
+    authId: process.env.BP_AUTH,
   },
 };
 
-export function getHTTPHeaders(config: MethodConfig = {}) {
+export function getHTTPHeaders(config: MethodConfig) {
   const { authId } = config;
   return authId != null ? { headers: { authId } } : HEADERS;
 }
 
-export function getHTTPHeadersWithData<T>(data: T, config: MethodConfig = {}) {
+export function getHTTPHeadersWithData<T>(data: T, config: MethodConfig) {
   const { authId } = config;
   return authId != null ? { headers: { authId }, data } : { ...HEADERS, data };
 }

@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { getGridURL, getHTTPHeaders, to } from './utils';
-import { APIResponse, CreateTabObject, MethodConfig } from './types';
+import { APIResponse, UpdateTabObject, MethodConfig } from './types';
 
 export async function updateTab(
-  updateTabObj: CreateTabObject,
+  updateTabObj: UpdateTabObject,
   gridId: string,
   config: MethodConfig = {}
 ): Promise<APIResponse> {
