@@ -1,12 +1,12 @@
 import { AxiosError } from 'axios';
 import {
-  search
+  updateByRowId
 } from '../../src/index';
 import {
   TestGrid
 } from '../__grids__/TestGrid';
 import {
-  QueryObject
+  UpdateRowIdObject
 } from '../../src/types'
 import { createGrids, removeGrid } from './integrationTestUtils';
 
@@ -17,53 +17,42 @@ jest.setTimeout(10000);
 let testGridTab1Id: string;
 let row1Id: string;
 
-const queryObject: QueryObject<TestGrid> = {
-  query: {
-    columnFilter: {
-      filters: [
-        {
-          column: 'Boolean Column',
-          operator: 'EQ',
-          keyword: true
+const updateRowIdObject: UpdateRowIdObject<TestGrid> = {
+  update: {
+    rows: [
+      {
+        rowId: row1Id,
+        columns: {
+          'Boolean Column': false
         }
-      ]
-    },
-    sendRowIdsInResponse: true,
-    showColumnNamesInResponse: true,
+      }
+    ]
   },
 };
 
 const beforeEachWrapper = async () => {
   jest.resetModules();
   [testGridTab1Id, , row1Id] = await createGrids();
+  updateRowIdObject.update.rows[0].rowId = row1Id;
 }
 
-describe('Search', () => {
+describe('Update By Row Id', () => {
   beforeEach(() => beforeEachWrapper());
   afterEach(() => removeGrid(testGridTab1Id));
   describe('Positive Test Cases', () => {
-    it('Should Return Grid Results', async () => {
+    it('Should Update Successfully', async () => {
       // Given
       const response = {
-        totalRowCount: 1,
-        rows: [
-          {
-            _id: row1Id,
-            'String Column': 'Example String',
-            'Number Column': 1337,
-            'Number 2 Column': 1234.5678,
-            'Boolean Column': true,
-            'Date Column': '2022-04-04 12:15:30.000',
-            'Linked Column': '20171',
-            'Linked Related Column From Other Grid': null,
-            'Formula Column': null,
-            'Empty Column': null
-          },
+        noOfRowsUpdated: 1,
+        noOfRowsFailed: 0,
+        updatedRows: [
+          row1Id
         ],
+        failedRows: {}
       };
 
       // When
-      const { data: responseData, error: responseError } = await search<TestGrid>(queryObject, testGridTab1Id);
+      const { data: responseData, error: responseError } = await updateByRowId<TestGrid>(updateRowIdObject, testGridTab1Id);
 
       // Then
       expect(responseError).toEqual(undefined);
@@ -81,7 +70,7 @@ describe('Search', () => {
       };
 
       // When
-      const { data: responseData, error: responseError } = await search<TestGrid>(queryObject, 'INVALID_GRID_ID');
+      const { data: responseData, error: responseError } = await updateByRowId<TestGrid>(updateRowIdObject, 'INVALID_GRID_ID');
 
       // Then
       expect(responseData).toEqual(undefined);
@@ -97,9 +86,10 @@ describe('Search', () => {
       };
 
       // When
-      const { data: responseData, error: responseError } = await search<TestGrid>(queryObject, testGridTab1Id, {
+      const { data: responseData, error: responseError } = await updateByRowId<TestGrid>(updateRowIdObject, testGridTab1Id, {
         viewId: 'INVALID_VIEW_ID',
       });
+
       // Then
       expect(responseData).toEqual(undefined);
       expect((responseError as AxiosError).response.data).toEqual(errorObject);
@@ -114,7 +104,7 @@ describe('Search', () => {
       };
 
       // When
-      const { data: responseData, error: responseError } = await search<TestGrid>(queryObject, testGridTab1Id, {
+      const { data: responseData, error: responseError } = await updateByRowId<TestGrid>(updateRowIdObject, testGridTab1Id, {
         authId: 'INVALID_AUTHID',
       });
 
@@ -132,7 +122,7 @@ describe('Search', () => {
       };
 
       // When
-      const { data: responseData, error: responseError } = await search<TestGrid>(queryObject, testGridTab1Id, {
+      const { data: responseData, error: responseError } = await updateByRowId<TestGrid>(updateRowIdObject, testGridTab1Id, {
         authId: 'INVALID_AUTHID',
         qa: true
       });

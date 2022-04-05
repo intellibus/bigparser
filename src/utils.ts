@@ -22,6 +22,13 @@ export function gridURL(
   }/${action}`;
 }
 
+export function gridlessURL(
+  action: string,
+  qa?: boolean
+): string {
+  return `${getAPIURL(qa)}/grid/${action}`;
+}
+
 export async function to(
   promise: Promise<AxiosResponse>
 ): Promise<APIResponse> {
