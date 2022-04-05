@@ -1,24 +1,23 @@
-import mockAxios from 'jest-mock-axios';
-import { searchCount } from '../../src/index';
-import { TestGrid } from '../__grids__/TestGrid';
+import mockAxios from "jest-mock-axios";
+import { searchCount } from "../../src/index";
+import { TestGrid } from "../__grids__/TestGrid";
 
 const { TEST_GRID_ID, BP_AUTH } = process.env;
+const queryObject = {
+  query: {},
+};
 
-describe('Search Count', () => {
+describe("Search Count", () => {
   beforeEach(() => {
     jest.resetModules();
   });
   afterEach(() => {
     mockAxios.reset();
   });
-  describe('Positive Test Cases', () => {
-    it('Should Return Number Of Records In Grid', async () => {
+  describe("Positive Test Cases", () => {
+    it("Axios Returns Successfully", async () => {
       // Given
       const gridResponse = { totalRowCount: 1 };
-
-      const queryObject = {
-        query: {},
-      };
 
       // When
       const searchPromise = searchCount<TestGrid>(queryObject, TEST_GRID_ID);
@@ -41,55 +40,19 @@ describe('Search Count', () => {
       expect(responseData).toEqual(gridResponse);
     });
   });
-  describe('Negative Test Cases', () => {
-    it('Should Reject Invalid Grid Id', async () => {
+  describe("Negative Test Cases", () => {
+    it("Axios Returns Error", async () => {
       // Given
-      const queryObject = {
-        query: {},
-      };
       const errorObject = {
         err: {
-          message: 'Invalid Grid Id',
-          statusCode: 404,
-        },
-      };
-
-      // When
-      const searchPromise = searchCount<TestGrid>(
-        queryObject,
-        'INVALID_GRID_ID'
-      );
-      mockAxios.mockError(errorObject);
-      const { data: responseData, error: responseError } = await searchPromise;
-
-      // Then
-      expect(mockAxios.post).toHaveBeenCalledWith(
-        'https://www.bigparser.com/api/v2/grid/INVALID_GRID_ID/search_count',
-        queryObject,
-        {
-          headers: {
-            authId: BP_AUTH,
-          },
-        }
-      );
-      expect(responseData).toEqual(undefined);
-      expect(responseError).toEqual(errorObject);
-    });
-    it('Should Reject Invalid Auth Id', async () => {
-      // Given
-      const queryObject = {
-        query: {},
-      };
-      const errorObject = {
-        err: {
-          message: 'Invalid Auth Id',
+          message: "Invalid Auth Id",
           statusCode: 403,
         },
       };
 
       // When
       const searchPromise = searchCount<TestGrid>(queryObject, TEST_GRID_ID, {
-        authId: 'INVALID_AUTHID',
+        authId: "INVALID_AUTHID",
       });
       mockAxios.mockError(errorObject);
       const { data: responseData, error: responseError } = await searchPromise;
@@ -100,7 +63,7 @@ describe('Search Count', () => {
         queryObject,
         {
           headers: {
-            authId: 'INVALID_AUTHID',
+            authId: "INVALID_AUTHID",
           },
         }
       );

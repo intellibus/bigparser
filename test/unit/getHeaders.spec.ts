@@ -1,117 +1,117 @@
-import mockAxios from 'jest-mock-axios';
-import { getHeaders } from '../../src/index';
+import mockAxios from "jest-mock-axios";
+import { getHeaders } from "../../src/index";
 
 const { TEST_GRID_ID, BP_AUTH } = process.env;
 
-describe('Get Headers', () => {
+describe("Get Headers", () => {
   beforeEach(() => {
     jest.resetModules();
   });
   afterEach(() => {
     mockAxios.reset();
   });
-  describe('Positive Test Cases', () => {
-    it('Should Return Grid Data', async () => {
+  describe("Positive Test Cases", () => {
+    it("Axios Returns Successfully", async () => {
       // Given
       const gridResponse = {
-        name: 'Test Grid.grid',
+        name: "Test Grid.grid",
         description: null,
         columns: [
           {
-            columnName: 'String Column',
-            columnDesc: '',
-            dataType: 'String',
-            columnIndex: '0',
+            columnName: "String Column",
+            columnDesc: "",
+            dataType: "String",
+            columnIndex: "0",
             isLinkedColumn: false,
             isPrimaryLink: false,
           },
           {
-            columnName: 'Number Column',
-            columnDesc: '',
-            dataType: 'Number',
-            columnIndex: '1',
+            columnName: "Number Column",
+            columnDesc: "",
+            dataType: "Number",
+            columnIndex: "1",
             isLinkedColumn: false,
             isPrimaryLink: false,
           },
           {
-            columnName: 'Number 2 Column',
-            columnDesc: '',
-            dataType: 'Number',
-            columnIndex: '2',
+            columnName: "Number 2 Column",
+            columnDesc: "",
+            dataType: "Number",
+            columnIndex: "2",
             isLinkedColumn: false,
             isPrimaryLink: false,
           },
           {
-            columnName: 'Boolean Column',
-            columnDesc: '',
-            dataType: 'Boolean',
-            columnIndex: '3',
+            columnName: "Boolean Column",
+            columnDesc: "",
+            dataType: "Boolean",
+            columnIndex: "3",
             isLinkedColumn: false,
             isPrimaryLink: false,
           },
           {
-            columnName: 'Date Column',
-            columnDesc: '',
-            dataType: 'DATE',
-            columnIndex: '4',
+            columnName: "Date Column",
+            columnDesc: "",
+            dataType: "DATE",
+            columnIndex: "4",
             isLinkedColumn: false,
             isPrimaryLink: false,
           },
           {
-            columnName: 'Date Time Column',
-            columnDesc: '',
-            dataType: 'DATE_TIME',
-            columnIndex: '5',
+            columnName: "Date Time Column",
+            columnDesc: "",
+            dataType: "DATE_TIME",
+            columnIndex: "5",
             isLinkedColumn: false,
             isPrimaryLink: false,
           },
           {
-            columnName: 'Linked Column',
-            columnDesc: '',
-            dataType: 'STRING',
-            columnIndex: '6',
+            columnName: "Linked Column",
+            columnDesc: "",
+            dataType: "STRING",
+            columnIndex: "6",
             isLinkedColumn: true,
             isPrimaryLink: true,
             linkedColumnInfo: {
-              sourceGridId: '6244901dc9d0823617041966',
-              destinationGridId: '62448f82c9d0822ec669f83b',
-              sourceColumnName: 'Source Column',
-              destinationColumnName: 'Linked Column',
+              sourceGridId: "6244901dc9d0823617041966",
+              destinationGridId: "62448f82c9d0822ec669f83b",
+              sourceColumnName: "Source Column",
+              destinationColumnName: "Linked Column",
               queryInSourceGrid: null,
               linkedRelatedColumns: [
                 {
-                  destColName: 'Linked Related Column From Other Grid',
-                  srcColName: 'Linked Related Column',
+                  destColName: "Linked Related Column From Other Grid",
+                  srcColName: "Linked Related Column",
                 },
               ],
             },
           },
           {
-            columnName: 'Linked Related Column From Other Grid',
-            columnDesc: '',
-            dataType: 'STRING',
-            columnIndex: '7',
+            columnName: "Linked Related Column From Other Grid",
+            columnDesc: "",
+            dataType: "STRING",
+            columnIndex: "7",
             isLinkedColumn: true,
             isPrimaryLink: false,
-            srcColName: 'Linked Related Column',
+            srcColName: "Linked Related Column",
           },
           {
-            columnName: 'Formula Column',
-            columnDesc: '',
-            dataType: 'STRING',
-            columnIndex: '8',
+            columnName: "Formula Column",
+            columnDesc: "",
+            dataType: "STRING",
+            columnIndex: "8",
             columnDataSource: {
-              functionType: 'SUM',
-              columnNames: ['Number Column', 'Number 2 Column'],
+              functionType: "SUM",
+              columnNames: ["Number Column", "Number 2 Column"],
             },
             isLinkedColumn: false,
             isPrimaryLink: false,
           },
           {
-            columnName: 'Empty Column',
-            columnDesc: '',
-            dataType: 'String',
-            columnIndex: '9',
+            columnName: "Empty Column",
+            columnDesc: "",
+            dataType: "String",
+            columnIndex: "9",
             isLinkedColumn: false,
             isPrimaryLink: false,
           },
@@ -120,18 +120,18 @@ describe('Get Headers', () => {
         sortByIndex: {},
         sortArray: [],
         sortByIndexArray: [],
-        fileId: '62448f7ec9d0822ec669f834',
-        fileExtension: 'csv',
+        fileId: "62448f7ec9d0822ec669f834",
+        fileExtension: "csv",
         fileSource: null,
         imageInfo: null,
-        gridType: 'USER',
+        gridType: "USER",
         defaultSyncPref: null,
         saveType: null,
         lastExtSrcSyncDateTime: null,
-        auditGridId: '62448f82c9d0822ec669f83a',
+        auditGridId: "62448f82c9d0822ec669f83a",
         originalGridId: null,
         lastUpdatedTimeInBigParser: 1648661234129,
-        lastUpdatedBy: 'Jonathan Keegan',
+        lastUpdatedBy: "Jonathan Keegan",
         defaultSaveFilter: null,
         filters: {
           isRecent: true,
@@ -142,7 +142,7 @@ describe('Get Headers', () => {
           deletedBy: null,
         },
         tabDescription: null,
-        tabName: 'Test Tab',
+        tabName: "Test Tab",
         showRowId: false,
         owner: true,
         multisheet: true,
@@ -168,46 +168,19 @@ describe('Get Headers', () => {
       expect(responseData).toEqual(gridResponse);
     });
   });
-  describe('Negative Test Cases', () => {
-    it('Should Reject Invalid Grid Id', async () => {
+  describe("Negative Test Cases", () => {
+    it("Axios Returns Error", async () => {
       // Given
       const errorObject = {
         err: {
-          message: 'Invalid Grid Id',
-          statusCode: 404,
-        },
-      };
-
-      // When
-      const getHeadersPromise = getHeaders('INVALID_GRID_ID');
-      mockAxios.mockError(errorObject);
-      const { data: responseData, error: responseError } =
-        await getHeadersPromise;
-
-      // Then
-      expect(mockAxios.get).toHaveBeenCalledWith(
-        'https://www.bigparser.com/api/v2/grid/INVALID_GRID_ID/query_metadata',
-        {
-          headers: {
-            authId: BP_AUTH,
-          },
-        }
-      );
-      expect(responseData).toEqual(undefined);
-      expect(responseError).toEqual(errorObject);
-    });
-    it('Should Reject Invalid Auth Id', async () => {
-      // Given
-      const errorObject = {
-        err: {
-          message: 'Invalid Auth Id',
+          message: "Invalid Auth Id",
           statusCode: 403,
         },
       };
 
       // When
       const getHeadersPromise = getHeaders(TEST_GRID_ID, {
-        authId: 'INVALID_AUTHID',
+        authId: "INVALID_AUTHID",
       });
       mockAxios.mockError(errorObject);
       const { data: responseData, error: responseError } =
@@ -218,7 +191,7 @@ describe('Get Headers', () => {
         `https://www.bigparser.com/api/v2/grid/${TEST_GRID_ID}/query_metadata`,
         {
           headers: {
-            authId: 'INVALID_AUTHID',
+            authId: "INVALID_AUTHID",
           },
         }
       );
