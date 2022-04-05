@@ -17,6 +17,15 @@ export declare interface TestGridTab2 {
   'Linked Related Column': string;
 }
 
+export declare interface NewGrid {
+  _id: string;
+  'Column 1': string;
+  'Column 2': string;
+  'Column 3': string;
+  'Column 4': string;
+  'Column 5': string;
+}
+
 export const TestGridObject = {
   'String Column': 'STRING',
   'Number Column': 'NUMBER',
@@ -32,4 +41,12 @@ export const TestGridObject = {
 export const TestGridTab2Object = {
   'Source Column': 'STRING',
   'Linked Related Column': 'STRING'
+}
+
+export const NewGridObject = {
+  'Column 1': 'STRING',
+  'Column 2': 'STRING',
+  'Column 3': 'STRING',
+  'Column 4': 'STRING',
+  'Column 5': 'STRING',
 }

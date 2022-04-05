@@ -1,13 +1,17 @@
-import axios from 'axios'
+import axios from 'axios';
 import {
   getHeaders,
-  insert
+  updateColumnDataSource,
+  insert,
+  createGrid,
+  createTab,
+  setupLinkedColumn
 } from '../../src/index';
 import {
   TestGrid,
   TestGridObject,
   TestGridTab2,
-  TestGridTab2Object,
+  TestGridTab2Object
 } from '../__grids__/TestGrid';
 
 const { BP_AUTH } = process.env;
@@ -83,7 +87,7 @@ const setColumnLinking = async (
   gridTab1Id: string,
   gridTab2Id: string
 ) => {
-  await axios.put('https://www.bigparser.com/api/v2/grid/setup_linked_column',
+  await setupLinkedColumn<TestGrid, TestGridTab2>(
     {
       destinationColumnName: 'Linked Column',
       destinationGridId: gridTab1Id,
@@ -96,11 +100,6 @@ const setColumnLinking = async (
       queryInSourceGrid: null,
       sourceColumnName: 'Source Column',
       sourceGridId: gridTab2Id
-    },
-    {
-      headers: {
-        authId: BP_AUTH
-      }
     }
   );
 }
@@ -108,7 +107,7 @@ const setColumnLinking = async (
 const setDataSource = async (
   gridTab1Id: string
 ) => {
-  await axios.put(`https://www.bigparser.com/api/v2/grid/${gridTab1Id}/update_column_dataSource`,
+  await updateColumnDataSource<TestGrid>(
     {
       columns: [
         {
@@ -119,11 +118,8 @@ const setDataSource = async (
           columnName: 'Formula Column'
         }
       ]
-    }, {
-      headers: {
-        authId: BP_AUTH
-      }
-    }
+    },
+    gridTab1Id
   );
 }
 
@@ -180,38 +176,33 @@ const insertValues = async (
 }
 
 export const createGrids = async () => {
-  const createResponse = await axios.post('https://www.bigparser.com/api/v2/grid/create_grid', {
+  const { data: data1 } = await createGrid({
     gridName: 'integrationTestGrid',
     gridTabs: [
       {
         tabName: 'Test Grid'
       }
     ]
-  }, {
-    headers: {
-      authId: BP_AUTH
-    }
   });
-  const gridTab1Id = createResponse.data.gridId;
+  const gridTab1Id = data1.gridId;
 
-  const addResponse = await axios.post(`https://www.bigparser.com/api/v2/grid/${gridTab1Id}/create_tab`,
+  const { data: data2 } = await createTab(
     {
        tabName: 'Linked Data Tab'
     },
-    {
-      headers: {
-        authId: BP_AUTH
-      }
-    }
+    gridTab1Id
   );
-  const gridTab2Id = addResponse.data.gridId;
+  const gridTab2Id = data2.gridId;
+
   await modifyColumns(gridTab1Id, gridTab2Id);
   await setColumnLinking(gridTab1Id, gridTab2Id);
   await setDataSource(gridTab1Id);
+
   const [row1Id, row2Id] = await insertValues(gridTab1Id, gridTab2Id);
   return [gridTab1Id, gridTab2Id, row1Id, row2Id];
 }
 
+// TODO: add removeGrid method? How to get fileId in method
 export const removeGrid = async (gridId: string) => {
   const { data } = await getHeaders(gridId);
   if (data) {

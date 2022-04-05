@@ -12,6 +12,8 @@ export declare type JoinOperator = 'OR' | 'AND';
 
 export declare type GlobalFilterOperator = 'LIKE' | 'NLIKE' | 'EQ' | 'NEQ';
 
+export declare type FunctionType = 'SUM' | 'AVG' | 'MIN' | 'MAX';
+
 export declare type ColumnFilterOperator =
   | GlobalFilterOperator
   | 'GT'
@@ -115,6 +117,18 @@ export declare type UpdateColumnDatatypeObject<GridDataModel> = {
   columns: Array<UpdateColumnDatatype<GridDataModel>>;
 };
 
+export declare type UpdateColumnDataSource<GridDataModel> = {
+  columnDataSource: {
+    columnNames: Array<keyof GridDataModel>,
+    functionType: FunctionType;
+  },
+  columnName: keyof GridDataModel;
+}
+
+export declare type UpdateColumnDataSourceObject<GridDataModel> = {
+  columns: Array<UpdateColumnDataSource<GridDataModel>>;
+}
+
 export declare type DeleteQueryObject<GridDataModel> = {
   delete: QueryObject<GridDataModel>;
 };
@@ -130,6 +144,37 @@ export declare type DeleteRowIds = {
 export declare type DeleteRowIdObject = {
   delete: DeleteRowIds;
 };
+
+export declare type GridTab = {
+  tabName: string;
+  tabDescription?: string;
+}
+
+export declare type CreateGridObject = {
+  gridName: string;
+  gridDescription?: string;
+  gridTabs?: Array<GridTab>;
+}
+
+export declare type CreateTabObject = GridTab;
+
+export declare type UpdateTabObject = GridTab;
+
+// TODO: get exact docs
+export declare type LinkedRelatedColumn<DestGridDataModel, SourceGridDataModel> = {
+  destColName: keyof DestGridDataModel;
+  srcColName: keyof SourceGridDataModel;
+}
+
+// TODO: get exact docs
+export declare type SetupLinkedColumnObject<DestGridDataModel, SourceGridDataModel> = {
+  destinationColumnName: keyof DestGridDataModel;
+  destinationGridId: string;
+  linkedRelatedColumns: Array<LinkedRelatedColumn<DestGridDataModel, SourceGridDataModel>>;
+  queryInSourceGrid?: Query<SourceGridDataModel>;
+  sourceColumnName: keyof SourceGridDataModel;
+  sourceGridId: string;
+}
 
 export declare type APIResponse =
   | (AxiosResponse & { error: void })
