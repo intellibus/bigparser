@@ -176,6 +176,30 @@ export declare type SetupLinkedColumnObject<DestGridDataModel, SourceGridDataMod
   sourceGridId: string;
 }
 
+export declare type ColumnPosition<GridDataModel> = {
+  columnName: keyof GridDataModel;
+  // Currently in typescript we cannot do better than this
+  columnIndex?: string;
+}
+
+export declare type AfterColumnObject<GridDataModel> = {
+  afterColumn: ColumnPosition<GridDataModel>;
+  beforeColumn?: never;
+}
+
+export declare type BeforeColumnObject<GridDataModel> = {
+  afterColumn?: never;
+  beforeColumn: ColumnPosition<GridDataModel>;
+}
+
+export declare type AddColumnObject<GridDataModel> =
+  (AfterColumnObject<GridDataModel> | BeforeColumnObject<GridDataModel>) &
+  {  
+    newColumnName: string;
+  };
+
+// TODO: add DeleteColumnObject? What is the shape of this request?
+
 export declare type APIResponse =
   | (AxiosResponse & { error: void })
   | {
