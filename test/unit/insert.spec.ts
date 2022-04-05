@@ -113,7 +113,7 @@ describe('Insert', () => {
 
       // When
       const insertPromise = insert<TestGrid>(insertObject, TEST_GRID_ID, {
-        viewId: 'INVALID_VIEW_ID',
+        shareId: 'INVALID_VIEW_ID',
       });
       mockAxios.mockError(errorObject);
       const { data: responseData, error: responseError } = await insertPromise;

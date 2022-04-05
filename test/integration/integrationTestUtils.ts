@@ -5,142 +5,148 @@ import {
   insert,
   createGrid,
   createTab,
-  setupLinkedColumn
+  setupLinkedColumn,
 } from '../../src/index';
-import {
-  TestGrid,
-  TestGridObject,
-  TestGridTab2,
-  TestGridTab2Object
-} from '../__grids__/TestGrid';
+import { TestGrid, TestGrid2 } from '../__grids__/TestGrid';
 
 const { BP_AUTH } = process.env;
 
-const modifyColumns = async (
-  gridTab1Id: string,
-  gridTab2Id: string
-) => {
+const TestGridObject = {
+  'String Column': 'STRING',
+  'Number Column': 'NUMBER',
+  'Number 2 Column': 'NUMBER',
+  'Boolean Column': 'BOOLEAN',
+  'Date Column': 'DATE',
+  'Date Time Column': 'DATE_TIME',
+  'Linked Column': 'STRING',
+  'Linked Related Column From Other Grid': 'STRING',
+  'Formula Column': 'NUMBER',
+  'Empty Column': 'STRING',
+};
+
+const TestGrid2Object = {
+  'Source Column': 'STRING',
+  'Linked Related Column': 'STRING',
+};
+
+const modifyColumns = async (gridTab1Id: string, gridTab2Id: string) => {
   const modifyColumnsObject = {
     insertColumns: [
       {
         beforeColumn: 'Column 1',
-        columns: []
-      }
+        columns: [],
+      },
     ],
     deleteColumns: {
       columns: [
         {
-          columnName: 'Column 1'
+          columnName: 'Column 1',
         },
         {
-          columnName: 'Column 2'
+          columnName: 'Column 2',
         },
         {
-          columnName: 'Column 3'
+          columnName: 'Column 3',
         },
         {
-          columnName: 'Column 4'
+          columnName: 'Column 4',
         },
         {
-          columnName: 'Column 5'
-        }
-      ]
-    }
+          columnName: 'Column 5',
+        },
+      ],
+    },
   };
-  modifyColumnsObject.insertColumns[0].columns = Object.keys(TestGridObject).reduce((arr, key) => {
+  modifyColumnsObject.insertColumns[0].columns = Object.keys(
+    TestGridObject
+  ).reduce((arr, key) => {
     arr.push({
       columnName: key,
-      dataType: TestGridObject[key]
+      dataType: TestGridObject[key],
     });
     return arr;
   }, []);
 
-  await axios.post(`https://www.bigparser.com/api/v2/grid/${gridTab1Id}/rows_columns/bulk_crud`,
+  await axios.post(
+    `https://www.bigparser.com/api/v2/grid/${gridTab1Id}/rows_columns/bulk_crud`,
     modifyColumnsObject,
     {
       headers: {
-        authId: BP_AUTH
-      }
+        authId: BP_AUTH,
+      },
     }
   );
 
   modifyColumnsObject.insertColumns[0].columns = [];
 
-  modifyColumnsObject.insertColumns[0].columns = Object.keys(TestGridTab2Object).reduce((arr, key) => {
+  modifyColumnsObject.insertColumns[0].columns = Object.keys(
+    TestGrid2Object
+  ).reduce((arr, key) => {
     arr.push({
       columnName: key,
-      dataType: TestGridTab2Object[key]
+      dataType: TestGrid2Object[key],
     });
     return arr;
   }, []);
-  await axios.post(`https://www.bigparser.com/api/v2/grid/${gridTab2Id}/rows_columns/bulk_crud`,
+  await axios.post(
+    `https://www.bigparser.com/api/v2/grid/${gridTab2Id}/rows_columns/bulk_crud`,
     modifyColumnsObject,
     {
       headers: {
-        authId: BP_AUTH
-      }
+        authId: BP_AUTH,
+      },
     }
   );
-}
+};
 
-const setColumnLinking = async (
-  gridTab1Id: string,
-  gridTab2Id: string
-) => {
-  await setupLinkedColumn<TestGrid, TestGridTab2>(
-    {
-      destinationColumnName: 'Linked Column',
-      destinationGridId: gridTab1Id,
-      linkedRelatedColumns: [
-        {
-          destColName: 'Linked Related Column From Other Grid',
-          srcColName: 'Linked Related Column'
-        }
-      ],
-      queryInSourceGrid: null,
-      sourceColumnName: 'Source Column',
-      sourceGridId: gridTab2Id
-    }
-  );
-}
+const setColumnLinking = async (gridTab1Id: string, gridTab2Id: string) => {
+  await setupLinkedColumn<TestGrid, TestGrid2>({
+    destinationColumnName: 'Linked Column',
+    destinationGridId: gridTab1Id,
+    linkedRelatedColumns: [
+      {
+        destColName: 'Linked Related Column From Other Grid',
+        srcColName: 'Linked Related Column',
+      },
+    ],
+    queryInSourceGrid: null,
+    sourceColumnName: 'Source Column',
+    sourceGridId: gridTab2Id,
+  });
+};
 
-const setDataSource = async (
-  gridTab1Id: string
-) => {
+const setDataSource = async (gridTab1Id: string) => {
   await updateColumnDataSource<TestGrid>(
     {
       columns: [
         {
           columnDataSource: {
             columnNames: ['Number Column', 'Number 2 Column'],
-            functionType: 'SUM'
+            functionType: 'SUM',
           },
-          columnName: 'Formula Column'
-        }
-      ]
+          columnName: 'Formula Column',
+        },
+      ],
     },
     gridTab1Id
   );
-}
+};
 
-const insertValues = async (
-  gridTab1Id: string,
-  gridTab2Id: string
-) => {
-  await insert<TestGridTab2>(
+const insertValues = async (gridTab1Id: string, gridTab2Id: string) => {
+  await insert<TestGrid2>(
     {
       insert: {
         rows: [
           {
             'Source Column': '20171',
-            'Linked Related Column': 'Related Column Value 1'
+            'Linked Related Column': 'Related Column Value 1',
           },
           {
             'Source Column': '20172',
-            'Linked Related Column': 'Related Column Value 2'
-          }
-        ]
-      }
+            'Linked Related Column': 'Related Column Value 2',
+          },
+        ],
+      },
     },
     gridTab2Id
   );
@@ -155,7 +161,7 @@ const insertValues = async (
             'Number 2 Column': 1234.5678,
             'Boolean Column': true,
             'Date Column': '2022-04-4 12:15:30',
-            'Linked Column': '20171'
+            'Linked Column': '20171',
           },
           {
             'String Column': 'Example String',
@@ -163,32 +169,32 @@ const insertValues = async (
             'Number 2 Column': 11,
             'Boolean Column': false,
             'Date Column': '2021-03-15 1:30:30',
-            'Linked Column': '20172'
-          }
-        ]
-      }
+            'Linked Column': '20172',
+          },
+        ],
+      },
     },
     gridTab1Id
   );
 
   const { 0: row1Id, 1: row2Id } = insertResponse.data.createdRows;
   return [row1Id, row2Id];
-}
+};
 
 export const createGrids = async () => {
   const { data: data1 } = await createGrid({
     gridName: 'integrationTestGrid',
     gridTabs: [
       {
-        tabName: 'Test Grid'
-      }
-    ]
+        tabName: 'Test Grid',
+      },
+    ],
   });
   const gridTab1Id = data1.gridId;
 
   const { data: data2 } = await createTab(
     {
-       tabName: 'Linked Data Tab'
+      tabName: 'Linked Data Tab',
     },
     gridTab1Id
   );
@@ -200,14 +206,13 @@ export const createGrids = async () => {
 
   const [row1Id, row2Id] = await insertValues(gridTab1Id, gridTab2Id);
   return [gridTab1Id, gridTab2Id, row1Id, row2Id];
-}
+};
 
-// TODO: add removeGrid method? How to get fileId in method
 export const removeGrid = async (gridId: string) => {
   const { data } = await getHeaders(gridId);
   if (data) {
     await axios.delete(
-      "https://www.bigparser.com/APIServices/api/file/remove",
+      'https://www.bigparser.com/APIServices/api/file/remove',
       {
         headers: {
           authId: BP_AUTH,

@@ -1,13 +1,7 @@
 import { AxiosError } from 'axios';
-import {
-  insert
-} from '../../src/index';
-import {
-  TestGrid
-} from '../__grids__/TestGrid';
-import {
-  InsertObject
-} from '../../src/types'
+import { insert } from '../../src/index';
+import { TestGrid } from '../__grids__/TestGrid';
+import { InsertObject } from '../../src/types';
 import { createGrids, removeGrid } from './integrationTestUtils';
 
 jest.disableAutomock();
@@ -20,16 +14,16 @@ const insertObject: InsertObject<TestGrid> = {
   insert: {
     rows: [
       {
-        'String Column': 'Example String'
-      }
-    ]
+        'String Column': 'Example String',
+      },
+    ],
   },
 };
 
 const beforeEachWrapper = async () => {
   jest.resetModules();
   [testGridTab1Id] = await createGrids();
-}
+};
 
 describe('Insert', () => {
   beforeEach(() => beforeEachWrapper());
@@ -41,11 +35,12 @@ describe('Insert', () => {
         noOfRowsCreated: 1,
         noOfRowsFailed: 0,
         // Also contains a createdRows key
-        failedRows: {}
+        failedRows: {},
       };
 
       // When
-      const { data: responseData, error: responseError } = await insert<TestGrid>(insertObject, testGridTab1Id);
+      const { data: responseData, error: responseError } =
+        await insert<TestGrid>(insertObject, testGridTab1Id);
 
       // Then
       expect(responseError).toEqual(undefined);
@@ -59,11 +54,12 @@ describe('Insert', () => {
         errorMessage: 'System error. Please contact admin.',
         otherDetails: {},
         errorType: 'SYSTEMERROR',
-        recoverable: false
+        recoverable: false,
       };
 
       // When
-      const { data: responseData, error: responseError } = await insert<TestGrid>(insertObject, 'INVALID_GRID_ID');
+      const { data: responseData, error: responseError } =
+        await insert<TestGrid>(insertObject, 'INVALID_GRID_ID');
 
       // Then
       expect(responseData).toEqual(undefined);
@@ -75,13 +71,14 @@ describe('Insert', () => {
         errorMessage: 'share Id invalid',
         otherDetails: {},
         errorType: 'DATAERROR',
-        recoverable: true
+        recoverable: true,
       };
 
       // When
-      const { data: responseData, error: responseError } = await insert<TestGrid>(insertObject, testGridTab1Id, {
-        viewId: 'INVALID_VIEW_ID',
-      });
+      const { data: responseData, error: responseError } =
+        await insert<TestGrid>(insertObject, testGridTab1Id, {
+          shareId: 'INVALID_VIEW_ID',
+        });
       // Then
       expect(responseData).toEqual(undefined);
       expect((responseError as AxiosError).response.data).toEqual(errorObject);
@@ -92,13 +89,14 @@ describe('Insert', () => {
         errorMessage: 'authId is invalid',
         otherDetails: {},
         errorType: 'AUTHERROR',
-        recoverable: true
+        recoverable: true,
       };
 
       // When
-      const { data: responseData, error: responseError } = await insert<TestGrid>(insertObject, testGridTab1Id, {
-        authId: 'INVALID_AUTHID',
-      });
+      const { data: responseData, error: responseError } =
+        await insert<TestGrid>(insertObject, testGridTab1Id, {
+          authId: 'INVALID_AUTHID',
+        });
 
       // Then
       expect(responseData).toEqual(undefined);
@@ -110,14 +108,15 @@ describe('Insert', () => {
         errorMessage: 'authId is invalid',
         otherDetails: {},
         errorType: 'AUTHERROR',
-        recoverable: true
+        recoverable: true,
       };
 
       // When
-      const { data: responseData, error: responseError } = await insert<TestGrid>(insertObject, testGridTab1Id, {
-        authId: 'INVALID_AUTHID',
-        qa: true
-      });
+      const { data: responseData, error: responseError } =
+        await insert<TestGrid>(insertObject, testGridTab1Id, {
+          authId: 'INVALID_AUTHID',
+          qa: true,
+        });
 
       // Then
       expect(responseData).toEqual(undefined);

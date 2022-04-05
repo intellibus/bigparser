@@ -1,13 +1,7 @@
 import { AxiosError } from 'axios';
-import {
-  updateColumnDatatype
-} from '../../src/index';
-import {
-  TestGrid
-} from '../__grids__/TestGrid';
-import {
-  UpdateColumnDatatypeObject
-} from '../../src/types'
+import { updateColumnDatatype } from '../../src/index';
+import { TestGrid } from '../__grids__/TestGrid';
+import { UpdateColumnDatatypeObject } from '../../src/types';
 import { createGrids, removeGrid } from './integrationTestUtils';
 
 jest.disableAutomock();
@@ -28,7 +22,7 @@ const updateColumnDatatypeObject: UpdateColumnDatatypeObject<TestGrid> = {
 const beforeEachWrapper = async () => {
   jest.resetModules();
   [testGridTab1Id] = await createGrids();
-}
+};
 
 describe('Update Column Datatype', () => {
   beforeEach(() => beforeEachWrapper());
@@ -38,11 +32,16 @@ describe('Update Column Datatype', () => {
       // Given
       const response = {
         // Also contains dataFixId key
-        message: 'Please use \'fix_data_type_of_existing_data/status\' api to check the status.'
+        message:
+          "Please use 'fix_data_type_of_existing_data/status' api to check the status.",
       };
 
       // When
-      const { data: responseData, error: responseError } = await updateColumnDatatype<TestGrid>(updateColumnDatatypeObject, testGridTab1Id);
+      const { data: responseData, error: responseError } =
+        await updateColumnDatatype<TestGrid>(
+          updateColumnDatatypeObject,
+          testGridTab1Id
+        );
 
       // Then
       expect(responseError).toEqual(undefined);
@@ -56,11 +55,15 @@ describe('Update Column Datatype', () => {
         errorMessage: 'System error. Please contact admin.',
         otherDetails: {},
         errorType: 'SYSTEMERROR',
-        recoverable: false
+        recoverable: false,
       };
 
       // When
-      const { data: responseData, error: responseError } = await updateColumnDatatype<TestGrid>(updateColumnDatatypeObject, 'INVALID_GRID_ID');
+      const { data: responseData, error: responseError } =
+        await updateColumnDatatype<TestGrid>(
+          updateColumnDatatypeObject,
+          'INVALID_GRID_ID'
+        );
 
       // Then
       expect(responseData).toEqual(undefined);
@@ -72,13 +75,18 @@ describe('Update Column Datatype', () => {
         errorMessage: 'share Id invalid',
         otherDetails: {},
         errorType: 'DATAERROR',
-        recoverable: true
+        recoverable: true,
       };
 
       // When
-      const { data: responseData, error: responseError } = await updateColumnDatatype<TestGrid>(updateColumnDatatypeObject, testGridTab1Id, {
-        viewId: 'INVALID_VIEW_ID',
-      });
+      const { data: responseData, error: responseError } =
+        await updateColumnDatatype<TestGrid>(
+          updateColumnDatatypeObject,
+          testGridTab1Id,
+          {
+            shareId: 'INVALID_VIEW_ID',
+          }
+        );
       // Then
       expect(responseData).toEqual(undefined);
       expect((responseError as AxiosError).response.data).toEqual(errorObject);
@@ -89,13 +97,18 @@ describe('Update Column Datatype', () => {
         errorMessage: 'authId is invalid',
         otherDetails: {},
         errorType: 'AUTHERROR',
-        recoverable: true
+        recoverable: true,
       };
 
       // When
-      const { data: responseData, error: responseError } = await updateColumnDatatype<TestGrid>(updateColumnDatatypeObject, testGridTab1Id, {
-        authId: 'INVALID_AUTHID',
-      });
+      const { data: responseData, error: responseError } =
+        await updateColumnDatatype<TestGrid>(
+          updateColumnDatatypeObject,
+          testGridTab1Id,
+          {
+            authId: 'INVALID_AUTHID',
+          }
+        );
 
       // Then
       expect(responseData).toEqual(undefined);
@@ -107,14 +120,19 @@ describe('Update Column Datatype', () => {
         errorMessage: 'authId is invalid',
         otherDetails: {},
         errorType: 'AUTHERROR',
-        recoverable: true
+        recoverable: true,
       };
 
       // When
-      const { data: responseData, error: responseError } = await updateColumnDatatype<TestGrid>(updateColumnDatatypeObject, testGridTab1Id, {
-        authId: 'INVALID_AUTHID',
-        qa: true
-      });
+      const { data: responseData, error: responseError } =
+        await updateColumnDatatype<TestGrid>(
+          updateColumnDatatypeObject,
+          testGridTab1Id,
+          {
+            authId: 'INVALID_AUTHID',
+            qa: true,
+          }
+        );
 
       // Then
       expect(responseData).toEqual(undefined);

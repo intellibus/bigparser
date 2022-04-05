@@ -1,13 +1,7 @@
 import { AxiosError } from 'axios';
-import {
-  search
-} from '../../src/index';
-import {
-  TestGrid
-} from '../__grids__/TestGrid';
-import {
-  QueryObject
-} from '../../src/types'
+import { search } from '../../src/index';
+import { TestGrid } from '../__grids__/TestGrid';
+import { QueryObject } from '../../src/types';
 import { createGrids, removeGrid } from './integrationTestUtils';
 
 jest.disableAutomock();
@@ -24,9 +18,9 @@ const queryObject: QueryObject<TestGrid> = {
         {
           column: 'Boolean Column',
           operator: 'EQ',
-          keyword: true
-        }
-      ]
+          keyword: true,
+        },
+      ],
     },
     sendRowIdsInResponse: true,
     showColumnNamesInResponse: true,
@@ -36,7 +30,7 @@ const queryObject: QueryObject<TestGrid> = {
 const beforeEachWrapper = async () => {
   jest.resetModules();
   [testGridTab1Id, , row1Id] = await createGrids();
-}
+};
 
 describe('Search', () => {
   beforeEach(() => beforeEachWrapper());
@@ -57,13 +51,14 @@ describe('Search', () => {
             'Linked Column': '20171',
             'Linked Related Column From Other Grid': null,
             'Formula Column': null,
-            'Empty Column': null
+            'Empty Column': null,
           },
         ],
       };
 
       // When
-      const { data: responseData, error: responseError } = await search<TestGrid>(queryObject, testGridTab1Id);
+      const { data: responseData, error: responseError } =
+        await search<TestGrid>(queryObject, testGridTab1Id);
 
       // Then
       expect(responseError).toEqual(undefined);
@@ -77,11 +72,12 @@ describe('Search', () => {
         errorMessage: 'System error. Please contact admin.',
         otherDetails: {},
         errorType: 'SYSTEMERROR',
-        recoverable: false
+        recoverable: false,
       };
 
       // When
-      const { data: responseData, error: responseError } = await search<TestGrid>(queryObject, 'INVALID_GRID_ID');
+      const { data: responseData, error: responseError } =
+        await search<TestGrid>(queryObject, 'INVALID_GRID_ID');
 
       // Then
       expect(responseData).toEqual(undefined);
@@ -93,13 +89,14 @@ describe('Search', () => {
         errorMessage: 'share Id invalid',
         otherDetails: {},
         errorType: 'DATAERROR',
-        recoverable: true
+        recoverable: true,
       };
 
       // When
-      const { data: responseData, error: responseError } = await search<TestGrid>(queryObject, testGridTab1Id, {
-        viewId: 'INVALID_VIEW_ID',
-      });
+      const { data: responseData, error: responseError } =
+        await search<TestGrid>(queryObject, testGridTab1Id, {
+          shareId: 'INVALID_VIEW_ID',
+        });
       // Then
       expect(responseData).toEqual(undefined);
       expect((responseError as AxiosError).response.data).toEqual(errorObject);
@@ -110,13 +107,14 @@ describe('Search', () => {
         errorMessage: 'authId is invalid',
         otherDetails: {},
         errorType: 'AUTHERROR',
-        recoverable: true
+        recoverable: true,
       };
 
       // When
-      const { data: responseData, error: responseError } = await search<TestGrid>(queryObject, testGridTab1Id, {
-        authId: 'INVALID_AUTHID',
-      });
+      const { data: responseData, error: responseError } =
+        await search<TestGrid>(queryObject, testGridTab1Id, {
+          authId: 'INVALID_AUTHID',
+        });
 
       // Then
       expect(responseData).toEqual(undefined);
@@ -128,14 +126,15 @@ describe('Search', () => {
         errorMessage: 'authId is invalid',
         otherDetails: {},
         errorType: 'AUTHERROR',
-        recoverable: true
+        recoverable: true,
       };
 
       // When
-      const { data: responseData, error: responseError } = await search<TestGrid>(queryObject, testGridTab1Id, {
-        authId: 'INVALID_AUTHID',
-        qa: true
-      });
+      const { data: responseData, error: responseError } =
+        await search<TestGrid>(queryObject, testGridTab1Id, {
+          authId: 'INVALID_AUTHID',
+          qa: true,
+        });
 
       // Then
       expect(responseData).toEqual(undefined);

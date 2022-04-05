@@ -1,13 +1,7 @@
 import { AxiosError } from 'axios';
-import {
-  updateByRowId
-} from '../../src/index';
-import {
-  TestGrid
-} from '../__grids__/TestGrid';
-import {
-  UpdateRowIdObject
-} from '../../src/types'
+import { updateByRowId } from '../../src/index';
+import { TestGrid } from '../__grids__/TestGrid';
+import { UpdateRowIdObject } from '../../src/types';
 import { createGrids, removeGrid } from './integrationTestUtils';
 
 jest.disableAutomock();
@@ -23,10 +17,10 @@ const updateRowIdObject: UpdateRowIdObject<TestGrid> = {
       {
         rowId: row1Id,
         columns: {
-          'Boolean Column': false
-        }
-      }
-    ]
+          'Boolean Column': false,
+        },
+      },
+    ],
   },
 };
 
@@ -34,7 +28,7 @@ const beforeEachWrapper = async () => {
   jest.resetModules();
   [testGridTab1Id, , row1Id] = await createGrids();
   updateRowIdObject.update.rows[0].rowId = row1Id;
-}
+};
 
 describe('Update By Row Id', () => {
   beforeEach(() => beforeEachWrapper());
@@ -45,14 +39,13 @@ describe('Update By Row Id', () => {
       const response = {
         noOfRowsUpdated: 1,
         noOfRowsFailed: 0,
-        updatedRows: [
-          row1Id
-        ],
-        failedRows: {}
+        updatedRows: [row1Id],
+        failedRows: {},
       };
 
       // When
-      const { data: responseData, error: responseError } = await updateByRowId<TestGrid>(updateRowIdObject, testGridTab1Id);
+      const { data: responseData, error: responseError } =
+        await updateByRowId<TestGrid>(updateRowIdObject, testGridTab1Id);
 
       // Then
       expect(responseError).toEqual(undefined);
@@ -66,11 +59,12 @@ describe('Update By Row Id', () => {
         errorMessage: 'System error. Please contact admin.',
         otherDetails: {},
         errorType: 'SYSTEMERROR',
-        recoverable: false
+        recoverable: false,
       };
 
       // When
-      const { data: responseData, error: responseError } = await updateByRowId<TestGrid>(updateRowIdObject, 'INVALID_GRID_ID');
+      const { data: responseData, error: responseError } =
+        await updateByRowId<TestGrid>(updateRowIdObject, 'INVALID_GRID_ID');
 
       // Then
       expect(responseData).toEqual(undefined);
@@ -82,13 +76,14 @@ describe('Update By Row Id', () => {
         errorMessage: 'share Id invalid',
         otherDetails: {},
         errorType: 'DATAERROR',
-        recoverable: true
+        recoverable: true,
       };
 
       // When
-      const { data: responseData, error: responseError } = await updateByRowId<TestGrid>(updateRowIdObject, testGridTab1Id, {
-        viewId: 'INVALID_VIEW_ID',
-      });
+      const { data: responseData, error: responseError } =
+        await updateByRowId<TestGrid>(updateRowIdObject, testGridTab1Id, {
+          shareId: 'INVALID_VIEW_ID',
+        });
 
       // Then
       expect(responseData).toEqual(undefined);
@@ -100,13 +95,14 @@ describe('Update By Row Id', () => {
         errorMessage: 'authId is invalid',
         otherDetails: {},
         errorType: 'AUTHERROR',
-        recoverable: true
+        recoverable: true,
       };
 
       // When
-      const { data: responseData, error: responseError } = await updateByRowId<TestGrid>(updateRowIdObject, testGridTab1Id, {
-        authId: 'INVALID_AUTHID',
-      });
+      const { data: responseData, error: responseError } =
+        await updateByRowId<TestGrid>(updateRowIdObject, testGridTab1Id, {
+          authId: 'INVALID_AUTHID',
+        });
 
       // Then
       expect(responseData).toEqual(undefined);
@@ -118,14 +114,15 @@ describe('Update By Row Id', () => {
         errorMessage: 'authId is invalid',
         otherDetails: {},
         errorType: 'AUTHERROR',
-        recoverable: true
+        recoverable: true,
       };
 
       // When
-      const { data: responseData, error: responseError } = await updateByRowId<TestGrid>(updateRowIdObject, testGridTab1Id, {
-        authId: 'INVALID_AUTHID',
-        qa: true
-      });
+      const { data: responseData, error: responseError } =
+        await updateByRowId<TestGrid>(updateRowIdObject, testGridTab1Id, {
+          authId: 'INVALID_AUTHID',
+          qa: true,
+        });
 
       // Then
       expect(responseData).toEqual(undefined);

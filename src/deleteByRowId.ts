@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { gridURL, to, CONFIG } from './utils';
+import { getHTTPHeadersWithData, getGridURL, to } from './utils';
 import { APIResponse, DeleteRowIdObject, MethodConfig } from './types';
 
 export async function deleteByRowId(
@@ -7,13 +7,10 @@ export async function deleteByRowId(
   gridId: string,
   config: MethodConfig = {}
 ): Promise<APIResponse> {
-  const { viewId, qa, authId } = config;
   return to(
     axios.delete(
-      gridURL('rows/delete_by_rowIds', gridId, viewId, qa),
-      authId != null
-        ? { headers: { authId }, data: deleteRowIdObj }
-        : { ...CONFIG, data: deleteRowIdObj }
+      getGridURL('rows/delete_by_rowIds', gridId, config),
+      getHTTPHeadersWithData<DeleteRowIdObject>(deleteRowIdObj, config)
     )
   );
 }

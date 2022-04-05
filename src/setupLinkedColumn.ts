@@ -1,17 +1,22 @@
 import axios from 'axios';
-import { gridlessURL, to, CONFIG } from './utils';
+import { getAPIURL, getHTTPHeaders, to } from './utils';
 import { APIResponse, SetupLinkedColumnObject, MethodConfig } from './types';
 
-export async function setupLinkedColumn<DestGridDataModel, SourceGridDataModel>(
-  setupLinkedColumnObj: SetupLinkedColumnObject<DestGridDataModel, SourceGridDataModel>,
+export async function setupLinkedColumn<
+  DestinationGridDataModel,
+  SourceGridDataModel
+>(
+  setupLinkedColumnObj: SetupLinkedColumnObject<
+    DestinationGridDataModel,
+    SourceGridDataModel
+  >,
   config: MethodConfig = {}
 ): Promise<APIResponse> {
-  const { qa, authId } = config;
   return to(
     axios.put(
-      gridlessURL('setup_linked_column', qa),
+      getAPIURL('setup_linked_column', config),
       setupLinkedColumnObj,
-      authId != null ? { headers: { authId } } : CONFIG
+      getHTTPHeaders(config)
     )
   );
 }

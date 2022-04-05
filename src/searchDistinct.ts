@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { gridURL, to, CONFIG } from './utils';
+import { getGridURL, getHTTPHeaders, to } from './utils';
 import { APIResponse, MethodConfig, QueryDistinctObject } from './types';
 
 export async function searchDistinct<GridDataModel>(
@@ -7,12 +7,11 @@ export async function searchDistinct<GridDataModel>(
   gridId: string,
   config: MethodConfig = {}
 ): Promise<APIResponse> {
-  const { viewId, qa, authId } = config;
   return to(
     axios.post(
-      gridURL('distinct', gridId, viewId, qa),
+      getGridURL('distinct', gridId, config),
       queryDistinctObj,
-      authId != null ? { headers: { authId } } : CONFIG
+      getHTTPHeaders(config)
     )
   );
 }

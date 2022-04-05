@@ -1,10 +1,6 @@
 import { AxiosError } from 'axios';
-import {
-  deleteByRowId
-} from '../../src/index';
-import {
-  DeleteRowIdObject
-} from '../../src/types'
+import { deleteByRowId } from '../../src/index';
+import { DeleteRowIdObject } from '../../src/types';
 import { createGrids, removeGrid } from './integrationTestUtils';
 
 jest.disableAutomock();
@@ -18,9 +14,9 @@ const updateRowIdObject: DeleteRowIdObject = {
   delete: {
     rows: [
       {
-        rowId: row1Id
-      }
-    ]
+        rowId: row1Id,
+      },
+    ],
   },
 };
 
@@ -28,7 +24,7 @@ const beforeEachWrapper = async () => {
   jest.resetModules();
   [testGridTab1Id, , row1Id] = await createGrids();
   updateRowIdObject.delete.rows[0].rowId = row1Id;
-}
+};
 
 describe('Delete By Row Id', () => {
   beforeEach(() => beforeEachWrapper());
@@ -39,14 +35,15 @@ describe('Delete By Row Id', () => {
       const response = {
         noOfRowsDeleted: 1,
         noOfRowsFailed: 0,
-        deletedRows: [
-          row1Id
-        ],
-        failedRows: {}
+        deletedRows: [row1Id],
+        failedRows: {},
       };
 
       // When
-      const { data: responseData, error: responseError } = await deleteByRowId(updateRowIdObject, testGridTab1Id);
+      const { data: responseData, error: responseError } = await deleteByRowId(
+        updateRowIdObject,
+        testGridTab1Id
+      );
 
       // Then
       expect(responseError).toEqual(undefined);
@@ -60,11 +57,14 @@ describe('Delete By Row Id', () => {
         errorMessage: 'System error. Please contact admin.',
         otherDetails: {},
         errorType: 'SYSTEMERROR',
-        recoverable: false
+        recoverable: false,
       };
 
       // When
-      const { data: responseData, error: responseError } = await deleteByRowId(updateRowIdObject, 'INVALID_GRID_ID');
+      const { data: responseData, error: responseError } = await deleteByRowId(
+        updateRowIdObject,
+        'INVALID_GRID_ID'
+      );
 
       // Then
       expect(responseData).toEqual(undefined);
@@ -76,13 +76,17 @@ describe('Delete By Row Id', () => {
         errorMessage: 'share Id invalid',
         otherDetails: {},
         errorType: 'DATAERROR',
-        recoverable: true
+        recoverable: true,
       };
 
       // When
-      const { data: responseData, error: responseError } = await deleteByRowId(updateRowIdObject, testGridTab1Id, {
-        viewId: 'INVALID_VIEW_ID',
-      });
+      const { data: responseData, error: responseError } = await deleteByRowId(
+        updateRowIdObject,
+        testGridTab1Id,
+        {
+          shareId: 'INVALID_VIEW_ID',
+        }
+      );
 
       // Then
       expect(responseData).toEqual(undefined);
@@ -94,13 +98,17 @@ describe('Delete By Row Id', () => {
         errorMessage: 'authId is invalid',
         otherDetails: {},
         errorType: 'AUTHERROR',
-        recoverable: true
+        recoverable: true,
       };
 
       // When
-      const { data: responseData, error: responseError } = await deleteByRowId(updateRowIdObject, testGridTab1Id, {
-        authId: 'INVALID_AUTHID',
-      });
+      const { data: responseData, error: responseError } = await deleteByRowId(
+        updateRowIdObject,
+        testGridTab1Id,
+        {
+          authId: 'INVALID_AUTHID',
+        }
+      );
 
       // Then
       expect(responseData).toEqual(undefined);
@@ -112,14 +120,18 @@ describe('Delete By Row Id', () => {
         errorMessage: 'authId is invalid',
         otherDetails: {},
         errorType: 'AUTHERROR',
-        recoverable: true
+        recoverable: true,
       };
 
       // When
-      const { data: responseData, error: responseError } = await deleteByRowId(updateRowIdObject, testGridTab1Id, {
-        authId: 'INVALID_AUTHID',
-        qa: true
-      });
+      const { data: responseData, error: responseError } = await deleteByRowId(
+        updateRowIdObject,
+        testGridTab1Id,
+        {
+          authId: 'INVALID_AUTHID',
+          qa: true,
+        }
+      );
 
       // Then
       expect(responseData).toEqual(undefined);

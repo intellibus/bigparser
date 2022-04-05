@@ -14,7 +14,6 @@ describe('Delete By Query', () => {
   describe('Positive Test Cases', () => {
     it('Should Return Grid Data', async () => {
       // Given
-      // TODO: This response is not consistent with delete_by_rowIds endpoint's response.
       const gridResponse = {
         noOfRowsDeleted: 1,
       };

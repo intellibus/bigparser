@@ -162,7 +162,7 @@ describe('Search', () => {
 
       // When
       const searchPromise = search<TestGrid>(queryObject, TEST_GRID_ID, {
-        viewId: 'INVALID_VIEW_ID',
+        shareId: 'INVALID_VIEW_ID',
       });
       mockAxios.mockError(errorObject);
       const { data: responseData, error: responseError } = await searchPromise;

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { gridURL, to, CONFIG } from './utils';
+import { getGridURL, getHTTPHeaders, to } from './utils';
 import { APIResponse, MethodConfig, UpdateColumnDatatypeObject } from './types';
 
 export async function updateColumnDatatype<GridDataModel>(
@@ -7,12 +7,11 @@ export async function updateColumnDatatype<GridDataModel>(
   gridId: string,
   config: MethodConfig = {}
 ): Promise<APIResponse> {
-  const { viewId, qa, authId } = config;
   return to(
     axios.put(
-      gridURL('update_column_datatype', gridId, viewId, qa),
+      getGridURL('update_column_datatype', gridId, config),
       updateColumnDatatypeObj,
-      authId != null ? { headers: { authId } } : CONFIG
+      getHTTPHeaders(config)
     )
   );
 }

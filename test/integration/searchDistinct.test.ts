@@ -1,11 +1,6 @@
 import { AxiosError } from 'axios';
-import {
-  searchDistinct,
-  QueryDistinctObject,
-} from '../../src/index';
-import {
-  TestGrid
-} from '../__grids__/TestGrid';
+import { searchDistinct, QueryDistinctObject } from '../../src/index';
+import { TestGrid } from '../__grids__/TestGrid';
 import { createGrids, removeGrid } from './integrationTestUtils';
 
 jest.disableAutomock();
@@ -37,7 +32,8 @@ describe('Search Distinct', () => {
       };
 
       // When
-      const { data: responseData, error: responseError } = await searchDistinct<TestGrid>(queryDistinctObject, testGridTab1Id);
+      const { data: responseData, error: responseError } =
+        await searchDistinct<TestGrid>(queryDistinctObject, testGridTab1Id);
 
       // Then
       expect(responseData).toEqual(response);
@@ -72,9 +68,10 @@ describe('Search Distinct', () => {
       };
 
       // When
-      const { data: responseData, error: responseError } = await searchDistinct<TestGrid>(queryDistinctObject, testGridTab1Id, {
-        authId: 'INVALID_AUTHID',
-      });
+      const { data: responseData, error: responseError } =
+        await searchDistinct<TestGrid>(queryDistinctObject, testGridTab1Id, {
+          authId: 'INVALID_AUTHID',
+        });
 
       // Then
       expect(responseData).toEqual(undefined);

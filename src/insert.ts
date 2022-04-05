@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { gridURL, to, CONFIG } from './utils';
+import { getGridURL, getHTTPHeaders, to } from './utils';
 import { APIResponse, InsertObject, MethodConfig } from './types';
 
 export async function insert<GridDataModel>(
@@ -7,12 +7,11 @@ export async function insert<GridDataModel>(
   gridId: string,
   config: MethodConfig = {}
 ): Promise<APIResponse> {
-  const { viewId, qa, authId } = config;
   return to(
     axios.post(
-      gridURL('rows/create', gridId, viewId, qa),
+      getGridURL('rows/create', gridId, config),
       insertObj,
-      authId != null ? { headers: { authId } } : CONFIG
+      getHTTPHeaders(config)
     )
   );
 }

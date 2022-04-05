@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { gridURL, to, CONFIG } from './utils';
+import { getHTTPHeaders, getGridURL, to } from './utils';
 import { APIResponse, CreateTabObject, MethodConfig } from './types';
 
 export async function createTab(
@@ -7,13 +7,11 @@ export async function createTab(
   gridId: string,
   config: MethodConfig = {}
 ): Promise<APIResponse> {
-  const { viewId, qa, authId } = config;
   return to(
     axios.post(
-      // TODO: Confirm how viewId is used
-      gridURL('create_tab', gridId, viewId, qa),
+      getGridURL('create_tab', gridId, config),
       createTabObj,
-      authId != null ? { headers: { authId } } : CONFIG
+      getHTTPHeaders(config)
     )
   );
 }

@@ -1,32 +1,42 @@
-import { APIResponse, AxiosResponse } from './types';
+import { APIResponse, AxiosResponse, MethodConfig } from './types';
 
-export const getAPIURL = (qa?: boolean) =>
+export const getBaseURL = (qa?: boolean) =>
   `https://${
     (qa != null && qa) || process.env.BP_QA ? 'qa' : 'www'
   }.bigparser.com/api/v2`;
 
-export const CONFIG = {
+export function getGridURL(
+  action: string,
+  gridId: string,
+  config: MethodConfig = {}
+): string {
+  const { shareId, qa } = config;
+  return `${getBaseURL(qa)}/grid/${
+    shareId ? `${gridId}/share/${shareId}` : `${gridId}`
+  }/${action}`;
+}
+
+export function getAPIURL(
+  action: string,
+  config: MethodConfig = { qa: false }
+): string {
+  return `${getBaseURL(config.qa)}/grid/${action}`;
+}
+
+export const HEADERS = {
   headers: {
     authId: `${process.env.BP_AUTH}`,
   },
 };
 
-export function gridURL(
-  action: string,
-  gridId: string,
-  viewId?: string,
-  qa?: boolean
-): string {
-  return `${getAPIURL(qa)}/grid/${
-    viewId ? `${gridId}/share/${viewId}` : `${gridId}`
-  }/${action}`;
+export function getHTTPHeaders(config: MethodConfig = {}) {
+  const { authId } = config;
+  return authId != null ? { headers: { authId } } : HEADERS;
 }
 
-export function gridlessURL(
-  action: string,
-  qa?: boolean
-): string {
-  return `${getAPIURL(qa)}/grid/${action}`;
+export function getHTTPHeadersWithData<T>(data: T, config: MethodConfig = {}) {
+  const { authId } = config;
+  return authId != null ? { headers: { authId }, data } : { ...HEADERS, data };
 }
 
 export async function to(

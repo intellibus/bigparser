@@ -1,9 +1,9 @@
-import { AxiosError } from "axios";
-import { getMultisheetMetadata } from "../../src/index";
-import { createGrids, removeGrid } from "./integrationTestUtils";
+import { AxiosError } from 'axios';
+import { getMultisheetMetadata } from '../../src/index';
+import { createGrids, removeGrid } from './integrationTestUtils';
 
 jest.disableAutomock();
-jest.unmock("axios");
+jest.unmock('axios');
 jest.setTimeout(10000);
 
 let testGridTab1Id: string;
@@ -14,118 +14,110 @@ const beforeEachWrapper = async () => {
   [testGridTab1Id, testGridTab2Id] = await createGrids();
 };
 
-describe("Get Headers", () => {
+describe('Get Headers', () => {
   beforeEach(() => beforeEachWrapper());
   afterEach(() => removeGrid(testGridTab1Id));
-  describe("Positive Test Cases", () => {
-    it("Should Return Multigrid Metadata", async () => {
+  describe('Positive Test Cases', () => {
+    it('Should Return Multisheet Metadata', async () => {
       // Given
       const response = {
         grids: [
           {
             gridId: testGridTab1Id,
-            name: "Test Grid",
-            tabName: "Test Grid",
+            name: 'Test Grid',
+            tabName: 'Test Grid',
             tabDescription: null,
-            pinned: false
+            pinned: false,
           },
           {
             gridId: testGridTab2Id,
-            name: "Linked Data Tab",
-            tabName: "Linked Data Tab",
+            name: 'Linked Data Tab',
+            tabName: 'Linked Data Tab',
             tabDescription: null,
-            pinned: false
-          }
-        ]
-      }
+            pinned: false,
+          },
+        ],
+      };
 
       // When
-      const { data: responseData, error: responseError } = await getMultisheetMetadata(
-        testGridTab1Id
-      );
+      const { data: responseData, error: responseError } =
+        await getMultisheetMetadata(testGridTab1Id);
 
       // Then
       expect(responseError).toEqual(undefined);
       expect(responseData).toMatchObject(response);
     });
   });
-  describe("Negative Test Cases", () => {
-    it("Should Reject Invalid Grid Id", async () => {
+  describe('Negative Test Cases', () => {
+    it('Should Reject Invalid Grid Id', async () => {
       // Given
       const errorObject = {
-        errorMessage: "System error. Please contact admin.",
+        errorMessage: 'System error. Please contact admin.',
         otherDetails: {},
-        errorType: "SYSTEMERROR",
+        errorType: 'SYSTEMERROR',
         recoverable: false,
       };
 
       // When
-      const { data: responseData, error: responseError } = await getMultisheetMetadata(
-        "INVALID_GRID_ID"
-      );
+      const { data: responseData, error: responseError } =
+        await getMultisheetMetadata('INVALID_GRID_ID');
 
       // Then
       expect(responseData).toEqual(undefined);
       expect((responseError as AxiosError).response.data).toEqual(errorObject);
     });
-    it("Should Reject Invalid View Id", async () => {
+    it('Should Reject Invalid View Id', async () => {
       // Given
       const errorObject = {
-        errorMessage: "share Id invalid",
+        errorMessage: 'share Id invalid',
         otherDetails: {},
-        errorType: "DATAERROR",
+        errorType: 'DATAERROR',
         recoverable: true,
       };
 
       // When
-      const { data: responseData, error: responseError } = await getMultisheetMetadata(
-        testGridTab1Id,
-        {
-          viewId: "INVALID_VIEW_ID",
-        }
-      );
+      const { data: responseData, error: responseError } =
+        await getMultisheetMetadata(testGridTab1Id, {
+          shareId: 'INVALID_VIEW_ID',
+        });
       // Then
       expect(responseData).toEqual(undefined);
       expect((responseError as AxiosError).response.data).toEqual(errorObject);
     });
-    it("Should Reject Invalid Auth Id (prod)", async () => {
+    it('Should Reject Invalid Auth Id (prod)', async () => {
       // Given
       const errorObject = {
-        errorMessage: "authId is invalid",
+        errorMessage: 'authId is invalid',
         otherDetails: {},
-        errorType: "AUTHERROR",
+        errorType: 'AUTHERROR',
         recoverable: true,
       };
 
       // When
-      const { data: responseData, error: responseError } = await getMultisheetMetadata(
-        testGridTab1Id,
-        {
-          authId: "INVALID_AUTHID",
-        }
-      );
+      const { data: responseData, error: responseError } =
+        await getMultisheetMetadata(testGridTab1Id, {
+          authId: 'INVALID_AUTHID',
+        });
 
       // Then
       expect(responseData).toEqual(undefined);
       expect((responseError as AxiosError).response.data).toEqual(errorObject);
     });
-    it("Should Reject Invalid Auth Id (qa)", async () => {
+    it('Should Reject Invalid Auth Id (qa)', async () => {
       // Given
       const errorObject = {
-        errorMessage: "authId is invalid",
+        errorMessage: 'authId is invalid',
         otherDetails: {},
-        errorType: "AUTHERROR",
+        errorType: 'AUTHERROR',
         recoverable: true,
       };
 
       // When
-      const { data: responseData, error: responseError } = await getMultisheetMetadata(
-        testGridTab1Id,
-        {
-          authId: "INVALID_AUTHID",
+      const { data: responseData, error: responseError } =
+        await getMultisheetMetadata(testGridTab1Id, {
+          authId: 'INVALID_AUTHID',
           qa: true,
-        }
-      );
+        });
 
       // Then
       expect(responseData).toEqual(undefined);

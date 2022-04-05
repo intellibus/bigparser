@@ -40,9 +40,6 @@ describe('Search Count', () => {
       expect(responseError).toEqual(undefined);
       expect(responseData).toEqual(gridResponse);
     });
-    // TO DO
-    // it('Should Return Number Of Records In Grid When Valid View Id', async () => {
-    // });
   });
   describe('Negative Test Cases', () => {
     it('Should Reject Invalid Grid Id', async () => {

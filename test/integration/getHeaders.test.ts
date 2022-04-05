@@ -1,9 +1,9 @@
-import { AxiosError } from "axios";
-import { getHeaders } from "../../src/index";
-import { createGrids, removeGrid } from "./integrationTestUtils";
+import { AxiosError } from 'axios';
+import { getHeaders } from '../../src/index';
+import { createGrids, removeGrid } from './integrationTestUtils';
 
 jest.disableAutomock();
-jest.unmock("axios");
+jest.unmock('axios');
 jest.setTimeout(10000);
 
 let testGridTab1Id: string;
@@ -14,102 +14,102 @@ const beforeEachWrapper = async () => {
   [testGridTab1Id, testGridTab2Id] = await createGrids();
 };
 
-describe("Get Headers", () => {
+describe('Get Headers', () => {
   beforeEach(() => beforeEachWrapper());
   afterEach(() => removeGrid(testGridTab1Id));
-  describe("Positive Test Cases", () => {
-    it("Should Return Grid Metadata", async () => {
+  describe('Positive Test Cases', () => {
+    it('Should Return Grid Metadata', async () => {
       // Given
       const response = {
-        name: "integrationTestGrid.grid",
+        name: 'integrationTestGrid.grid',
         description: null,
         columns: [
           {
-            columnName: "String Column",
-            columnDesc: "",
-            dataType: "STRING",
+            columnName: 'String Column',
+            columnDesc: '',
+            dataType: 'STRING',
             columnIndex: '5',
             islinkedColumn: false,
             isPrimaryLink: false,
           },
           {
-            columnName: "Number Column",
-            columnDesc: "",
-            dataType: "NUMBER",
+            columnName: 'Number Column',
+            columnDesc: '',
+            dataType: 'NUMBER',
             columnIndex: '6',
             islinkedColumn: false,
             isPrimaryLink: false,
           },
           {
-            columnName: "Number 2 Column",
-            columnDesc: "",
-            dataType: "NUMBER",
+            columnName: 'Number 2 Column',
+            columnDesc: '',
+            dataType: 'NUMBER',
             columnIndex: '7',
             islinkedColumn: false,
             isPrimaryLink: false,
           },
           {
-            columnName: "Boolean Column",
-            columnDesc: "",
-            dataType: "BOOLEAN",
+            columnName: 'Boolean Column',
+            columnDesc: '',
+            dataType: 'BOOLEAN',
             columnIndex: '8',
             islinkedColumn: false,
             isPrimaryLink: false,
           },
           {
-            columnName: "Date Column",
-            columnDesc: "",
-            dataType: "DATE_TIME",
+            columnName: 'Date Column',
+            columnDesc: '',
+            dataType: 'DATE_TIME',
             columnIndex: '9',
             islinkedColumn: false,
             isPrimaryLink: false,
           },
           {
-            columnName: "Linked Column",
-            columnDesc: "",
-            dataType: "STRING",
+            columnName: 'Linked Column',
+            columnDesc: '',
+            dataType: 'STRING',
             columnIndex: '10',
             islinkedColumn: true,
             isPrimaryLink: true,
             linkedColumnInfo: {
               sourceGridId: testGridTab2Id,
               destinationGridId: testGridTab1Id,
-              sourceColumnName: "Source Column",
-              destinationColumnName: "Linked Column",
+              sourceColumnName: 'Source Column',
+              destinationColumnName: 'Linked Column',
               queryInSourceGrid: null,
               linkedRelatedColumns: [
                 {
-                  destColName: "Linked Related Column From Other Grid",
-                  srcColName: "Linked Related Column",
+                  destColName: 'Linked Related Column From Other Grid',
+                  srcColName: 'Linked Related Column',
                 },
               ],
             },
           },
           {
-            columnName: "Linked Related Column From Other Grid",
-            columnDesc: "",
-            dataType: "STRING",
+            columnName: 'Linked Related Column From Other Grid',
+            columnDesc: '',
+            dataType: 'STRING',
             columnIndex: '11',
             islinkedColumn: true,
             isPrimaryLink: false,
-            srcColName: "Linked Related Column",
+            srcColName: 'Linked Related Column',
           },
           {
-            columnName: "Formula Column",
-            columnDesc: "",
-            dataType: "NUMBER",
+            columnName: 'Formula Column',
+            columnDesc: '',
+            dataType: 'NUMBER',
             columnIndex: '12',
             columnDataSource: {
-              functionType: "SUM",
-              columnNames: ["Number Column", "Number 2 Column"],
+              functionType: 'SUM',
+              columnNames: ['Number Column', 'Number 2 Column'],
             },
             islinkedColumn: false,
             isPrimaryLink: false,
           },
           {
-            columnName: "Empty Column",
-            columnDesc: "",
-            dataType: "STRING",
+            columnName: 'Empty Column',
+            columnDesc: '',
+            dataType: 'STRING',
             columnIndex: '13',
             islinkedColumn: false,
             isPrimaryLink: false,
@@ -123,7 +123,7 @@ describe("Get Headers", () => {
         fileExtension: null,
         fileSource: null,
         imageInfo: null,
-        gridType: "USER",
+        gridType: 'USER',
         defaultSyncPref: null,
         saveType: null,
         lastExtSrcSyncDateTime: null,
@@ -134,7 +134,7 @@ describe("Get Headers", () => {
         defaultSaveFilter: null,
         filters: null,
         tabDescription: null,
-        tabName: "Test Grid",
+        tabName: 'Test Grid',
         showRowId: false,
         owner: true,
         multisheet: true,
@@ -151,31 +151,31 @@ describe("Get Headers", () => {
       expect(responseData).toMatchObject(response);
     });
   });
-  describe("Negative Test Cases", () => {
-    it("Should Reject Invalid Grid Id", async () => {
+  describe('Negative Test Cases', () => {
+    it('Should Reject Invalid Grid Id', async () => {
       // Given
       const errorObject = {
-        errorMessage: "System error. Please contact admin.",
+        errorMessage: 'System error. Please contact admin.',
         otherDetails: {},
-        errorType: "SYSTEMERROR",
+        errorType: 'SYSTEMERROR',
         recoverable: false,
       };
 
       // When
       const { data: responseData, error: responseError } = await getHeaders(
-        "INVALID_GRID_ID"
+        'INVALID_GRID_ID'
       );
 
       // Then
       expect(responseData).toEqual(undefined);
       expect((responseError as AxiosError).response.data).toEqual(errorObject);
     });
-    it("Should Reject Invalid View Id", async () => {
+    it('Should Reject Invalid View Id', async () => {
       // Given
       const errorObject = {
-        errorMessage: "share Id invalid",
+        errorMessage: 'share Id invalid',
         otherDetails: {},
-        errorType: "DATAERROR",
+        errorType: 'DATAERROR',
         recoverable: true,
       };
 
@@ -183,19 +183,19 @@ describe("Get Headers", () => {
       const { data: responseData, error: responseError } = await getHeaders(
         testGridTab1Id,
         {
-          viewId: "INVALID_VIEW_ID",
+          shareId: 'INVALID_VIEW_ID',
         }
       );
       // Then
       expect(responseData).toEqual(undefined);
       expect((responseError as AxiosError).response.data).toEqual(errorObject);
     });
-    it("Should Reject Invalid Auth Id (prod)", async () => {
+    it('Should Reject Invalid Auth Id (prod)', async () => {
       // Given
       const errorObject = {
-        errorMessage: "authId is invalid",
+        errorMessage: 'authId is invalid',
         otherDetails: {},
-        errorType: "AUTHERROR",
+        errorType: 'AUTHERROR',
         recoverable: true,
       };
 
@@ -203,7 +203,7 @@ describe("Get Headers", () => {
       const { data: responseData, error: responseError } = await getHeaders(
         testGridTab1Id,
         {
-          authId: "INVALID_AUTHID",
+          authId: 'INVALID_AUTHID',
         }
       );
 
@@ -211,12 +211,12 @@ describe("Get Headers", () => {
       expect(responseData).toEqual(undefined);
       expect((responseError as AxiosError).response.data).toEqual(errorObject);
     });
-    it("Should Reject Invalid Auth Id (qa)", async () => {
+    it('Should Reject Invalid Auth Id (qa)', async () => {
       // Given
       const errorObject = {
-        errorMessage: "authId is invalid",
+        errorMessage: 'authId is invalid',
         otherDetails: {},
-        errorType: "AUTHERROR",
+        errorType: 'AUTHERROR',
         recoverable: true,
       };
 
@@ -224,7 +224,7 @@ describe("Get Headers", () => {
       const { data: responseData, error: responseError } = await getHeaders(
         testGridTab1Id,
         {
-          authId: "INVALID_AUTHID",
+          authId: 'INVALID_AUTHID',
           qa: true,
         }
       );
