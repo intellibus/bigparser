@@ -27,7 +27,7 @@ const updateColumnDatatypeObject: UpdateColumnDatatypeObject<TestGrid> = {
 
 const beforeEachWrapper = async () => {
   jest.resetModules();
-  await createGrids();
+  [testGridTab1Id] = await createGrids();
 }
 
 describe('Update Column Datatype', () => {

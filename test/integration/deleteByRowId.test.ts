@@ -27,6 +27,7 @@ const updateRowIdObject: DeleteRowIdObject = {
 const beforeEachWrapper = async () => {
   jest.resetModules();
   [testGridTab1Id, , row1Id] = await createGrids();
+  updateRowIdObject.delete.rows[0].rowId = row1Id;
 }
 
 describe('Delete By Row Id', () => {

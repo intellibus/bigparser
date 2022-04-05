@@ -33,6 +33,7 @@ const updateRowIdObject: UpdateRowIdObject<TestGrid> = {
 const beforeEachWrapper = async () => {
   jest.resetModules();
   [testGridTab1Id, , row1Id] = await createGrids();
+  updateRowIdObject.update.rows[0].rowId = row1Id;
 }
 
 describe('Update By Row Id', () => {
