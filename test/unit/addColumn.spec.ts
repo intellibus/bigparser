@@ -1,24 +1,25 @@
-import mockAxios from "jest-mock-axios";
-import { addColumn, AddColumnObject } from "../../src/index";
-import { TestGrid } from "../__grids__/TestGrid";
+import mockAxios from 'jest-mock-axios';
+import { addColumn, AddColumnObject } from '../../src/index';
+import { TestGrid } from '../__grids__/TestGrid';
 
-const { TEST_GRID_ID, BP_AUTH } = process.env;
+const { BP_AUTH } = process.env;
+const TEST_GRID_ID = 'VALID_GRID_ID';
 const addColumnObject: AddColumnObject<TestGrid> = {
-  newColumnName: "New Column",
+  newColumnName: 'New Column',
   afterColumn: {
-    columnName: "Date Column",
+    columnName: 'Date Column',
   },
 };
 
-describe("Add Column", () => {
+describe('Add Column', () => {
   beforeEach(() => {
     jest.resetModules();
   });
   afterEach(() => {
     mockAxios.reset();
   });
-  describe("Positive Test Cases", () => {
-    it("Axios Returns Successfully", async () => {
+  describe('Positive Test Cases', () => {
+    it('Returns Number of Columns Created', async () => {
       // Given
       const gridResponse = {
         insertColumns: [
@@ -36,8 +37,7 @@ describe("Add Column", () => {
       mockAxios.mockResponse({
         data: gridResponse,
       });
-      const { data: responseData, error: responseError } =
-        await addColumnPromise;
+      const { data, error } = await addColumnPromise;
 
       // Then
       expect(mockAxios.post).toHaveBeenCalledWith(
@@ -49,16 +49,16 @@ describe("Add Column", () => {
           },
         }
       );
-      expect(responseError).toEqual(undefined);
-      expect(responseData).toEqual(gridResponse);
+      expect(error).toEqual(undefined);
+      expect(data).toEqual(gridResponse);
     });
   });
-  describe("Negative Test Cases", () => {
-    it("Axios Returns Error", async () => {
+  describe('Negative Test Cases', () => {
+    it('Rejects Invalid Auth Id', async () => {
       // Given
       const errorObject = {
         err: {
-          message: "Invalid Auth Id",
+          message: 'Invalid Auth Id',
           statusCode: 403,
         },
       };
@@ -67,11 +67,10 @@ describe("Add Column", () => {
       const addColumnPromise = addColumn<TestGrid>(
         addColumnObject,
         TEST_GRID_ID,
-        { authId: "INVALID_AUTHID" }
+        { authId: 'INVALID_AUTHID' }
       );
       mockAxios.mockError(errorObject);
-      const { data: responseData, error: responseError } =
-        await addColumnPromise;
+      const { data, error } = await addColumnPromise;
 
       // Then
       expect(mockAxios.post).toHaveBeenCalledWith(
@@ -79,12 +78,12 @@ describe("Add Column", () => {
         addColumnObject,
         {
           headers: {
-            authId: "INVALID_AUTHID",
+            authId: 'INVALID_AUTHID',
           },
         }
       );
-      expect(responseData).toEqual(undefined);
-      expect(responseError).toEqual(errorObject);
+      expect(data).toEqual(undefined);
+      expect(error).toEqual(errorObject);
     });
   });
 });

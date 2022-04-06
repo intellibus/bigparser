@@ -1,35 +1,36 @@
-import mockAxios from "jest-mock-axios";
-import { updateByRowId, UpdateRowIdObject } from "../../src/index";
-import { TestGrid } from "../__grids__/TestGrid";
+import mockAxios from 'jest-mock-axios';
+import { updateByRowId, UpdateRowIdObject } from '../../src/index';
+import { TestGrid } from '../__grids__/TestGrid';
 
-const { TEST_GRID_ID, BP_AUTH } = process.env;
+const { BP_AUTH } = process.env;
+const TEST_GRID_ID = 'VALID_GRID_ID';
 const updateRowIdObject: UpdateRowIdObject<TestGrid> = {
   update: {
     rows: [
       {
-        rowId: "6243cd4ec9d082361703ea4e",
+        rowId: '6243cd4ec9d082361703ea4e',
         columns: {
-          "String Column": "Example String 1",
+          'String Column': 'Example String 1',
         },
       },
     ],
   },
 };
 
-describe("Update By Row Id", () => {
+describe('Update By Row Id', () => {
   beforeEach(() => {
     jest.resetModules();
   });
   afterEach(() => {
     mockAxios.reset();
   });
-  describe("Positive Test Cases", () => {
-    it("Axios Returns Successfully", async () => {
+  describe('Positive Test Cases', () => {
+    it('Returns Number of Rows & Row Ids of Rows Updated', async () => {
       // Given
       const gridResponse = {
         noOfRowsUpdated: 1,
         noOfRowsFailed: 0,
-        updatedRows: ["6243cd4ec9d082361703ea4e"],
+        updatedRows: ['6243cd4ec9d082361703ea4e'],
         failedRows: {},
       };
 
@@ -41,8 +42,7 @@ describe("Update By Row Id", () => {
       mockAxios.mockResponse({
         data: gridResponse,
       });
-      const { data: responseData, error: responseError } =
-        await updateByRowIdPromise;
+      const { data, error } = await updateByRowIdPromise;
 
       // Then
       expect(mockAxios.put).toHaveBeenCalledWith(
@@ -54,16 +54,16 @@ describe("Update By Row Id", () => {
           },
         }
       );
-      expect(responseError).toEqual(undefined);
-      expect(responseData).toEqual(gridResponse);
+      expect(error).toEqual(undefined);
+      expect(data).toEqual(gridResponse);
     });
   });
-  describe("Negative Test Cases", () => {
-    it("Axios Returns Error", async () => {
+  describe('Negative Test Cases', () => {
+    it('Rejects Invalid Auth Id', async () => {
       // Given
       const errorObject = {
         err: {
-          message: "Invalid Auth Id",
+          message: 'Invalid Auth Id',
           statusCode: 403,
         },
       };
@@ -72,11 +72,10 @@ describe("Update By Row Id", () => {
       const updateByRowIdPromise = updateByRowId<TestGrid>(
         updateRowIdObject,
         TEST_GRID_ID,
-        { authId: "INVALID_AUTHID" }
+        { authId: 'INVALID_AUTHID' }
       );
       mockAxios.mockError(errorObject);
-      const { data: responseData, error: responseError } =
-        await updateByRowIdPromise;
+      const { data, error } = await updateByRowIdPromise;
 
       // Then
       expect(mockAxios.put).toHaveBeenCalledWith(
@@ -84,12 +83,12 @@ describe("Update By Row Id", () => {
         updateRowIdObject,
         {
           headers: {
-            authId: "INVALID_AUTHID",
+            authId: 'INVALID_AUTHID',
           },
         }
       );
-      expect(responseData).toEqual(undefined);
-      expect(responseError).toEqual(errorObject);
+      expect(data).toEqual(undefined);
+      expect(error).toEqual(errorObject);
     });
   });
 });

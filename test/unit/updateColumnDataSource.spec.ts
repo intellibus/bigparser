@@ -1,32 +1,33 @@
-import mockAxios from "jest-mock-axios";
+import mockAxios from 'jest-mock-axios';
 import {
   updateColumnDataSource,
   UpdateColumnDataSourceObject,
-} from "../../src/index";
-import { TestGrid } from "../__grids__/TestGrid";
+} from '../../src/index';
+import { TestGrid } from '../__grids__/TestGrid';
 
-const { TEST_GRID_ID, BP_AUTH } = process.env;
+const { BP_AUTH } = process.env;
+const TEST_GRID_ID = 'VALID_GRID_ID';
 const updateColumnDataSourceObject: UpdateColumnDataSourceObject<TestGrid> = {
   columns: [
     {
       columnDataSource: {
-        columnNames: ["Number Column", "Number 2 Column"],
-        functionType: "AVG",
+        columnNames: ['Number Column', 'Number 2 Column'],
+        functionType: 'AVG',
       },
-      columnName: "Formula Column",
+      columnName: 'Formula Column',
     },
   ],
 };
 
-describe("Update Column Data Source", () => {
+describe('Update Column Data Source', () => {
   beforeEach(() => {
     jest.resetModules();
   });
   afterEach(() => {
     mockAxios.reset();
   });
-  describe("Positive Test Cases", () => {
-    it("Axios Returns Successfully", async () => {
+  describe('Positive Test Cases', () => {
+    it('Returns Metadata of Updated Column', async () => {
       // Given
       const gridResponse = {};
 
@@ -38,8 +39,7 @@ describe("Update Column Data Source", () => {
       mockAxios.mockResponse({
         data: gridResponse,
       });
-      const { data: responseData, error: responseError } =
-        await updateColumnDataSourcePromise;
+      const { data, error } = await updateColumnDataSourcePromise;
 
       // Then
       expect(mockAxios.put).toHaveBeenCalledWith(
@@ -51,16 +51,16 @@ describe("Update Column Data Source", () => {
           },
         }
       );
-      expect(responseError).toEqual(undefined);
-      expect(responseData).toEqual(gridResponse);
+      expect(error).toEqual(undefined);
+      expect(data).toEqual(gridResponse);
     });
   });
-  describe("Negative Test Cases", () => {
-    it("Axios Returns Error", async () => {
+  describe('Negative Test Cases', () => {
+    it('Rejects Invalid Auth Id', async () => {
       // Given
       const errorObject = {
         err: {
-          message: "Invalid Auth Id",
+          message: 'Invalid Auth Id',
           statusCode: 403,
         },
       };
@@ -70,12 +70,11 @@ describe("Update Column Data Source", () => {
         updateColumnDataSourceObject,
         TEST_GRID_ID,
         {
-          authId: "INVALID_AUTHID",
+          authId: 'INVALID_AUTHID',
         }
       );
       mockAxios.mockError(errorObject);
-      const { data: responseData, error: responseError } =
-        await updateColumnDataSourcePromise;
+      const { data, error } = await updateColumnDataSourcePromise;
 
       // Then
       expect(mockAxios.put).toHaveBeenCalledWith(
@@ -83,12 +82,12 @@ describe("Update Column Data Source", () => {
         updateColumnDataSourceObject,
         {
           headers: {
-            authId: "INVALID_AUTHID",
+            authId: 'INVALID_AUTHID',
           },
         }
       );
-      expect(responseData).toEqual(undefined);
-      expect(responseError).toEqual(errorObject);
+      expect(data).toEqual(undefined);
+      expect(error).toEqual(errorObject);
     });
   });
 });

@@ -1,4 +1,4 @@
-import { AxiosResponse } from 'axios';
+import { AxiosResponse, AxiosError } from 'axios';
 
 // BigParser Types
 export declare type DataType =
@@ -222,4 +222,4 @@ export declare type MethodConfig = {
   qa?: boolean;
 };
 
-export { AxiosResponse };
+export { AxiosResponse, AxiosError };

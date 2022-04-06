@@ -1,24 +1,25 @@
-import mockAxios from "jest-mock-axios";
-import { createTab, CreateTabObject } from "../../src/index";
+import mockAxios from 'jest-mock-axios';
+import { createTab, CreateTabObject } from '../../src/index';
 
-const { TEST_GRID_ID, BP_AUTH } = process.env;
+const { BP_AUTH } = process.env;
+const TEST_GRID_ID = 'VALID_GRID_ID';
 const createTabObject: CreateTabObject = {
-  tabName: "New Tab",
-  tabDescription: "foobar",
+  tabName: 'New Tab',
+  tabDescription: 'foobar',
 };
 
-describe("Create Tab", () => {
+describe('Create Tab', () => {
   beforeEach(() => {
     jest.resetModules();
   });
   afterEach(() => {
     mockAxios.reset();
   });
-  describe("Positive Test Cases", () => {
-    it("Axios Returns Successfully", async () => {
+  describe('Positive Test Cases', () => {
+    it('Returns Grid Id of Tab Created', async () => {
       // Given
       const gridResponse = {
-        gridId: "624c67b1c9d0823617062b01",
+        gridId: '624c67b1c9d0823617062b01',
       };
 
       // When
@@ -26,8 +27,7 @@ describe("Create Tab", () => {
       mockAxios.mockResponse({
         data: gridResponse,
       });
-      const { data: responseData, error: responseError } =
-        await createTabPromise;
+      const { data, error } = await createTabPromise;
 
       // Then
       expect(mockAxios.post).toHaveBeenCalledWith(
@@ -39,27 +39,26 @@ describe("Create Tab", () => {
           },
         }
       );
-      expect(responseError).toEqual(undefined);
-      expect(responseData).toEqual(gridResponse);
+      expect(error).toEqual(undefined);
+      expect(data).toEqual(gridResponse);
     });
   });
-  describe("Negative Test Cases", () => {
-    it("Axios Returns Error", async () => {
+  describe('Negative Test Cases', () => {
+    it('Rejects Invalid Auth Id', async () => {
       // Given
       const errorObject = {
         err: {
-          message: "Invalid Auth Id",
+          message: 'Invalid Auth Id',
           statusCode: 403,
         },
       };
 
       // When
       const createTabPromise = createTab(createTabObject, TEST_GRID_ID, {
-        authId: "INVALID_AUTHID",
+        authId: 'INVALID_AUTHID',
       });
       mockAxios.mockError(errorObject);
-      const { data: responseData, error: responseError } =
-        await createTabPromise;
+      const { data, error } = await createTabPromise;
 
       // Then
       expect(mockAxios.post).toHaveBeenCalledWith(
@@ -67,12 +66,12 @@ describe("Create Tab", () => {
         createTabObject,
         {
           headers: {
-            authId: "INVALID_AUTHID",
+            authId: 'INVALID_AUTHID',
           },
         }
       );
-      expect(responseData).toEqual(undefined);
-      expect(responseError).toEqual(errorObject);
+      expect(data).toEqual(undefined);
+      expect(error).toEqual(errorObject);
     });
   });
 });

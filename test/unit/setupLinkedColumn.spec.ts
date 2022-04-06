@@ -1,30 +1,32 @@
-import mockAxios from "jest-mock-axios";
-import { setupLinkedColumn, SetupLinkedColumnObject } from "../../src/index";
-import { TestGrid, TestGrid2 } from "../__grids__/TestGrid";
+import mockAxios from 'jest-mock-axios';
+import { setupLinkedColumn, SetupLinkedColumnObject } from '../../src/index';
+import { TestGrid, TestGrid2 } from '../__grids__/TestGrid';
 
-const { TEST_GRID_ID, TEST_GRID_ID_2, BP_AUTH } = process.env;
+const { BP_AUTH } = process.env;
+const TEST_GRID_ID = 'VALID_GRID_ID';
+const TEST_GRID_ID_2 = 'VALID_GRID_ID_2';
 const setupLinkedColumnObject: SetupLinkedColumnObject<TestGrid, TestGrid2> = {
-  destinationColumnName: "Linked Column",
+  destinationColumnName: 'Linked Column',
   destinationGridId: TEST_GRID_ID,
   linkedRelatedColumns: [
     {
-      destColName: "Linked Related Column From Other Grid",
-      srcColName: "Linked Related Column",
+      destColName: 'Linked Related Column From Other Grid',
+      srcColName: 'Linked Related Column',
     },
   ],
-  sourceColumnName: "Source Column",
+  sourceColumnName: 'Source Column',
   sourceGridId: TEST_GRID_ID_2,
 };
 
-describe("Set Up Linked Column", () => {
+describe('Set Up Linked Column', () => {
   beforeEach(() => {
     jest.resetModules();
   });
   afterEach(() => {
     mockAxios.reset();
   });
-  describe("Positive Test Cases", () => {
-    it("Axios Returns Successfully", async () => {
+  describe('Positive Test Cases', () => {
+    it('Returns Metadata of Configured Linked Columns', async () => {
       // Given
       const gridResponse = {};
 
@@ -35,8 +37,7 @@ describe("Set Up Linked Column", () => {
       mockAxios.mockResponse({
         data: gridResponse,
       });
-      const { data: responseData, error: responseError } =
-        await setupLinkedColumnPromise;
+      const { data, error } = await setupLinkedColumnPromise;
 
       // Then
       expect(mockAxios.put).toHaveBeenCalledWith(
@@ -48,16 +49,16 @@ describe("Set Up Linked Column", () => {
           },
         }
       );
-      expect(responseError).toEqual(undefined);
-      expect(responseData).toEqual(gridResponse);
+      expect(error).toEqual(undefined);
+      expect(data).toEqual(gridResponse);
     });
   });
-  describe("Negative Test Cases", () => {
-    it("Axios Returns Error", async () => {
+  describe('Negative Test Cases', () => {
+    it('Rejects Invalid Auth Id', async () => {
       // Given
       const errorObject = {
         err: {
-          message: "Invalid Auth Id",
+          message: 'Invalid Auth Id',
           statusCode: 403,
         },
       };
@@ -66,12 +67,11 @@ describe("Set Up Linked Column", () => {
       const setupLinkedColumnPromise = setupLinkedColumn<TestGrid, TestGrid2>(
         setupLinkedColumnObject,
         {
-          authId: "INVALID_AUTHID",
+          authId: 'INVALID_AUTHID',
         }
       );
       mockAxios.mockError(errorObject);
-      const { data: responseData, error: responseError } =
-        await setupLinkedColumnPromise;
+      const { data, error } = await setupLinkedColumnPromise;
 
       // Then
       expect(mockAxios.put).toHaveBeenCalledWith(
@@ -79,12 +79,12 @@ describe("Set Up Linked Column", () => {
         setupLinkedColumnObject,
         {
           headers: {
-            authId: "INVALID_AUTHID",
+            authId: 'INVALID_AUTHID',
           },
         }
       );
-      expect(responseData).toEqual(undefined);
-      expect(responseError).toEqual(errorObject);
+      expect(data).toEqual(undefined);
+      expect(error).toEqual(errorObject);
     });
   });
 });

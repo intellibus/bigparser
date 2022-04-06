@@ -4,6 +4,7 @@ export { createTab } from './createTab';
 export { deleteByQuery } from './deleteByQuery';
 export { deleteByRowId } from './deleteByRowId';
 export { deleteTab } from './deleteTab';
+export { deleteGrid } from './deleteGrid';
 export { getHeaders } from './getHeaders';
 export { getMultisheetMetadata } from './getMultisheetMetadata';
 export { insert } from './insert';

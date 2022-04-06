@@ -1,4 +1,4 @@
-import { APIResponse, AxiosResponse, MethodConfig } from './types';
+import { APIResponse, AxiosResponse, AxiosError, MethodConfig } from './types';
 
 export const getBaseURL = (qa?: boolean) =>
   `https://${
@@ -16,11 +16,12 @@ export function getGridURL(
   }/${action}`;
 }
 
-export function getAPIURL(
-  action: string,
-  config: MethodConfig
-): string {
+export function getAPIURL(action: string, config: MethodConfig): string {
   return `${getBaseURL(config.qa)}/grid/${action}`;
+}
+
+export function getV1APIURL(action: string, config: MethodConfig): string {
+  return `${getBaseURL(config.qa).replace('/v2', '')}/${action}`;
 }
 
 export const HEADERS = {
@@ -47,5 +48,5 @@ export async function to(
       ...response,
       error: undefined,
     }))
-    .catch((err: Error) => ({ error: err, data: undefined }));
+    .catch((err: AxiosError) => ({ error: err, data: undefined }));
 }

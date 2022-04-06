@@ -1,37 +1,38 @@
-import mockAxios from "jest-mock-axios";
-import { searchDistinct, QueryDistinctObject } from "../../src/index";
-import { TestGrid } from "../__grids__/TestGrid";
+import mockAxios from 'jest-mock-axios';
+import { searchDistinct, QueryDistinctObject } from '../../src/index';
+import { TestGrid } from '../__grids__/TestGrid';
 
-const { TEST_GRID_ID, BP_AUTH } = process.env;
+const { BP_AUTH } = process.env;
+const TEST_GRID_ID = 'VALID_GRID_ID';
 const queryDistinctObject: QueryDistinctObject<TestGrid> = {
   query: {
     columnFilter: {
       filters: [
         {
-          column: "String Column",
-          operator: "LIKE",
-          keyword: "Example",
+          column: 'String Column',
+          operator: 'LIKE',
+          keyword: 'Example',
         },
       ],
     },
   },
   distinct: {
-    columnNames: ["String Column"],
+    columnNames: ['String Column'],
   },
 };
 
-describe("Search Distinct", () => {
+describe('Search Distinct', () => {
   beforeEach(() => {
     jest.resetModules();
   });
   afterEach(() => {
     mockAxios.reset();
   });
-  describe("Positive Test Cases", () => {
-    it("Axios Returns Successfully", async () => {
+  describe('Positive Test Cases', () => {
+    it('Returns List of Distinct Values as Result of Query', async () => {
       // Given
       const gridResponse = {
-        matchingValues: ["Example String"],
+        matchingValues: ['Example String'],
       };
 
       // When
@@ -42,8 +43,7 @@ describe("Search Distinct", () => {
       mockAxios.mockResponse({
         data: gridResponse,
       });
-      const { data: responseData, error: responseError } =
-        await searchDistinctPromise;
+      const { data, error } = await searchDistinctPromise;
 
       // Then
       expect(mockAxios.post).toHaveBeenCalledWith(
@@ -55,16 +55,16 @@ describe("Search Distinct", () => {
           },
         }
       );
-      expect(responseData).toEqual(gridResponse);
-      expect(responseError).toEqual(undefined);
+      expect(data).toEqual(gridResponse);
+      expect(error).toEqual(undefined);
     });
   });
-  describe("Negative Test Cases", () => {
-    it("Axios Returns Error", async () => {
+  describe('Negative Test Cases', () => {
+    it('Rejects Invalid Auth Id', async () => {
       // Given
       const errorObject = {
         err: {
-          message: "Invalid Auth Id",
+          message: 'Invalid Auth Id',
           statusCode: 403,
         },
       };
@@ -73,11 +73,10 @@ describe("Search Distinct", () => {
       const searchDistinctPromise = searchDistinct<TestGrid>(
         queryDistinctObject,
         TEST_GRID_ID,
-        { authId: "INVALID_AUTHID" }
+        { authId: 'INVALID_AUTHID' }
       );
       mockAxios.mockError(errorObject);
-      const { data: responseData, error: responseError } =
-        await searchDistinctPromise;
+      const { data, error } = await searchDistinctPromise;
 
       // Then
       expect(mockAxios.post).toHaveBeenCalledWith(
@@ -85,12 +84,12 @@ describe("Search Distinct", () => {
         queryDistinctObject,
         {
           headers: {
-            authId: "INVALID_AUTHID",
+            authId: 'INVALID_AUTHID',
           },
         }
       );
-      expect(responseData).toEqual(undefined);
-      expect(responseError).toEqual(errorObject);
+      expect(data).toEqual(undefined);
+      expect(error).toEqual(errorObject);
     });
   });
 });

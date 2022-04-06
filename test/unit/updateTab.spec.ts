@@ -1,21 +1,22 @@
-import mockAxios from "jest-mock-axios";
-import { updateTab, UpdateTabObject } from "../../src/index";
+import mockAxios from 'jest-mock-axios';
+import { updateTab, UpdateTabObject } from '../../src/index';
 
-const { TEST_GRID_ID, BP_AUTH } = process.env;
+const { BP_AUTH } = process.env;
+const TEST_GRID_ID = 'VALID_GRID_ID';
 const updateTabObject: UpdateTabObject = {
-  tabName: "New Tab Name",
-  tabDescription: "foobar",
+  tabName: 'New Tab Name',
+  tabDescription: 'foobar',
 };
 
-describe("Update Tab", () => {
+describe('Update Tab', () => {
   beforeEach(() => {
     jest.resetModules();
   });
   afterEach(() => {
     mockAxios.reset();
   });
-  describe("Positive Test Cases", () => {
-    it("Axios Returns Successfully", async () => {
+  describe('Positive Test Cases', () => {
+    it('Returns Grid Id of Updated Tab', async () => {
       // Given
       const gridResponse = {};
 
@@ -24,8 +25,7 @@ describe("Update Tab", () => {
       mockAxios.mockResponse({
         data: gridResponse,
       });
-      const { data: responseData, error: responseError } =
-        await updateTabPromise;
+      const { data, error } = await updateTabPromise;
 
       // Then
       expect(mockAxios.post).toHaveBeenCalledWith(
@@ -37,27 +37,26 @@ describe("Update Tab", () => {
           },
         }
       );
-      expect(responseError).toEqual(undefined);
-      expect(responseData).toEqual(gridResponse);
+      expect(error).toEqual(undefined);
+      expect(data).toEqual(gridResponse);
     });
   });
-  describe("Negative Test Cases", () => {
-    it("Axios Returns Error", async () => {
+  describe('Negative Test Cases', () => {
+    it('Rejects Invalid Auth Id', async () => {
       // Given
       const errorObject = {
         err: {
-          message: "Invalid Auth Id",
+          message: 'Invalid Auth Id',
           statusCode: 403,
         },
       };
 
       // When
       const updateTabPromise = updateTab(updateTabObject, TEST_GRID_ID, {
-        authId: "INVALID_AUTHID",
+        authId: 'INVALID_AUTHID',
       });
       mockAxios.mockError(errorObject);
-      const { data: responseData, error: responseError } =
-        await updateTabPromise;
+      const { data, error } = await updateTabPromise;
 
       // Then
       expect(mockAxios.post).toHaveBeenCalledWith(
@@ -65,12 +64,12 @@ describe("Update Tab", () => {
         updateTabObject,
         {
           headers: {
-            authId: "INVALID_AUTHID",
+            authId: 'INVALID_AUTHID',
           },
         }
       );
-      expect(responseData).toEqual(undefined);
-      expect(responseError).toEqual(errorObject);
+      expect(data).toEqual(undefined);
+      expect(error).toEqual(errorObject);
     });
   });
 });

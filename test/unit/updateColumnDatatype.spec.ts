@@ -1,35 +1,36 @@
-import mockAxios from "jest-mock-axios";
+import mockAxios from 'jest-mock-axios';
 import {
   updateColumnDatatype,
   UpdateColumnDatatypeObject,
-} from "../../src/index";
-import { TestGrid } from "../__grids__/TestGrid";
+} from '../../src/index';
+import { TestGrid } from '../__grids__/TestGrid';
 
-const { TEST_GRID_ID, BP_AUTH } = process.env;
+const { BP_AUTH } = process.env;
+const TEST_GRID_ID = 'VALID_GRID_ID';
 const updateColumnDatatypeObject: UpdateColumnDatatypeObject<TestGrid> = {
   columns: [
     {
-      columnName: "Empty Column",
-      dataType: "NUMBER",
+      columnName: 'Empty Column',
+      dataType: 'NUMBER',
     },
   ],
 };
 
-describe("Update Column Datatype", () => {
+describe('Update Column Datatype', () => {
   beforeEach(() => {
     jest.resetModules();
   });
   afterEach(() => {
     mockAxios.reset();
   });
-  describe("Positive Test Cases", () => {
-    it("Axios Returns Successfully", async () => {
+  describe('Positive Test Cases', () => {
+    it('Returns Job Id of Data Fix Job to Update Column Datatype', async () => {
       // Given
       const gridResponse = {
-        dataFixId: "6245fd56c9d082361704bdd3",
+        dataFixId: '6245fd56c9d082361704bdd3',
         message:
           "Please use 'fix_data_type_of_existing_data/status'" +
-          " api to check the status.",
+          ' api to check the status.',
       };
 
       // When
@@ -40,8 +41,7 @@ describe("Update Column Datatype", () => {
       mockAxios.mockResponse({
         data: gridResponse,
       });
-      const { data: responseData, error: responseError } =
-        await updateColumnDatatypePromise;
+      const { data, error } = await updateColumnDatatypePromise;
 
       // Then
       expect(mockAxios.put).toHaveBeenCalledWith(
@@ -53,16 +53,16 @@ describe("Update Column Datatype", () => {
           },
         }
       );
-      expect(responseError).toEqual(undefined);
-      expect(responseData).toEqual(gridResponse);
+      expect(error).toEqual(undefined);
+      expect(data).toEqual(gridResponse);
     });
   });
-  describe("Negative Test Cases", () => {
-    it("Axios Returns Error", async () => {
+  describe('Negative Test Cases', () => {
+    it('Rejects Invalid Auth Id', async () => {
       // Given
       const errorObject = {
         err: {
-          message: "Invalid Auth Id",
+          message: 'Invalid Auth Id',
           statusCode: 403,
         },
       };
@@ -71,11 +71,10 @@ describe("Update Column Datatype", () => {
       const updateColumnDatatypePromise = updateColumnDatatype<TestGrid>(
         updateColumnDatatypeObject,
         TEST_GRID_ID,
-        { authId: "INVALID_AUTHID" }
+        { authId: 'INVALID_AUTHID' }
       );
       mockAxios.mockError(errorObject);
-      const { data: responseData, error: responseError } =
-        await updateColumnDatatypePromise;
+      const { data, error } = await updateColumnDatatypePromise;
 
       // Then
       expect(mockAxios.put).toHaveBeenCalledWith(
@@ -83,12 +82,12 @@ describe("Update Column Datatype", () => {
         updateColumnDatatypeObject,
         {
           headers: {
-            authId: "INVALID_AUTHID",
+            authId: 'INVALID_AUTHID',
           },
         }
       );
-      expect(responseData).toEqual(undefined);
-      expect(responseError).toEqual(errorObject);
+      expect(data).toEqual(undefined);
+      expect(error).toEqual(errorObject);
     });
   });
 });

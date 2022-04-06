@@ -1,17 +1,10 @@
 import mockAxios from 'jest-mock-axios';
-import { createGrid, CreateGridObject } from '../../src/index';
+import { deleteGrid } from '../../src/index';
 
 const { BP_AUTH } = process.env;
-const createGridObject: CreateGridObject = {
-  gridName: 'New Grid',
-  gridTabs: [
-    {
-      tabName: 'New Tab',
-    },
-  ],
-};
+const TEST_FILE_ID = 'VALID_FILE_ID';
 
-describe('Create Grid', () => {
+describe('Delete Grid', () => {
   beforeEach(() => {
     jest.resetModules();
   });
@@ -19,31 +12,28 @@ describe('Create Grid', () => {
     mockAxios.reset();
   });
   describe('Positive Test Cases', () => {
-    it('Returns Grid Id of Created Grid', async () => {
-      // Given
-      const gridResponse = {
-        gridId: '624c8267c9d08236170650a5',
-      };
-
+    it('Returns Metadata of Tab Deleted', async () => {
       // When
-      const createGridPromise = createGrid(createGridObject);
+      const deleteTabPromise = deleteGrid(TEST_FILE_ID);
       mockAxios.mockResponse({
-        data: gridResponse,
+        data: {},
       });
-      const { data, error } = await createGridPromise;
+      const { data, error } = await deleteTabPromise;
 
       // Then
-      expect(mockAxios.post).toHaveBeenCalledWith(
-        'https://www.bigparser.com/api/v2/grid/create_grid',
-        createGridObject,
+      expect(mockAxios.delete).toHaveBeenCalledWith(
+        `https://www.bigparser.com/api/file/remove`,
         {
           headers: {
             authId: BP_AUTH,
           },
+          data: {
+            id: TEST_FILE_ID,
+          },
         }
       );
       expect(error).toEqual(undefined);
-      expect(data).toEqual(gridResponse);
+      expect(data).toEqual({});
     });
   });
   describe('Negative Test Cases', () => {
@@ -57,19 +47,21 @@ describe('Create Grid', () => {
       };
 
       // When
-      const createGridPromise = createGrid(createGridObject, {
+      const deleteTabPromise = deleteGrid(TEST_FILE_ID, {
         authId: 'INVALID_AUTHID',
       });
       mockAxios.mockError(errorObject);
-      const { data, error } = await createGridPromise;
+      const { data, error } = await deleteTabPromise;
 
       // Then
-      expect(mockAxios.post).toHaveBeenCalledWith(
-        'https://www.bigparser.com/api/v2/grid/create_grid',
-        createGridObject,
+      expect(mockAxios.delete).toHaveBeenCalledWith(
+        `https://www.bigparser.com/api/file/remove`,
         {
           headers: {
             authId: 'INVALID_AUTHID',
+          },
+          data: {
+            id: TEST_FILE_ID,
           },
         }
       );

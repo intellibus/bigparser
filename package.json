@@ -30,9 +30,9 @@
     "test:unit": "DOTENV_CONFIG_PATH=./.env.test.local jest --testPathPattern=test/unit",
     "test:unit:coverage": "DOTENV_CONFIG_PATH=./.env.test.local jest --coverage --testPathPattern=test/unit",
     "test:unit:ci": "DOTENV_CONFIG_PATH=./.env.test.local jest --ci --coverage --testPathPattern=test/unit",
-    "test:integration": "DOTENV_CONFIG_PATH=./.env.test.local jest --testPathPattern=test/integration",
-    "test:integration:coverage": "DOTENV_CONFIG_PATH=./.env.test.local jest --coverage --testPathPattern=test/integration",
-    "test:integration:ci": "DOTENV_CONFIG_PATH=./.env.test.local jest --ci --coverage --testPathPattern=test/integration",
+    "test:integration": "DOTENV_CONFIG_PATH=./.env.test.local jest --bail --testPathPattern=test/integration",
+    "test:integration:coverage": "DOTENV_CONFIG_PATH=./.env.test.local jest --bail --coverage --testPathPattern=test/integration",
+    "test:integration:ci": "DOTENV_CONFIG_PATH=./.env.test.local jest --bail --ci --coverage --testPathPattern=test/integration",
     "prepare": "husky install",
     "semantic-release": "semantic-release"
   },

@@ -1,35 +1,36 @@
-import mockAxios from "jest-mock-axios";
-import { updateByQuery, QueryUpdateObject } from "../../src/index";
-import { TestGrid } from "../__grids__/TestGrid";
+import mockAxios from 'jest-mock-axios';
+import { updateByQuery, QueryUpdateObject } from '../../src/index';
+import { TestGrid } from '../__grids__/TestGrid';
 
-const { TEST_GRID_ID, BP_AUTH } = process.env;
+const { BP_AUTH } = process.env;
+const TEST_GRID_ID = 'VALID_GRID_ID';
 const queryUpdateObject: QueryUpdateObject<TestGrid> = {
   update: {
     columns: {
-      "Number Column": 123,
+      'Number Column': 123,
     },
   },
   query: {
     globalFilter: {
       filters: [
         {
-          operator: "LIKE",
-          keyword: "Example",
+          operator: 'LIKE',
+          keyword: 'Example',
         },
       ],
     },
   },
 };
 
-describe("Update By Query", () => {
+describe('Update By Query', () => {
   beforeEach(() => {
     jest.resetModules();
   });
   afterEach(() => {
     mockAxios.reset();
   });
-  describe("Positive Test Cases", () => {
-    it("Axios Returns Successfully", async () => {
+  describe('Positive Test Cases', () => {
+    it('Returns Number of Rows Updated', async () => {
       // Given
       const gridResponse = {
         noOfRowsUpdated: 1,
@@ -43,8 +44,7 @@ describe("Update By Query", () => {
       mockAxios.mockResponse({
         data: gridResponse,
       });
-      const { data: responseData, error: responseError } =
-        await updateByQueryPromise;
+      const { data, error } = await updateByQueryPromise;
 
       // Then
       expect(mockAxios.put).toHaveBeenCalledWith(
@@ -56,17 +56,17 @@ describe("Update By Query", () => {
           },
         }
       );
-      expect(responseData).toEqual(gridResponse);
-      expect(responseError).toEqual(undefined);
+      expect(data).toEqual(gridResponse);
+      expect(error).toEqual(undefined);
     });
   });
 
-  describe("Negative Test Cases", () => {
-    it("Axios Returns Error", async () => {
+  describe('Negative Test Cases', () => {
+    it('Rejects Invalid Auth Id', async () => {
       // Given
       const errorObject = {
         err: {
-          message: "Invalid Auth Id",
+          message: 'Invalid Auth Id',
           statusCode: 403,
         },
       };
@@ -75,11 +75,10 @@ describe("Update By Query", () => {
       const updateByQueryPromise = updateByQuery<TestGrid>(
         queryUpdateObject,
         TEST_GRID_ID,
-        { authId: "INVALID_AUTHID" }
+        { authId: 'INVALID_AUTHID' }
       );
       mockAxios.mockError(errorObject);
-      const { data: responseData, error: responseError } =
-        await updateByQueryPromise;
+      const { data, error } = await updateByQueryPromise;
 
       // Then
       expect(mockAxios.put).toHaveBeenCalledWith(
@@ -87,12 +86,12 @@ describe("Update By Query", () => {
         queryUpdateObject,
         {
           headers: {
-            authId: "INVALID_AUTHID",
+            authId: 'INVALID_AUTHID',
           },
         }
       );
-      expect(responseData).toEqual(undefined);
-      expect(responseError).toEqual(errorObject);
+      expect(data).toEqual(undefined);
+      expect(error).toEqual(errorObject);
     });
   });
 });

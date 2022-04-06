@@ -1,34 +1,35 @@
-import mockAxios from "jest-mock-axios";
-import { insert, InsertObject } from "../../src/index";
-import { TestGrid } from "../__grids__/TestGrid";
+import mockAxios from 'jest-mock-axios';
+import { insert, InsertObject } from '../../src/index';
+import { TestGrid } from '../__grids__/TestGrid';
 
-const { TEST_GRID_ID, BP_AUTH } = process.env;
+const { BP_AUTH } = process.env;
+const TEST_GRID_ID = 'VALID_GRID_ID';
 const insertObject: InsertObject<TestGrid> = {
   insert: {
     rows: [
       {
-        "String Column": "Example String 2",
-        "Boolean Column": false,
+        'String Column': 'Example String 2',
+        'Boolean Column': false,
       },
     ],
   },
 };
 
-describe("Insert", () => {
+describe('Insert', () => {
   beforeEach(() => {
     jest.resetModules();
   });
   afterEach(() => {
     mockAxios.reset();
   });
-  describe("Positive Test Cases", () => {
-    it("Axios Returns Successfully", async () => {
+  describe('Positive Test Cases', () => {
+    it('Returns Number of Rows & Row Ids of Rows Created', async () => {
       // Given
       const gridResponse = {
         noOfRowsCreated: 1,
         noOfRowsFailed: 0,
         createdRows: {
-          0: "6245fdd8c9d082361704be38",
+          0: '6245fdd8c9d082361704be38',
         },
         failedRows: {},
       };
@@ -38,7 +39,7 @@ describe("Insert", () => {
       mockAxios.mockResponse({
         data: gridResponse,
       });
-      const { data: responseData, error: responseError } = await insertPromise;
+      const { data, error } = await insertPromise;
 
       // Then
       expect(mockAxios.post).toHaveBeenCalledWith(
@@ -50,26 +51,26 @@ describe("Insert", () => {
           },
         }
       );
-      expect(responseError).toEqual(undefined);
-      expect(responseData).toEqual(gridResponse);
+      expect(error).toEqual(undefined);
+      expect(data).toEqual(gridResponse);
     });
   });
-  describe("Negative Test Cases", () => {
-    it("Axios Returns Error", async () => {
+  describe('Negative Test Cases', () => {
+    it('Rejects Invalid Auth Id', async () => {
       // Given
       const errorObject = {
         err: {
-          message: "Invalid Auth Id",
+          message: 'Invalid Auth Id',
           statusCode: 403,
         },
       };
 
       // When
       const insertPromise = insert<TestGrid>(insertObject, TEST_GRID_ID, {
-        authId: "INVALID_AUTHID",
+        authId: 'INVALID_AUTHID',
       });
       mockAxios.mockError(errorObject);
-      const { data: responseData, error: responseError } = await insertPromise;
+      const { data, error } = await insertPromise;
 
       // Then
       expect(mockAxios.post).toHaveBeenCalledWith(
@@ -77,12 +78,12 @@ describe("Insert", () => {
         insertObject,
         {
           headers: {
-            authId: "INVALID_AUTHID",
+            authId: 'INVALID_AUTHID',
           },
         }
       );
-      expect(responseData).toEqual(undefined);
-      expect(responseError).toEqual(errorObject);
+      expect(data).toEqual(undefined);
+      expect(error).toEqual(errorObject);
     });
   });
 });
