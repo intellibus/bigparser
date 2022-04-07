@@ -2,38 +2,60 @@ import { AxiosError } from 'axios';
 import { searchCount } from '../../src/index';
 import { TestGrid } from '../__grids__/TestGrid';
 import { QueryObject } from '../../src/types';
-import { createGrids, removeGrid } from './integrationTestUtils';
+import {
+  bootstrapIntegrationTests,
+  cleanupIntegrationTests,
+} from './integration.utils';
 
 jest.disableAutomock();
 jest.unmock('axios');
 jest.setTimeout(10000);
 
-let testGridTab1Id: string;
+let TEST_GRID_ID;
 
 const queryObject: QueryObject<TestGrid> = {
-  query: {},
+  query: {
+    columnFilter: {
+      filters: [
+        {
+          column: 'Boolean Column',
+          operator: 'EQ',
+          keyword: true,
+        },
+      ],
+    },
+    sendRowIdsInResponse: true,
+    showColumnNamesInResponse: true,
+  },
 };
 
-const beforeEachWrapper = async () => {
+const beforeEachRun = async () => {
   jest.resetModules();
-  [testGridTab1Id] = await createGrids();
+  const { testGridId } = await bootstrapIntegrationTests();
+  TEST_GRID_ID = testGridId;
+};
+
+const afterEachRun = async () => {
+  await cleanupIntegrationTests(TEST_GRID_ID);
 };
 
 describe('Search Count', () => {
-  beforeEach(() => beforeEachWrapper());
-  afterEach(() => removeGrid(testGridTab1Id));
+  beforeEach(() => beforeEachRun());
+  afterEach(() => afterEachRun());
   describe('Positive Test Cases', () => {
     it('Should Return Number of Grid Results', async () => {
       // Given
-      const response = { totalRowCount: 2 };
+      const response = { totalRowCount: 1 };
 
       // When
-      const { data: responseData, error: responseError } =
-        await searchCount<TestGrid>(queryObject, testGridTab1Id);
+      const { data, error } = await searchCount<TestGrid>(
+        queryObject,
+        TEST_GRID_ID
+      );
 
       // Then
-      expect(responseError).toEqual(undefined);
-      expect(responseData).toEqual(response);
+      expect(error).toEqual(undefined);
+      expect(data).toEqual(response);
     });
   });
   describe('Negative Test Cases', () => {
@@ -47,14 +69,16 @@ describe('Search Count', () => {
       };
 
       // When
-      const { data: responseData, error: responseError } =
-        await searchCount<TestGrid>(queryObject, 'INVALID_GRID_ID');
+      const { data, error } = await searchCount<TestGrid>(
+        queryObject,
+        'INVALID_GRID_ID'
+      );
 
       // Then
-      expect(responseData).toEqual(undefined);
-      expect((responseError as AxiosError).response.data).toEqual(errorObject);
+      expect(data).toEqual(undefined);
+      expect((error as AxiosError).response.data).toEqual(errorObject);
     });
-    it('Should Reject Invalid View Id', async () => {
+    it('Should Reject Invalid Share Id', async () => {
       // Given
       const errorObject = {
         errorMessage: 'share Id invalid',
@@ -64,16 +88,19 @@ describe('Search Count', () => {
       };
 
       // When
-      const { data: responseData, error: responseError } =
-        await searchCount<TestGrid>(queryObject, testGridTab1Id, {
-          shareId: 'INVALID_VIEW_ID',
-        });
+      const { data, error } = await searchCount<TestGrid>(
+        queryObject,
+        TEST_GRID_ID,
+        {
+          shareId: 'INVALID_SHARE_ID',
+        }
+      );
 
       // Then
-      expect(responseData).toEqual(undefined);
-      expect((responseError as AxiosError).response.data).toEqual(errorObject);
+      expect(data).toEqual(undefined);
+      expect((error as AxiosError).response.data).toEqual(errorObject);
     });
-    it('Should Reject Invalid Auth Id (prod)', async () => {
+    it('Should Reject Invalid Auth Id in Production', async () => {
       // Given
       const errorObject = {
         errorMessage: 'You are not authorized to this grid.',
@@ -83,16 +110,19 @@ describe('Search Count', () => {
       };
 
       // When
-      const { data: responseData, error: responseError } =
-        await searchCount<TestGrid>(queryObject, testGridTab1Id, {
+      const { data, error } = await searchCount<TestGrid>(
+        queryObject,
+        TEST_GRID_ID,
+        {
           authId: 'INVALID_AUTHID',
-        });
+        }
+      );
 
       // Then
-      expect(responseData).toEqual(undefined);
-      expect((responseError as AxiosError).response.data).toEqual(errorObject);
+      expect(data).toEqual(undefined);
+      expect((error as AxiosError).response.data).toEqual(errorObject);
     });
-    it('Should Reject Invalid Auth Id (qa)', async () => {
+    it('Should Reject Invalid Auth Id in QA', async () => {
       // Given
       const errorObject = {
         errorMessage: 'System error. Please contact admin.',
@@ -102,15 +132,18 @@ describe('Search Count', () => {
       };
 
       // When
-      const { data: responseData, error: responseError } =
-        await searchCount<TestGrid>(queryObject, testGridTab1Id, {
+      const { data, error } = await searchCount<TestGrid>(
+        queryObject,
+        TEST_GRID_ID,
+        {
           authId: 'INVALID_AUTHID',
           qa: true,
-        });
+        }
+      );
 
       // Then
-      expect(responseData).toEqual(undefined);
-      expect((responseError as AxiosError).response.data).toEqual(errorObject);
+      expect(data).toEqual(undefined);
+      expect((error as AxiosError).response.data).toEqual(errorObject);
     });
   });
 });

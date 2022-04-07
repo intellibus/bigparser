@@ -11,18 +11,3 @@ export declare type TestGrid = {
   'Formula Column': number;
   'Empty Column': string;
 };
-
-export declare type TestGrid2 = {
-  _id: string;
-  'Source Column': string;
-  'Linked Related Column': string;
-};
-
-export declare type NewGrid = {
-  _id: string;
-  'Column 1': string;
-  'Column 2': string;
-  'Column 3': string;
-  'Column 4': string;
-  'Column 5': string;
-};

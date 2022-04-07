@@ -1,5 +1,5 @@
 import mockAxios from 'jest-mock-axios';
-import { getHeaders } from '../../src/index';
+import { getGridMetadata } from '../../src/index';
 
 const { BP_AUTH } = process.env;
 const TEST_GRID_ID = 'VALID_GRID_ID';
@@ -151,9 +151,9 @@ describe('Get Headers', () => {
       };
 
       // When
-      const getHeadersPromise = getHeaders(TEST_GRID_ID);
+      const getGridMetadataPromise = getGridMetadata(TEST_GRID_ID);
       mockAxios.mockResponse({ data: gridResponse });
-      const { data, error } = await getHeadersPromise;
+      const { data, error } = await getGridMetadataPromise;
 
       // Then
       expect(mockAxios.get).toHaveBeenCalledWith(
@@ -179,11 +179,11 @@ describe('Get Headers', () => {
       };
 
       // When
-      const getHeadersPromise = getHeaders(TEST_GRID_ID, {
+      const getGridMetadataPromise = getGridMetadata(TEST_GRID_ID, {
         authId: 'INVALID_AUTHID',
       });
       mockAxios.mockError(errorObject);
-      const { data, error } = await getHeadersPromise;
+      const { data, error } = await getGridMetadataPromise;
 
       // Then
       expect(mockAxios.get).toHaveBeenCalledWith(

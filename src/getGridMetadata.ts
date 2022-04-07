@@ -2,7 +2,7 @@ import axios from 'axios';
 import { getGridURL, getHTTPHeaders, to } from './utils';
 import { APIResponse, MethodConfig } from './types';
 
-export async function getHeaders(
+export async function getGridMetadata(
   gridId: string,
   config: MethodConfig = {}
 ): Promise<APIResponse> {

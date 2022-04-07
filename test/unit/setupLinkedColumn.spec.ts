@@ -1,6 +1,7 @@
 import mockAxios from 'jest-mock-axios';
 import { setupLinkedColumn, SetupLinkedColumnObject } from '../../src/index';
-import { TestGrid, TestGrid2 } from '../__grids__/TestGrid';
+import { TestGrid } from '../__grids__/TestGrid';
+import { TestGrid2 } from '../__grids__/TestGrid2';
 
 const { BP_AUTH } = process.env;
 const TEST_GRID_ID = 'VALID_GRID_ID';

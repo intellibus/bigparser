@@ -22,7 +22,7 @@ describe('Delete Grid', () => {
 
       // Then
       expect(mockAxios.delete).toHaveBeenCalledWith(
-        `https://www.bigparser.com/api/file/remove`,
+        `https://www.bigparser.com/APIServices/api/file/remove`,
         {
           headers: {
             authId: BP_AUTH,
@@ -55,7 +55,7 @@ describe('Delete Grid', () => {
 
       // Then
       expect(mockAxios.delete).toHaveBeenCalledWith(
-        `https://www.bigparser.com/api/file/remove`,
+        `https://www.bigparser.com/APIServices/api/file/remove`,
         {
           headers: {
             authId: 'INVALID_AUTHID',

@@ -63,10 +63,8 @@ export declare type Query<GridDataModel> = {
   showColumnNamesInResponse?: boolean;
 };
 
-export declare type RowEntry<GridDataModel> = Partial<GridDataModel>;
-
 export declare type Insert<GridDataModel> = {
-  rows: Array<RowEntry<GridDataModel>>;
+  rows: Array<Partial<GridDataModel>>;
 };
 
 export declare type InsertObject<GridDataModel> = {
@@ -87,7 +85,7 @@ export declare type QueryDistinctObject<GridDataModel> = {
 };
 
 export declare type QueryUpdate<GridDataModel> = {
-  columns: RowEntry<GridDataModel>;
+  columns: Partial<GridDataModel>;
 };
 
 export declare type QueryUpdateObject<GridDataModel> = {
@@ -97,7 +95,7 @@ export declare type QueryUpdateObject<GridDataModel> = {
 
 export declare type UpdateRowId<GridDataModel> = {
   rowId: string;
-  columns: RowEntry<GridDataModel>;
+  columns: Partial<GridDataModel>;
 };
 
 export declare type UpdateRowIds<GridDataModel> = {
@@ -107,6 +105,8 @@ export declare type UpdateRowIds<GridDataModel> = {
 export declare type UpdateRowIdObject<GridDataModel> = {
   update: UpdateRowIds<GridDataModel>;
 };
+
+export declare type InsertColumn = { columnName: string; dataType?: DataType };
 
 export declare type UpdateColumnDatatype<GridDataModel> = {
   columnName: keyof GridDataModel;
@@ -133,12 +133,8 @@ export declare type DeleteQueryObject<GridDataModel> = {
   delete: QueryObject<GridDataModel>;
 };
 
-export declare type RowId = {
-  rowId: string;
-};
-
 export declare type DeleteRowIds = {
-  rows: Array<RowId>;
+  rows: Array<{ rowId: string }>;
 };
 
 export declare type DeleteRowIdObject = {
@@ -160,7 +156,6 @@ export declare type CreateTabObject = GridTab;
 
 export declare type UpdateTabObject = GridTab;
 
-// TODO: get exact docs
 export declare type LinkedRelatedColumn<
   DestinationGridDataModel,
   SourceGridDataModel
@@ -169,7 +164,6 @@ export declare type LinkedRelatedColumn<
   srcColName: keyof SourceGridDataModel;
 };
 
-// TODO: get exact docs
 export declare type SetupLinkedColumnObject<
   DestinationGridDataModel,
   SourceGridDataModel
@@ -179,41 +173,81 @@ export declare type SetupLinkedColumnObject<
   linkedRelatedColumns: Array<
     LinkedRelatedColumn<DestinationGridDataModel, SourceGridDataModel>
   >;
-  queryInSourceGrid?: Query<SourceGridDataModel>;
+  queryInSourceGrid?: Query<DestinationGridDataModel>;
   sourceColumnName: keyof SourceGridDataModel;
   sourceGridId: string;
 };
 
 export declare type ColumnPosition<GridDataModel> = {
   columnName: keyof GridDataModel;
-  // Currently in typescript we cannot do better than this
   columnIndex?: string;
 };
 
-export declare type AfterColumnObject<GridDataModel> = {
-  afterColumn: ColumnPosition<GridDataModel>;
+export declare type AfterColumnObject<AfterType> = {
+  afterColumn?: AfterType;
   beforeColumn?: never;
 };
 
-export declare type BeforeColumnObject<GridDataModel> = {
+export declare type BeforeColumnObject<BeforeType> = {
   afterColumn?: never;
-  beforeColumn: ColumnPosition<GridDataModel>;
+  beforeColumn?: BeforeType;
+};
+
+export declare type AfterRowIdObject = {
+  afterRowId?: string;
+  beforeRowId?: never;
+};
+
+export declare type BeforeRowIdObject = {
+  afterRowId?: never;
+  beforeRowId?: string;
 };
 
 export declare type AddColumnObject<GridDataModel> = (
-  | AfterColumnObject<GridDataModel>
-  | BeforeColumnObject<GridDataModel>
+  | AfterColumnObject<ColumnPosition<GridDataModel>>
+  | BeforeColumnObject<ColumnPosition<GridDataModel>>
 ) & {
   newColumnName: string;
 };
 
-// TODO: add DeleteColumnObject? What is the shape of this request?
+export declare type BulkDeleteColumns<GridDataModel> = {
+  columns: Array<ColumnPosition<GridDataModel>>;
+};
+
+export declare type BulkInsertColumns<GridDataModel> = (
+  | AfterColumnObject<keyof GridDataModel>
+  | BeforeColumnObject<keyof GridDataModel>
+) & { columns: Array<InsertColumn> };
+
+export declare type BulkRenameColumn<GridDataModel> = {
+  existingColumnName: keyof GridDataModel;
+  newColumnName: string;
+};
+
+export declare type BulkRenameColumns<GridDataModel> = {
+  columns: Array<BulkRenameColumn<GridDataModel>>;
+};
+
+export declare type BulkInsertRows<GridDataModel> = (
+  | AfterRowIdObject
+  | BeforeRowIdObject
+) &
+  Insert<GridDataModel>;
+
+export declare type BulkCrudObject<GridDataModel> = {
+  insertColumns?: Array<BulkInsertColumns<GridDataModel>>;
+  deleteColumns?: BulkDeleteColumns<GridDataModel>;
+  renameColumns?: BulkRenameColumns<GridDataModel>;
+  insertRows?: Array<BulkInsertRows<GridDataModel>>;
+  updateRows?: UpdateRowIds<GridDataModel>;
+  deleteRows?: DeleteRowIds;
+};
 
 export declare type APIResponse =
   | (AxiosResponse & { error: void })
   | {
       data: void;
-      error: Error;
+      error: AxiosError;
     };
 
 export declare type MethodConfig = {

@@ -21,7 +21,10 @@ export function getAPIURL(action: string, config: MethodConfig): string {
 }
 
 export function getV1APIURL(action: string, config: MethodConfig): string {
-  return `${getBaseURL(config.qa).replace('/v2', '')}/${action}`;
+  return `${getBaseURL(config.qa).replace(
+    'api/v2',
+    'APIServices/api'
+  )}/${action}`;
 }
 
 export const HEADERS = {

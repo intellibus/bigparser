@@ -10,3 +10,5 @@
 8. Full Schema for setupLinkedColumns API
 9. Response Schema of deleteByQuery doesn't match deleteByRowIds
 10. Response Body of getHeaders has property "islinkedColumn" for each column instead of "isLinkedColumn"
+
+11. Rename getHeaders to getGridMetadata
