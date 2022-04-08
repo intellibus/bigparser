@@ -17,6 +17,7 @@
 [![NPM version](https://img.shields.io/npm/v/bigparser?style=flat-square)](https://img.shields.io/npm/v/bigparser?style=flat-square)
 [![HEAD Build Status](https://github.com/intellibus/bigparser/actions/workflows/CI.yml/badge.svg?style=flat-square)](https://github.com/intellibus/bigparser/actions/workflows/CI.yml)
 [![Release Build Status](https://github.com/intellibus/bigparser/actions/workflows/CD.yml/badge.svg?style=flat-square)](https://github.com/intellibus/bigparser/actions/workflows/CD.yml)
+[![Synthetic Monitoring Status](https://github.com/intellibus/bigparser/actions/workflows/SM.yml/badge.svg?style=flat-square)](https://github.com/intellibus/bigparser/actions/workflows/SM.yml)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/64436d03e7566e8e9bee/test_coverage)](https://codeclimate.com/github/intellibus/bigparser/test_coverage)
 [![Maintainability](https://api.codeclimate.com/v1/badges/64436d03e7566e8e9bee/maintainability)](https://codeclimate.com/github/intellibus/bigparser/maintainability)
 [![Contributors](https://img.shields.io/github/contributors-anon/intellibus/bigparser?style=flat-square)](https:/github.com/intellibus/bigparser/graphs/contributors)
