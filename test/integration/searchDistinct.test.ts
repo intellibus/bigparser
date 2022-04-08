@@ -1,7 +1,7 @@
 import { AxiosError } from 'axios';
-import { search } from '../../src/index';
+import { searchDistinct } from '../../src/index';
 import { TestGrid } from '../__grids__/TestGrid';
-import { QueryObject } from '../../src/types';
+import { QueryDistinctObject } from '../../src/types';
 import {
   bootstrapIntegrationTests,
   cleanupIntegrationTests,
@@ -12,62 +12,39 @@ jest.unmock('axios');
 jest.setTimeout(10000);
 
 let TEST_GRID_ID: string;
-let FIRST_ROW_ID: string;
 
-const queryObject: QueryObject<TestGrid> = {
-  query: {
-    columnFilter: {
-      filters: [
-        {
-          column: 'Boolean Column',
-          operator: 'EQ',
-          keyword: true,
-        },
-      ],
-    },
-    sendRowIdsInResponse: true,
-    showColumnNamesInResponse: true,
+const queryDistinctObject: QueryDistinctObject<TestGrid> = {
+  query: {},
+  distinct: {
+    columnNames: ['String Column'],
   },
 };
 
 const beforeEachRun = async () => {
   jest.resetModules();
-  const { testGridId, firstRowId } = await bootstrapIntegrationTests();
+  const { testGridId } = await bootstrapIntegrationTests();
   TEST_GRID_ID = testGridId;
-  FIRST_ROW_ID = firstRowId;
 };
 
 const afterEachRun = async () => {
   await cleanupIntegrationTests(TEST_GRID_ID);
 };
 
-describe('Search', () => {
+describe('Search Distinct', () => {
   beforeEach(() => beforeEachRun());
   afterEach(() => afterEachRun());
   describe('Positive Test Cases', () => {
-    it('Should Return Grid Results', async () => {
+    it('Should Return Distinct Matching Values Successfully', async () => {
       // Given
       const response = {
-        totalRowCount: 1,
-        rows: [
-          {
-            _id: FIRST_ROW_ID,
-            'String Column': 'Example String',
-            'Number Column': 1337,
-            'Number 2 Column': 1234.5678,
-            'Boolean Column': true,
-            'Date Column': '2022-04-07',
-            'Date Time Column': '2022-04-07 00:00:00.000',
-            'Linked Column': '20171',
-            'Linked Related Column From Other Grid': 'Related Column Value 1',
-            'Formula Column': null,
-            'Empty Column': null,
-          },
-        ],
+        matchingValues: ['Example String'],
       };
 
       // When
-      const { data, error } = await search<TestGrid>(queryObject, TEST_GRID_ID);
+      const { data, error } = await searchDistinct<TestGrid>(
+        queryDistinctObject,
+        TEST_GRID_ID,
+      );
 
       // Then
       expect(error).toEqual(undefined);
@@ -78,15 +55,15 @@ describe('Search', () => {
     it('Should Reject Invalid Grid Id', async () => {
       // Given
       const errorObject = {
-        errorMessage: 'System error. Please contact admin.',
+        errorMessage: 'Grid not found',
         otherDetails: {},
-        errorType: 'SYSTEMERROR',
-        recoverable: false,
+        errorType: 'DATAERROR',
+        recoverable: true,
       };
 
       // When
-      const { data, error } = await search<TestGrid>(
-        queryObject,
+      const { data, error } = await searchDistinct<TestGrid>(
+        queryDistinctObject,
         'INVALID_GRID_ID',
       );
 
@@ -97,15 +74,15 @@ describe('Search', () => {
     it('Should Reject Invalid Share Id', async () => {
       // Given
       const errorObject = {
-        errorMessage: 'share Id invalid',
+        errorMessage: 'System error. Please contact admin.',
         otherDetails: {},
-        errorType: 'DATAERROR',
-        recoverable: true,
+        errorType: 'SYSTEMERROR',
+        recoverable: false,
       };
 
       // When
-      const { data, error } = await search<TestGrid>(
-        queryObject,
+      const { data, error } = await searchDistinct<TestGrid>(
+        queryDistinctObject,
         TEST_GRID_ID,
         {
           shareId: 'INVALID_SHARE_ID',
@@ -119,15 +96,15 @@ describe('Search', () => {
     it('Should Reject Invalid Auth Id in Production', async () => {
       // Given
       const errorObject = {
-        errorMessage: 'authId is invalid',
+        errorMessage: 'System error. Please contact admin.',
         otherDetails: {},
-        errorType: 'AUTHERROR',
-        recoverable: true,
+        errorType: 'SYSTEMERROR',
+        recoverable: false,
       };
 
       // When
-      const { data, error } = await search<TestGrid>(
-        queryObject,
+      const { data, error } = await searchDistinct<TestGrid>(
+        queryDistinctObject,
         TEST_GRID_ID,
         {
           authId: 'INVALID_AUTHID',
@@ -141,15 +118,15 @@ describe('Search', () => {
     it('Should Reject Invalid Auth Id in QA', async () => {
       // Given
       const errorObject = {
-        errorMessage: 'authId is invalid',
+        errorMessage: 'Grid not found',
         otherDetails: {},
-        errorType: 'AUTHERROR',
+        errorType: 'DATAERROR',
         recoverable: true,
       };
 
       // When
-      const { data, error } = await search<TestGrid>(
-        queryObject,
+      const { data, error } = await searchDistinct<TestGrid>(
+        queryDistinctObject,
         TEST_GRID_ID,
         {
           authId: 'INVALID_AUTHID',

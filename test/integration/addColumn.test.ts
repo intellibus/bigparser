@@ -1,7 +1,7 @@
 import { AxiosError } from 'axios';
-import { search } from '../../src/index';
+import { addColumn } from '../../src/index';
 import { TestGrid } from '../__grids__/TestGrid';
-import { QueryObject } from '../../src/types';
+import { AddColumnObject } from '../../src/types';
 import {
   bootstrapIntegrationTests,
   cleanupIntegrationTests,
@@ -12,62 +12,42 @@ jest.unmock('axios');
 jest.setTimeout(10000);
 
 let TEST_GRID_ID: string;
-let FIRST_ROW_ID: string;
 
-const queryObject: QueryObject<TestGrid> = {
-  query: {
-    columnFilter: {
-      filters: [
-        {
-          column: 'Boolean Column',
-          operator: 'EQ',
-          keyword: true,
-        },
-      ],
-    },
-    sendRowIdsInResponse: true,
-    showColumnNamesInResponse: true,
+const addColumnObject: AddColumnObject<TestGrid> = {
+  newColumnName: 'New Column',
+  afterColumn: {
+    columnName: 'Date Column',
   },
 };
 
 const beforeEachRun = async () => {
   jest.resetModules();
-  const { testGridId, firstRowId } = await bootstrapIntegrationTests();
+  const { testGridId } = await bootstrapIntegrationTests();
   TEST_GRID_ID = testGridId;
-  FIRST_ROW_ID = firstRowId;
 };
 
 const afterEachRun = async () => {
   await cleanupIntegrationTests(TEST_GRID_ID);
 };
 
-describe('Search', () => {
+describe('Add Column', () => {
   beforeEach(() => beforeEachRun());
   afterEach(() => afterEachRun());
   describe('Positive Test Cases', () => {
-    it('Should Return Grid Results', async () => {
+    it('Should Return Number of Columns Created', async () => {
       // Given
       const response = {
-        totalRowCount: 1,
-        rows: [
+        insertColumns: [
           {
-            _id: FIRST_ROW_ID,
-            'String Column': 'Example String',
-            'Number Column': 1337,
-            'Number 2 Column': 1234.5678,
-            'Boolean Column': true,
-            'Date Column': '2022-04-07',
-            'Date Time Column': '2022-04-07 00:00:00.000',
-            'Linked Column': '20171',
-            'Linked Related Column From Other Grid': 'Related Column Value 1',
-            'Formula Column': null,
-            'Empty Column': null,
+            noOfColumnsCreated: 1,
           },
         ],
       };
-
       // When
-      const { data, error } = await search<TestGrid>(queryObject, TEST_GRID_ID);
+      const { data, error } = await addColumn<TestGrid>(
+        addColumnObject,
+        TEST_GRID_ID,
+      );
 
       // Then
       expect(error).toEqual(undefined);
@@ -85,8 +65,8 @@ describe('Search', () => {
       };
 
       // When
-      const { data, error } = await search<TestGrid>(
-        queryObject,
+      const { data, error } = await addColumn<TestGrid>(
+        addColumnObject,
         'INVALID_GRID_ID',
       );
 
@@ -104,14 +84,13 @@ describe('Search', () => {
       };
 
       // When
-      const { data, error } = await search<TestGrid>(
-        queryObject,
+      const { data, error } = await addColumn<TestGrid>(
+        addColumnObject,
         TEST_GRID_ID,
         {
           shareId: 'INVALID_SHARE_ID',
         },
       );
-
       // Then
       expect(data).toEqual(undefined);
       expect((error as AxiosError).response.data).toEqual(errorObject);
@@ -126,8 +105,8 @@ describe('Search', () => {
       };
 
       // When
-      const { data, error } = await search<TestGrid>(
-        queryObject,
+      const { data, error } = await addColumn<TestGrid>(
+        addColumnObject,
         TEST_GRID_ID,
         {
           authId: 'INVALID_AUTHID',
@@ -148,8 +127,8 @@ describe('Search', () => {
       };
 
       // When
-      const { data, error } = await search<TestGrid>(
-        queryObject,
+      const { data, error } = await addColumn<TestGrid>(
+        addColumnObject,
         TEST_GRID_ID,
         {
           authId: 'INVALID_AUTHID',
