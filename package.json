@@ -70,6 +70,14 @@
     "ts-node": "^10.7.0",
     "typescript": "^4.6.3"
   },
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "all",
+    "bracketSpacing": true,
+    "tabWidth": 2,
+    "useTabs": false,
+    "semi": true
+  },
   "eslintConfig": {
     "root": true,
     "parser": "@typescript-eslint/parser",
