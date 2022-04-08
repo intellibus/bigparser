@@ -36,7 +36,7 @@ describe('Update Column Datatype', () => {
       // When
       const updateColumnDatatypePromise = updateColumnDatatype<TestGrid>(
         updateColumnDatatypeObject,
-        TEST_GRID_ID
+        TEST_GRID_ID,
       );
       mockAxios.mockResponse({
         data: response,
@@ -51,7 +51,7 @@ describe('Update Column Datatype', () => {
           headers: {
             authId: BP_AUTH,
           },
-        }
+        },
       );
       expect(error).toEqual(undefined);
       expect(data).toEqual(response);
@@ -71,7 +71,7 @@ describe('Update Column Datatype', () => {
       const updateColumnDatatypePromise = updateColumnDatatype<TestGrid>(
         updateColumnDatatypeObject,
         TEST_GRID_ID,
-        { authId: 'INVALID_AUTHID' }
+        { authId: 'INVALID_AUTHID' },
       );
       mockAxios.mockError(errorObject);
       const { data, error } = await updateColumnDatatypePromise;
@@ -84,7 +84,7 @@ describe('Update Column Datatype', () => {
           headers: {
             authId: 'INVALID_AUTHID',
           },
-        }
+        },
       );
       expect(data).toEqual(undefined);
       expect(error).toEqual(errorObject);

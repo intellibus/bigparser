@@ -37,7 +37,7 @@ describe('Update By Row Id', () => {
       // When
       const updateByRowIdPromise = updateByRowId<TestGrid>(
         updateRowIdObject,
-        TEST_GRID_ID
+        TEST_GRID_ID,
       );
       mockAxios.mockResponse({
         data: response,
@@ -52,7 +52,7 @@ describe('Update By Row Id', () => {
           headers: {
             authId: BP_AUTH,
           },
-        }
+        },
       );
       expect(error).toEqual(undefined);
       expect(data).toEqual(response);
@@ -72,7 +72,7 @@ describe('Update By Row Id', () => {
       const updateByRowIdPromise = updateByRowId<TestGrid>(
         updateRowIdObject,
         TEST_GRID_ID,
-        { authId: 'INVALID_AUTHID' }
+        { authId: 'INVALID_AUTHID' },
       );
       mockAxios.mockError(errorObject);
       const { data, error } = await updateByRowIdPromise;
@@ -85,7 +85,7 @@ describe('Update By Row Id', () => {
           headers: {
             authId: 'INVALID_AUTHID',
           },
-        }
+        },
       );
       expect(data).toEqual(undefined);
       expect(error).toEqual(errorObject);

@@ -55,7 +55,7 @@ describe('Search', () => {
           headers: {
             authId: BP_AUTH,
           },
-        }
+        },
       );
       expect(error).toEqual(undefined);
       expect(data).toEqual(response);
@@ -98,7 +98,7 @@ describe('Search', () => {
           headers: {
             authId: BP_AUTH,
           },
-        }
+        },
       );
       expect(error).toEqual(undefined);
       expect(data).toEqual(response);
@@ -127,7 +127,7 @@ describe('Search', () => {
           headers: {
             authId: BP_AUTH,
           },
-        }
+        },
       );
       expect(data).toEqual(undefined);
       expect(error).toEqual(errorObject);
@@ -156,7 +156,7 @@ describe('Search', () => {
           headers: {
             authId: BP_AUTH,
           },
-        }
+        },
       );
       expect(data).toEqual(undefined);
       expect(error).toEqual(errorObject);
@@ -185,7 +185,7 @@ describe('Search', () => {
           headers: {
             authId: 'INVALID_AUTHID',
           },
-        }
+        },
       );
       expect(data).toEqual(undefined);
       expect(error).toEqual(errorObject);

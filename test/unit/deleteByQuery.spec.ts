@@ -37,7 +37,7 @@ describe('Delete By Query', () => {
       // When
       const deleteByQueryPromise = deleteByQuery<TestGrid>(
         deleteQueryObject,
-        TEST_GRID_ID
+        TEST_GRID_ID,
       );
       mockAxios.mockResponse({
         data: response,
@@ -52,7 +52,7 @@ describe('Delete By Query', () => {
             authId: BP_AUTH,
           },
           data: deleteQueryObject,
-        }
+        },
       );
       expect(error).toEqual(undefined);
       expect(data).toEqual(response);
@@ -72,7 +72,7 @@ describe('Delete By Query', () => {
       const deleteByQueryPromise = deleteByQuery(
         deleteQueryObject,
         TEST_GRID_ID,
-        { authId: 'INVALID_AUTHID' }
+        { authId: 'INVALID_AUTHID' },
       );
       mockAxios.mockError(errorObject);
       const { data, error } = await deleteByQueryPromise;
@@ -85,7 +85,7 @@ describe('Delete By Query', () => {
             authId: 'INVALID_AUTHID',
           },
           data: deleteQueryObject,
-        }
+        },
       );
       expect(data).toEqual(undefined);
       expect(error).toEqual(errorObject);

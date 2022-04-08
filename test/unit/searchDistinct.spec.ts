@@ -38,7 +38,7 @@ describe('Search Distinct', () => {
       // When
       const searchDistinctPromise = searchDistinct<TestGrid>(
         queryDistinctObject,
-        TEST_GRID_ID
+        TEST_GRID_ID,
       );
       mockAxios.mockResponse({
         data: response,
@@ -53,7 +53,7 @@ describe('Search Distinct', () => {
           headers: {
             authId: BP_AUTH,
           },
-        }
+        },
       );
       expect(data).toEqual(response);
       expect(error).toEqual(undefined);
@@ -73,7 +73,7 @@ describe('Search Distinct', () => {
       const searchDistinctPromise = searchDistinct<TestGrid>(
         queryDistinctObject,
         TEST_GRID_ID,
-        { authId: 'INVALID_AUTHID' }
+        { authId: 'INVALID_AUTHID' },
       );
       mockAxios.mockError(errorObject);
       const { data, error } = await searchDistinctPromise;
@@ -86,7 +86,7 @@ describe('Search Distinct', () => {
           headers: {
             authId: 'INVALID_AUTHID',
           },
-        }
+        },
       );
       expect(data).toEqual(undefined);
       expect(error).toEqual(errorObject);

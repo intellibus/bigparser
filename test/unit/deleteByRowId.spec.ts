@@ -33,7 +33,7 @@ describe('Delete By Row Id', () => {
       // When
       const deleteByRowIdPromise = deleteByRowId(
         deleteRowIdObject,
-        TEST_GRID_ID
+        TEST_GRID_ID,
       );
       mockAxios.mockResponse({
         data: response,
@@ -48,7 +48,7 @@ describe('Delete By Row Id', () => {
             authId: BP_AUTH,
           },
           data: deleteRowIdObject,
-        }
+        },
       );
       expect(error).toEqual(undefined);
       expect(data).toEqual(response);
@@ -68,7 +68,7 @@ describe('Delete By Row Id', () => {
       const deleteByRowIdPromise = deleteByRowId(
         deleteRowIdObject,
         TEST_GRID_ID,
-        { authId: 'INVALID_AUTHID' }
+        { authId: 'INVALID_AUTHID' },
       );
       mockAxios.mockError(errorObject);
       const { data, error } = await deleteByRowIdPromise;
@@ -81,7 +81,7 @@ describe('Delete By Row Id', () => {
             authId: 'INVALID_AUTHID',
           },
           data: deleteRowIdObject,
-        }
+        },
       );
       expect(data).toEqual(undefined);
       expect(error).toEqual(errorObject);

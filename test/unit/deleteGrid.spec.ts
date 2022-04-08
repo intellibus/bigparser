@@ -30,7 +30,7 @@ describe('Delete Grid', () => {
           data: {
             id: TEST_FILE_ID,
           },
-        }
+        },
       );
       expect(error).toEqual(undefined);
       expect(data).toEqual('');
@@ -63,7 +63,7 @@ describe('Delete Grid', () => {
           data: {
             id: TEST_FILE_ID,
           },
-        }
+        },
       );
       expect(error).toEqual(errorObject);
       expect(data).toEqual(undefined);

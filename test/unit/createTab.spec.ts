@@ -37,7 +37,7 @@ describe('Create Tab', () => {
           headers: {
             authId: BP_AUTH,
           },
-        }
+        },
       );
       expect(error).toEqual(undefined);
       expect(data).toEqual(response);
@@ -68,7 +68,7 @@ describe('Create Tab', () => {
           headers: {
             authId: 'INVALID_AUTHID',
           },
-        }
+        },
       );
       expect(data).toEqual(undefined);
       expect(error).toEqual(errorObject);

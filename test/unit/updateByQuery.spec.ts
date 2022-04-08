@@ -39,7 +39,7 @@ describe('Update By Query', () => {
       // When
       const updateByQueryPromise = updateByQuery<TestGrid>(
         queryUpdateObject,
-        TEST_GRID_ID
+        TEST_GRID_ID,
       );
       mockAxios.mockResponse({
         data: response,
@@ -54,7 +54,7 @@ describe('Update By Query', () => {
           headers: {
             authId: BP_AUTH,
           },
-        }
+        },
       );
       expect(data).toEqual(response);
       expect(error).toEqual(undefined);
@@ -75,7 +75,7 @@ describe('Update By Query', () => {
       const updateByQueryPromise = updateByQuery<TestGrid>(
         queryUpdateObject,
         TEST_GRID_ID,
-        { authId: 'INVALID_AUTHID' }
+        { authId: 'INVALID_AUTHID' },
       );
       mockAxios.mockError(errorObject);
       const { data, error } = await updateByQueryPromise;
@@ -88,7 +88,7 @@ describe('Update By Query', () => {
           headers: {
             authId: 'INVALID_AUTHID',
           },
-        }
+        },
       );
       expect(data).toEqual(undefined);
       expect(error).toEqual(errorObject);

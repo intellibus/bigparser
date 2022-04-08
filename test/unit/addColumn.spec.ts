@@ -32,7 +32,7 @@ describe('Add Column', () => {
       // When
       const addColumnPromise = addColumn<TestGrid>(
         addColumnObject,
-        TEST_GRID_ID
+        TEST_GRID_ID,
       );
       mockAxios.mockResponse({
         data: response,
@@ -47,7 +47,7 @@ describe('Add Column', () => {
           headers: {
             authId: BP_AUTH,
           },
-        }
+        },
       );
       expect(error).toEqual(undefined);
       expect(data).toEqual(response);
@@ -67,7 +67,7 @@ describe('Add Column', () => {
       const addColumnPromise = addColumn<TestGrid>(
         addColumnObject,
         TEST_GRID_ID,
-        { authId: 'INVALID_AUTHID' }
+        { authId: 'INVALID_AUTHID' },
       );
       mockAxios.mockError(errorObject);
       const { data, error } = await addColumnPromise;
@@ -80,7 +80,7 @@ describe('Add Column', () => {
           headers: {
             authId: 'INVALID_AUTHID',
           },
-        }
+        },
       );
       expect(data).toEqual(undefined);
       expect(error).toEqual(errorObject);

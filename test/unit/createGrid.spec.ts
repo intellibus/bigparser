@@ -40,7 +40,7 @@ describe('Create Grid', () => {
           headers: {
             authId: BP_AUTH,
           },
-        }
+        },
       );
       expect(error).toEqual(undefined);
       expect(data).toEqual(response);
@@ -71,7 +71,7 @@ describe('Create Grid', () => {
           headers: {
             authId: 'INVALID_AUTHID',
           },
-        }
+        },
       );
       expect(error).toEqual(errorObject);
       expect(data).toEqual(undefined);

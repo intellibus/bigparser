@@ -85,28 +85,24 @@ describe('Bulk CRUD', () => {
         insertRows: [
           {
             createdRows: {
-              0: '62505000c9d082361707accc'
+              0: '62505000c9d082361707accc',
             },
             failedRows: {},
             noOfRowsCreated: 1,
-            noOfRowsFailed: 0
+            noOfRowsFailed: 0,
           },
         ],
         updateRows: {
-          updatedRows: [
-            '62505000c9d082361707accc',
-          ],
+          updatedRows: ['62505000c9d082361707accc'],
           failedRows: {},
           noOfRowsUpdated: 1,
-          noOfRowsFailed: 0
+          noOfRowsFailed: 0,
         },
         deleteRows: {
-          deletedRows: [
-            '62505000c9d082361707accd'
-          ],
+          deletedRows: ['62505000c9d082361707accd'],
           failedRows: {},
           noOfRowsDeleted: 1,
-          noOfRowsFailed: 0
+          noOfRowsFailed: 0,
         },
         insertColumns: [
           {
@@ -136,7 +132,7 @@ describe('Bulk CRUD', () => {
           headers: {
             authId: BP_AUTH,
           },
-        }
+        },
       );
       expect(error).toEqual(undefined);
       expect(data).toEqual(response);
@@ -167,7 +163,7 @@ describe('Bulk CRUD', () => {
           headers: {
             authId: 'INVALID_AUTHID',
           },
-        }
+        },
       );
       expect(data).toEqual(undefined);
       expect(error).toEqual(errorObject);

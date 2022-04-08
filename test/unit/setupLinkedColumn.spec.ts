@@ -33,7 +33,7 @@ describe('Set Up Linked Column', () => {
 
       // When
       const setupLinkedColumnPromise = setupLinkedColumn<TestGrid, TestGrid2>(
-        setupLinkedColumnObject
+        setupLinkedColumnObject,
       );
       mockAxios.mockResponse({
         data: response,
@@ -48,7 +48,7 @@ describe('Set Up Linked Column', () => {
           headers: {
             authId: BP_AUTH,
           },
-        }
+        },
       );
       expect(error).toEqual(undefined);
       expect(data).toEqual(response);
@@ -69,7 +69,7 @@ describe('Set Up Linked Column', () => {
         setupLinkedColumnObject,
         {
           authId: 'INVALID_AUTHID',
-        }
+        },
       );
       mockAxios.mockError(errorObject);
       const { data, error } = await setupLinkedColumnPromise;
@@ -82,7 +82,7 @@ describe('Set Up Linked Column', () => {
           headers: {
             authId: 'INVALID_AUTHID',
           },
-        }
+        },
       );
       expect(data).toEqual(undefined);
       expect(error).toEqual(errorObject);

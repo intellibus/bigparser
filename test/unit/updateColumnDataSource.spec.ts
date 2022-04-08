@@ -34,7 +34,7 @@ describe('Update Column Data Source', () => {
       // When
       const updateColumnDataSourcePromise = updateColumnDataSource<TestGrid>(
         updateColumnDataSourceObject,
-        TEST_GRID_ID
+        TEST_GRID_ID,
       );
       mockAxios.mockResponse({
         data: response,
@@ -49,7 +49,7 @@ describe('Update Column Data Source', () => {
           headers: {
             authId: BP_AUTH,
           },
-        }
+        },
       );
       expect(error).toEqual(undefined);
       expect(data).toEqual(response);
@@ -71,7 +71,7 @@ describe('Update Column Data Source', () => {
         TEST_GRID_ID,
         {
           authId: 'INVALID_AUTHID',
-        }
+        },
       );
       mockAxios.mockError(errorObject);
       const { data, error } = await updateColumnDataSourcePromise;
@@ -84,7 +84,7 @@ describe('Update Column Data Source', () => {
           headers: {
             authId: 'INVALID_AUTHID',
           },
-        }
+        },
       );
       expect(data).toEqual(undefined);
       expect(error).toEqual(errorObject);

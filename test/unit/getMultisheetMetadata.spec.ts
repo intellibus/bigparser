@@ -19,15 +19,15 @@ describe('Get Multisheet Metadata', () => {
         grids: [
           {
             gridId: TEST_GRID_ID,
-            name: "Test Tab",
-            tabName: "Test Tab",
+            name: 'Test Tab',
+            tabName: 'Test Tab',
             tabDescription: null,
             pinned: false,
           },
           {
             gridId: LINKED_DATA_TAB_GRID_ID,
-            name: "Linked Data Tab",
-            tabName: "Linked Data Tab",
+            name: 'Linked Data Tab',
+            tabName: 'Linked Data Tab',
             tabDescription: null,
             pinned: false,
           },
@@ -46,7 +46,7 @@ describe('Get Multisheet Metadata', () => {
           headers: {
             authId: BP_AUTH,
           },
-        }
+        },
       );
       expect(error).toEqual(undefined);
       expect(data).toEqual(response);
@@ -76,7 +76,7 @@ describe('Get Multisheet Metadata', () => {
           headers: {
             authId: 'INVALID_AUTHID',
           },
-        }
+        },
       );
       expect(data).toEqual(undefined);
       expect(error).toEqual(errorObject);

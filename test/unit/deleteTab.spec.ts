@@ -27,7 +27,7 @@ describe('Delete Tab', () => {
           headers: {
             authId: BP_AUTH,
           },
-        }
+        },
       );
       expect(error).toEqual(undefined);
       expect(data).toEqual('');
@@ -57,7 +57,7 @@ describe('Delete Tab', () => {
           headers: {
             authId: 'INVALID_AUTHID',
           },
-        }
+        },
       );
       expect(error).toEqual(errorObject);
       expect(data).toEqual(undefined);
