@@ -1,11 +1,12 @@
 name: Release
 
 on:
-  release:
-    types: [created]
+  push:
+    branches: [main]
+concurrency: release
 
 jobs:
-  continuous-deployment-npm:
+  release:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
@@ -36,6 +37,16 @@ jobs:
       - name: Run Integration Tests
         run: pnpm run test:integration:ci
       - name: Publish
-        run: pnpm publish --no-git-checks --access public
+        uses: cycjimmy/semantic-release-action@v3
+        with:
+          extra_plugins: |
+            @semantic-release/commit-analyzer
+            semantic-release-interval
+            @semantic-release/release-notes-generator
+            @semantic-release/git
+            @semantic-release/github
+            @semantic-release/npm
+            @googlemaps/semantic-release-config
         env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -219,7 +219,7 @@ describe('Get Grid Metadata', () => {
       expect(data).toEqual(undefined);
       expect((error as AxiosError).response.data).toEqual(errorObject);
     });
-    it('Should Reject Invalid Auth Id (qa)', async () => {
+    it('Should Reject Invalid Auth Id in QA', async () => {
       // Given
       const errorObject = {
         errorMessage: 'System error. Please contact admin.',

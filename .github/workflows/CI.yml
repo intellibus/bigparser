@@ -1,9 +1,8 @@
 name: CI
 
 on:
-  push:
-    branches:
-      - main
+  - push
+  - pull_request
 
 jobs:
   continuous-integration:
