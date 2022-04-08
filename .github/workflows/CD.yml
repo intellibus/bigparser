@@ -33,6 +33,8 @@ jobs:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
         with:
           coverageCommand: pnpm run test:unit:ci
+      - name: Run Integration Tests
+        run: pnpm run test:integration:ci
       - name: Publish
         run: pnpm publish --no-git-checks --access public
         env:
