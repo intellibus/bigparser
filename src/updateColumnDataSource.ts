@@ -9,13 +9,13 @@ import {
 export async function updateColumnDataSource<GridDataModel>(
   updateColumnDataSourceObj: UpdateColumnDataSourceObject<GridDataModel>,
   gridId: string,
-  config: MethodConfig = {}
+  config: MethodConfig = {},
 ): Promise<APIResponse> {
   return to(
     axios.put(
       getGridURL('update_column_dataSource', gridId, config),
       updateColumnDataSourceObj,
-      getHTTPHeaders(config)
-    )
+      getHTTPHeaders(config),
+    ),
   );
 }

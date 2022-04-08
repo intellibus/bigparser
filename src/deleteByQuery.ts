@@ -5,15 +5,15 @@ import { APIResponse, DeleteQueryObject, MethodConfig } from './types';
 export async function deleteByQuery<GridDataModel>(
   deleteQueryObj: DeleteQueryObject<GridDataModel>,
   gridId: string,
-  config: MethodConfig = {}
+  config: MethodConfig = {},
 ): Promise<APIResponse> {
   return to(
     axios.delete(
       getGridURL('rows/delete_by_queryObj', gridId, config),
       getHTTPHeadersWithData<DeleteQueryObject<GridDataModel>>(
         deleteQueryObj,
-        config
-      )
-    )
+        config,
+      ),
+    ),
   );
 }

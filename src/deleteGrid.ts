@@ -4,12 +4,12 @@ import { APIResponse, MethodConfig } from './types';
 
 export async function deleteGrid(
   fileId: string,
-  config: MethodConfig = {}
+  config: MethodConfig = {},
 ): Promise<APIResponse> {
   return to(
     axios.delete(
       getV1APIURL('file/remove', config),
-      getHTTPHeadersWithData({ id: fileId }, config)
-    )
+      getHTTPHeadersWithData({ id: fileId }, config),
+    ),
   );
 }
