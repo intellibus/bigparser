@@ -8,7 +8,7 @@ export const getBaseURL = (qa?: boolean) =>
 export function getGridURL(
   action: string,
   gridId: string,
-  config: MethodConfig
+  config: MethodConfig,
 ): string {
   const { shareId, qa } = config;
   return `${getBaseURL(qa)}/grid/${
@@ -23,7 +23,7 @@ export function getAPIURL(action: string, config: MethodConfig): string {
 export function getV1APIURL(action: string, config: MethodConfig): string {
   return `${getBaseURL(config.qa).replace(
     'api/v2',
-    'APIServices/api'
+    'APIServices/api',
   )}/${action}`;
 }
 
@@ -44,7 +44,7 @@ export function getHTTPHeadersWithData<T>(data: T, config: MethodConfig) {
 }
 
 export async function to(
-  promise: Promise<AxiosResponse>
+  promise: Promise<AxiosResponse>,
 ): Promise<APIResponse> {
   return promise
     .then((response: AxiosResponse) => ({

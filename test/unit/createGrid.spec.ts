@@ -21,14 +21,14 @@ describe('Create Grid', () => {
   describe('Positive Test Cases', () => {
     it('Returns Grid Id of Created Grid', async () => {
       // Given
-      const gridResponse = {
+      const response = {
         gridId: '624c8267c9d08236170650a5',
       };
 
       // When
       const createGridPromise = createGrid(createGridObject);
       mockAxios.mockResponse({
-        data: gridResponse,
+        data: response,
       });
       const { data, error } = await createGridPromise;
 
@@ -40,10 +40,10 @@ describe('Create Grid', () => {
           headers: {
             authId: BP_AUTH,
           },
-        }
+        },
       );
       expect(error).toEqual(undefined);
-      expect(data).toEqual(gridResponse);
+      expect(data).toEqual(response);
     });
   });
   describe('Negative Test Cases', () => {
@@ -71,7 +71,7 @@ describe('Create Grid', () => {
           headers: {
             authId: 'INVALID_AUTHID',
           },
-        }
+        },
       );
       expect(error).toEqual(errorObject);
       expect(data).toEqual(undefined);

@@ -5,12 +5,12 @@ import { APIResponse, DeleteRowIdObject, MethodConfig } from './types';
 export async function deleteByRowId(
   deleteRowIdObj: DeleteRowIdObject,
   gridId: string,
-  config: MethodConfig = {}
+  config: MethodConfig = {},
 ): Promise<APIResponse> {
   return to(
     axios.delete(
       getGridURL('rows/delete_by_rowIds', gridId, config),
-      getHTTPHeadersWithData<DeleteRowIdObject>(deleteRowIdObj, config)
-    )
+      getHTTPHeadersWithData<DeleteRowIdObject>(deleteRowIdObj, config),
+    ),
   );
 }

@@ -1,7 +1,5 @@
 import { AxiosError } from 'axios';
-import { searchCount } from '../../src/index';
-import { TestGrid } from '../__grids__/TestGrid';
-import { QueryObject } from '../../src/types';
+import { getMultisheetMetadata } from '../../src/index';
 import {
   bootstrapIntegrationTests,
   cleanupIntegrationTests,
@@ -9,53 +7,53 @@ import {
 
 jest.disableAutomock();
 jest.unmock('axios');
-jest.setTimeout(10000);
+jest.setTimeout(100000);
 
 let TEST_GRID_ID: string;
-
-const queryObject: QueryObject<TestGrid> = {
-  query: {
-    columnFilter: {
-      filters: [
-        {
-          column: 'Boolean Column',
-          operator: 'EQ',
-          keyword: true,
-        },
-      ],
-    },
-    sendRowIdsInResponse: true,
-    showColumnNamesInResponse: true,
-  },
-};
+let LINKED_DATA_TAB_GRID_ID: string;
 
 const beforeEachRun = async () => {
   jest.resetModules();
-  const { testGridId } = await bootstrapIntegrationTests();
+  const { testGridId, linkedDataTabGridId } = await bootstrapIntegrationTests();
   TEST_GRID_ID = testGridId;
+  LINKED_DATA_TAB_GRID_ID = linkedDataTabGridId;
 };
 
 const afterEachRun = async () => {
   await cleanupIntegrationTests(TEST_GRID_ID);
 };
 
-describe('Search Count', () => {
+describe('Get Multisheet Metadata', () => {
   beforeEach(() => beforeEachRun());
   afterEach(() => afterEachRun());
   describe('Positive Test Cases', () => {
-    it('Should Return Number of Grid Results', async () => {
+    it('Should Return Multigrid Metadata Successfully', async () => {
       // Given
-      const response = { totalRowCount: 1 };
+      const response = {
+        grids: [
+          {
+            gridId: TEST_GRID_ID,
+            name: 'Test Tab',
+            tabName: 'Test Tab',
+            tabDescription: null,
+            pinned: false,
+          },
+          {
+            gridId: LINKED_DATA_TAB_GRID_ID,
+            name: 'Linked Data Tab',
+            tabName: 'Linked Data Tab',
+            tabDescription: null,
+            pinned: false,
+          },
+        ],
+      };
 
       // When
-      const { data, error } = await searchCount<TestGrid>(
-        queryObject,
-        TEST_GRID_ID,
-      );
+      const { data, error } = await getMultisheetMetadata(TEST_GRID_ID);
 
       // Then
       expect(error).toEqual(undefined);
-      expect(data).toEqual(response);
+      expect(data).toMatchObject(response);
     });
   });
   describe('Negative Test Cases', () => {
@@ -69,16 +67,13 @@ describe('Search Count', () => {
       };
 
       // When
-      const { data, error } = await searchCount<TestGrid>(
-        queryObject,
-        'INVALID_GRID_ID',
-      );
+      const { data, error } = await getMultisheetMetadata('INVALID_GRID_ID');
 
       // Then
       expect(data).toEqual(undefined);
       expect((error as AxiosError).response.data).toEqual(errorObject);
     });
-    it('Should Reject Invalid Share Id', async () => {
+    it('Should Reject Invalid View Id', async () => {
       // Given
       const errorObject = {
         errorMessage: 'share Id invalid',
@@ -88,13 +83,9 @@ describe('Search Count', () => {
       };
 
       // When
-      const { data, error } = await searchCount<TestGrid>(
-        queryObject,
-        TEST_GRID_ID,
-        {
-          shareId: 'INVALID_SHARE_ID',
-        },
-      );
+      const { data, error } = await getMultisheetMetadata(TEST_GRID_ID, {
+        shareId: 'INVALID_VIEW_ID',
+      });
 
       // Then
       expect(data).toEqual(undefined);
@@ -110,13 +101,9 @@ describe('Search Count', () => {
       };
 
       // When
-      const { data, error } = await searchCount<TestGrid>(
-        queryObject,
-        TEST_GRID_ID,
-        {
-          authId: 'INVALID_AUTHID',
-        },
-      );
+      const { data, error } = await getMultisheetMetadata(TEST_GRID_ID, {
+        authId: 'INVALID_AUTHID',
+      });
 
       // Then
       expect(data).toEqual(undefined);
@@ -132,14 +119,10 @@ describe('Search Count', () => {
       };
 
       // When
-      const { data, error } = await searchCount<TestGrid>(
-        queryObject,
-        TEST_GRID_ID,
-        {
-          authId: 'INVALID_AUTHID',
-          qa: true,
-        },
-      );
+      const { data, error } = await getMultisheetMetadata(TEST_GRID_ID, {
+        authId: 'INVALID_AUTHID',
+        qa: true,
+      });
 
       // Then
       expect(data).toEqual(undefined);

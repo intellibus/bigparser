@@ -4,12 +4,12 @@ import { APIResponse, MethodConfig } from './types';
 
 export async function getGridMetadata(
   gridId: string,
-  config: MethodConfig = {}
+  config: MethodConfig = {},
 ): Promise<APIResponse> {
   return to(
     axios.get(
       getGridURL('query_metadata', gridId, config),
-      getHTTPHeaders(config)
-    )
+      getHTTPHeaders(config),
+    ),
   );
 }

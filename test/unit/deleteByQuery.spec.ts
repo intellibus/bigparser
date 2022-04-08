@@ -30,17 +30,17 @@ describe('Delete By Query', () => {
   describe('Positive Test Cases', () => {
     it('Returns Number of Rows Deleted', async () => {
       // Given
-      const gridResponse = {
-        noOfRowsDeleted: 1,
+      const response = {
+        noOfRowsDeleted: 2,
       };
 
       // When
       const deleteByQueryPromise = deleteByQuery<TestGrid>(
         deleteQueryObject,
-        TEST_GRID_ID
+        TEST_GRID_ID,
       );
       mockAxios.mockResponse({
-        data: gridResponse,
+        data: response,
       });
       const { data, error } = await deleteByQueryPromise;
 
@@ -52,10 +52,10 @@ describe('Delete By Query', () => {
             authId: BP_AUTH,
           },
           data: deleteQueryObject,
-        }
+        },
       );
       expect(error).toEqual(undefined);
-      expect(data).toEqual(gridResponse);
+      expect(data).toEqual(response);
     });
   });
   describe('Negative Test Cases', () => {
@@ -72,7 +72,7 @@ describe('Delete By Query', () => {
       const deleteByQueryPromise = deleteByQuery(
         deleteQueryObject,
         TEST_GRID_ID,
-        { authId: 'INVALID_AUTHID' }
+        { authId: 'INVALID_AUTHID' },
       );
       mockAxios.mockError(errorObject);
       const { data, error } = await deleteByQueryPromise;
@@ -85,7 +85,7 @@ describe('Delete By Query', () => {
             authId: 'INVALID_AUTHID',
           },
           data: deleteQueryObject,
-        }
+        },
       );
       expect(data).toEqual(undefined);
       expect(error).toEqual(errorObject);

@@ -4,12 +4,12 @@ import { APIResponse, MethodConfig } from './types';
 
 export async function deleteTab(
   gridId: string,
-  config: MethodConfig = {}
+  config: MethodConfig = {},
 ): Promise<APIResponse> {
   return to(
     axios.delete(
       getGridURL('delete_tab', gridId, config),
-      getHTTPHeaders(config)
-    )
+      getHTTPHeaders(config),
+    ),
   );
 }

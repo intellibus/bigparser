@@ -1,19 +1,33 @@
-import mockAxios from 'jest-mock-axios';
+import { AxiosError } from 'axios';
 import { getGridMetadata } from '../../src/index';
+import {
+  bootstrapIntegrationTests,
+  cleanupIntegrationTests,
+} from './integration.utils';
 
-const { BP_AUTH } = process.env;
-const TEST_GRID_ID = 'VALID_GRID_ID';
-const LINKED_DATA_TAB_GRID_ID = 'VALID_GRID_ID_2';
+jest.disableAutomock();
+jest.unmock('axios');
+jest.setTimeout(10000);
 
-describe('Get Headers', () => {
-  beforeEach(() => {
-    jest.resetModules();
-  });
-  afterEach(() => {
-    mockAxios.reset();
-  });
+let TEST_GRID_ID: string;
+let LINKED_DATA_TAB_GRID_ID: string;
+
+const beforeEachRun = async () => {
+  jest.resetModules();
+  const { testGridId, linkedDataTabGridId } = await bootstrapIntegrationTests();
+  TEST_GRID_ID = testGridId;
+  LINKED_DATA_TAB_GRID_ID = linkedDataTabGridId;
+};
+
+const afterEachRun = async () => {
+  await cleanupIntegrationTests(TEST_GRID_ID);
+};
+
+describe('Get Grid Metadata', () => {
+  beforeEach(() => beforeEachRun());
+  afterEach(() => afterEachRun());
   describe('Positive Test Cases', () => {
-    it('Returns Metadata of Grid Columns', async () => {
+    it('Should Return Grid Metadata Successfully', async () => {
       // Given
       const response = {
         name: 'Testing Grid.grid',
@@ -145,51 +159,84 @@ describe('Get Headers', () => {
       };
 
       // When
-      const getGridMetadataPromise = getGridMetadata(TEST_GRID_ID);
-      mockAxios.mockResponse({ data: response });
-      const { data, error } = await getGridMetadataPromise;
+      const { data, error } = await getGridMetadata(TEST_GRID_ID);
 
       // Then
-      expect(mockAxios.get).toHaveBeenCalledWith(
-        `https://www.bigparser.com/api/v2/grid/${TEST_GRID_ID}/query_metadata`,
-        {
-          headers: {
-            authId: BP_AUTH,
-          },
-        },
-      );
       expect(error).toEqual(undefined);
-      expect(data).toEqual(response);
+      expect(data).toMatchObject(response);
     });
   });
   describe('Negative Test Cases', () => {
-    it('Rejects Invalid Auth Id', async () => {
+    it('Should Reject Invalid Grid Id', async () => {
       // Given
       const errorObject = {
-        err: {
-          message: 'Invalid Auth Id',
-          statusCode: 403,
-        },
+        errorMessage: 'System error. Please contact admin.',
+        otherDetails: {},
+        errorType: 'SYSTEMERROR',
+        recoverable: false,
       };
 
       // When
-      const getGridMetadataPromise = getGridMetadata(TEST_GRID_ID, {
-        authId: 'INVALID_AUTHID',
-      });
-      mockAxios.mockError(errorObject);
-      const { data, error } = await getGridMetadataPromise;
+      const { data, error } = await getGridMetadata('INVALID_GRID_ID');
 
       // Then
-      expect(mockAxios.get).toHaveBeenCalledWith(
-        `https://www.bigparser.com/api/v2/grid/${TEST_GRID_ID}/query_metadata`,
-        {
-          headers: {
-            authId: 'INVALID_AUTHID',
-          },
-        },
-      );
       expect(data).toEqual(undefined);
-      expect(error).toEqual(errorObject);
+      expect((error as AxiosError).response.data).toEqual(errorObject);
+    });
+    it('Should Reject Invalid Share Id', async () => {
+      // Given
+      const errorObject = {
+        errorMessage: 'share Id invalid',
+        otherDetails: {},
+        errorType: 'DATAERROR',
+        recoverable: true,
+      };
+
+      // When
+      const { data, error } = await getGridMetadata(TEST_GRID_ID, {
+        shareId: 'INVALID_SHARE_ID',
+      });
+
+      // Then
+      expect(data).toEqual(undefined);
+      expect((error as AxiosError).response.data).toEqual(errorObject);
+    });
+    it('Should Reject Invalid Auth Id in Production', async () => {
+      // Given
+      const errorObject = {
+        errorMessage: 'You are not authorized to this grid.',
+        otherDetails: {},
+        errorType: 'DATAERROR',
+        recoverable: true,
+      };
+
+      // When
+      const { data, error } = await getGridMetadata(TEST_GRID_ID, {
+        authId: 'INVALID_AUTHID',
+      });
+
+      // Then
+      expect(data).toEqual(undefined);
+      expect((error as AxiosError).response.data).toEqual(errorObject);
+    });
+    it('Should Reject Invalid Auth Id (qa)', async () => {
+      // Given
+      const errorObject = {
+        errorMessage: 'System error. Please contact admin.',
+        otherDetails: {},
+        errorType: 'SYSTEMERROR',
+        recoverable: false,
+      };
+
+      // When
+      const { data, error } = await getGridMetadata(TEST_GRID_ID, {
+        authId: 'INVALID_AUTHID',
+        qa: true,
+      });
+
+      // Then
+      expect(data).toEqual(undefined);
+      expect((error as AxiosError).response.data).toEqual(errorObject);
     });
   });
 });

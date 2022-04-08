@@ -4,19 +4,19 @@ import { APIResponse, SetupLinkedColumnObject, MethodConfig } from './types';
 
 export async function setupLinkedColumn<
   DestinationGridDataModel,
-  SourceGridDataModel
+  SourceGridDataModel,
 >(
   setupLinkedColumnObj: SetupLinkedColumnObject<
     DestinationGridDataModel,
     SourceGridDataModel
   >,
-  config: MethodConfig = {}
+  config: MethodConfig = {},
 ): Promise<APIResponse> {
   return to(
     axios.put(
       getAPIURL('setup_linked_column', config),
       setupLinkedColumnObj,
-      getHTTPHeaders(config)
-    )
+      getHTTPHeaders(config),
+    ),
   );
 }

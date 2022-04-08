@@ -27,7 +27,7 @@ describe('Update By Row Id', () => {
   describe('Positive Test Cases', () => {
     it('Returns Number of Rows & Row Ids of Rows Updated', async () => {
       // Given
-      const gridResponse = {
+      const response = {
         noOfRowsUpdated: 1,
         noOfRowsFailed: 0,
         updatedRows: ['6243cd4ec9d082361703ea4e'],
@@ -37,10 +37,10 @@ describe('Update By Row Id', () => {
       // When
       const updateByRowIdPromise = updateByRowId<TestGrid>(
         updateRowIdObject,
-        TEST_GRID_ID
+        TEST_GRID_ID,
       );
       mockAxios.mockResponse({
-        data: gridResponse,
+        data: response,
       });
       const { data, error } = await updateByRowIdPromise;
 
@@ -52,10 +52,10 @@ describe('Update By Row Id', () => {
           headers: {
             authId: BP_AUTH,
           },
-        }
+        },
       );
       expect(error).toEqual(undefined);
-      expect(data).toEqual(gridResponse);
+      expect(data).toEqual(response);
     });
   });
   describe('Negative Test Cases', () => {
@@ -72,7 +72,7 @@ describe('Update By Row Id', () => {
       const updateByRowIdPromise = updateByRowId<TestGrid>(
         updateRowIdObject,
         TEST_GRID_ID,
-        { authId: 'INVALID_AUTHID' }
+        { authId: 'INVALID_AUTHID' },
       );
       mockAxios.mockError(errorObject);
       const { data, error } = await updateByRowIdPromise;
@@ -85,7 +85,7 @@ describe('Update By Row Id', () => {
           headers: {
             authId: 'INVALID_AUTHID',
           },
-        }
+        },
       );
       expect(data).toEqual(undefined);
       expect(error).toEqual(errorObject);

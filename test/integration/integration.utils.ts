@@ -40,7 +40,7 @@ async function setupGridColumns(columns, gridId) {
         ],
       },
     },
-    gridId
+    gridId,
   );
 
   expect(testGridBulkCrudResponse).toMatchObject({
@@ -80,7 +80,7 @@ export async function bootstrapIntegrationTests() {
     {
       tabName: 'Linked Data Tab',
     },
-    testGridId
+    testGridId,
   );
 
   expect(linkedDataTabGridId).toBeTruthy();
@@ -102,14 +102,14 @@ export async function bootstrapIntegrationTests() {
       { columnName: 'Formula Column', dataType: 'NUMBER' },
       { columnName: 'Empty Column', dataType: 'STRING' },
     ],
-    testGridId
+    testGridId,
   );
   await setupGridColumns(
     [
       { columnName: 'Source Column', dataType: 'STRING' },
       { columnName: 'Linked Related Column', dataType: 'STRING' },
     ],
-    linkedDataTabGridId
+    linkedDataTabGridId,
   );
 
   // Setup Column Linking
@@ -145,7 +145,7 @@ export async function bootstrapIntegrationTests() {
           },
         ],
       },
-      testGridId
+      testGridId,
     );
 
   expect(updateColumnDataSourceResponse).toBe('');
@@ -166,7 +166,7 @@ export async function bootstrapIntegrationTests() {
         ],
       },
     },
-    linkedDataTabGridId
+    linkedDataTabGridId,
   );
 
   expect(linkedDataTabInsertResponse).toBeTruthy();
@@ -202,7 +202,7 @@ export async function bootstrapIntegrationTests() {
         ],
       },
     },
-    testGridId
+    testGridId,
   );
 
   expect(firstRowId).toBeTruthy();

@@ -29,7 +29,7 @@ export declare type GlobalFilter = {
 
 export declare type ColumnFilter<
   GridDataModel,
-  K extends keyof GridDataModel = keyof GridDataModel
+  K extends keyof GridDataModel = keyof GridDataModel,
 > = K extends keyof GridDataModel
   ? {
       column: K;
@@ -158,7 +158,7 @@ export declare type UpdateTabObject = GridTab;
 
 export declare type LinkedRelatedColumn<
   DestinationGridDataModel,
-  SourceGridDataModel
+  SourceGridDataModel,
 > = {
   destColName: keyof DestinationGridDataModel;
   srcColName: keyof SourceGridDataModel;
@@ -166,7 +166,7 @@ export declare type LinkedRelatedColumn<
 
 export declare type SetupLinkedColumnObject<
   DestinationGridDataModel,
-  SourceGridDataModel
+  SourceGridDataModel,
 > = {
   destinationColumnName: keyof DestinationGridDataModel;
   destinationGridId: string;
@@ -228,17 +228,22 @@ export declare type BulkRenameColumns<GridDataModel> = {
   columns: Array<BulkRenameColumn<GridDataModel>>;
 };
 
-export declare type BulkInsertRows<GridDataModel> = (
-  | AfterRowIdObject
-  | BeforeRowIdObject
-) &
-  Insert<GridDataModel>;
+export declare type BulkInsertRow = {
+  [column: string]: string | number | boolean;
+};
+
+export declare type BulkInsert = {
+  rows: Array<BulkInsertRow>;
+};
+
+export declare type BulkInsertRows = (AfterRowIdObject | BeforeRowIdObject) &
+  BulkInsert;
 
 export declare type BulkCrudObject<GridDataModel> = {
   insertColumns?: Array<BulkInsertColumns<GridDataModel>>;
   deleteColumns?: BulkDeleteColumns<GridDataModel>;
   renameColumns?: BulkRenameColumns<GridDataModel>;
-  insertRows?: Array<BulkInsertRows<GridDataModel>>;
+  insertRows?: Array<BulkInsertRows>;
   updateRows?: UpdateRowIds<GridDataModel>;
   deleteRows?: DeleteRowIds;
 };

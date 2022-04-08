@@ -18,12 +18,12 @@ describe('Update Tab', () => {
   describe('Positive Test Cases', () => {
     it('Returns Grid Id of Updated Tab', async () => {
       // Given
-      const gridResponse = {};
+      const response = '';
 
       // When
       const updateTabPromise = updateTab(updateTabObject, TEST_GRID_ID);
       mockAxios.mockResponse({
-        data: gridResponse,
+        data: response,
       });
       const { data, error } = await updateTabPromise;
 
@@ -35,10 +35,10 @@ describe('Update Tab', () => {
           headers: {
             authId: BP_AUTH,
           },
-        }
+        },
       );
       expect(error).toEqual(undefined);
-      expect(data).toEqual(gridResponse);
+      expect(data).toEqual(response);
     });
   });
   describe('Negative Test Cases', () => {
@@ -66,7 +66,7 @@ describe('Update Tab', () => {
           headers: {
             authId: 'INVALID_AUTHID',
           },
-        }
+        },
       );
       expect(data).toEqual(undefined);
       expect(error).toEqual(errorObject);

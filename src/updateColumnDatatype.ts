@@ -5,13 +5,13 @@ import { APIResponse, MethodConfig, UpdateColumnDatatypeObject } from './types';
 export async function updateColumnDatatype<GridDataModel>(
   updateColumnDatatypeObj: UpdateColumnDatatypeObject<GridDataModel>,
   gridId: string,
-  config: MethodConfig = {}
+  config: MethodConfig = {},
 ): Promise<APIResponse> {
   return to(
     axios.put(
       getGridURL('update_column_datatype', gridId, config),
       updateColumnDatatypeObj,
-      getHTTPHeaders(config)
-    )
+      getHTTPHeaders(config),
+    ),
   );
 }

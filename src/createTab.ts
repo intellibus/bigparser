@@ -5,13 +5,13 @@ import { APIResponse, CreateTabObject, MethodConfig } from './types';
 export async function createTab(
   createTabObj: CreateTabObject,
   gridId: string,
-  config: MethodConfig = {}
+  config: MethodConfig = {},
 ): Promise<APIResponse> {
   return to(
     axios.post(
       getGridURL('create_tab', gridId, config),
       createTabObj,
-      getHTTPHeaders(config)
-    )
+      getHTTPHeaders(config),
+    ),
   );
 }
