@@ -3,6 +3,7 @@ import { getGridMetadata } from '../../src/index';
 
 const { BP_AUTH } = process.env;
 const TEST_GRID_ID = 'VALID_GRID_ID';
+const LINKED_DATA_TAB_GRID_ID = 'VALID_GRID_ID_2';
 
 describe('Get Headers', () => {
   beforeEach(() => {
@@ -14,106 +15,106 @@ describe('Get Headers', () => {
   describe('Positive Test Cases', () => {
     it('Returns Metadata of Grid Columns', async () => {
       // Given
-      const gridResponse = {
-        name: 'Test Grid.grid',
+      const response = {
+        name: "Testing Grid.grid",
         description: null,
         columns: [
           {
-            columnName: 'String Column',
-            columnDesc: '',
-            dataType: 'String',
-            columnIndex: '0',
-            isLinkedColumn: false,
+            columnName: "String Column",
+            columnDesc: "",
+            dataType: "STRING",
+            columnIndex: "5",
+            islinkedColumn: false,
             isPrimaryLink: false,
           },
           {
-            columnName: 'Number Column',
-            columnDesc: '',
-            dataType: 'Number',
-            columnIndex: '1',
-            isLinkedColumn: false,
+            columnName: "Number Column",
+            columnDesc: "",
+            dataType: "NUMBER",
+            columnIndex: "6",
+            islinkedColumn: false,
             isPrimaryLink: false,
           },
           {
-            columnName: 'Number 2 Column',
-            columnDesc: '',
-            dataType: 'Number',
-            columnIndex: '2',
-            isLinkedColumn: false,
+            columnName: "Number 2 Column",
+            columnDesc: "",
+            dataType: "NUMBER",
+            columnIndex: "7",
+            islinkedColumn: false,
             isPrimaryLink: false,
           },
           {
-            columnName: 'Boolean Column',
-            columnDesc: '',
-            dataType: 'Boolean',
-            columnIndex: '3',
-            isLinkedColumn: false,
+            columnName: "Boolean Column",
+            columnDesc: "",
+            dataType: "BOOLEAN",
+            columnIndex: "8",
+            islinkedColumn: false,
             isPrimaryLink: false,
           },
           {
-            columnName: 'Date Column',
-            columnDesc: '',
-            dataType: 'DATE',
-            columnIndex: '4',
-            isLinkedColumn: false,
+            columnName: "Date Column",
+            columnDesc: "",
+            dataType: "DATE",
+            columnIndex: "9",
+            islinkedColumn: false,
             isPrimaryLink: false,
           },
           {
-            columnName: 'Date Time Column',
-            columnDesc: '',
-            dataType: 'DATE_TIME',
-            columnIndex: '5',
-            isLinkedColumn: false,
+            columnName: "Date Time Column",
+            columnDesc: "",
+            dataType: "DATE_TIME",
+            columnIndex: "10",
+            islinkedColumn: false,
             isPrimaryLink: false,
           },
           {
-            columnName: 'Linked Column',
-            columnDesc: '',
-            dataType: 'STRING',
-            columnIndex: '6',
-            isLinkedColumn: true,
+            columnName: "Linked Column",
+            columnDesc: "",
+            dataType: "STRING",
+            columnIndex: "11",
+            islinkedColumn: true,
             isPrimaryLink: true,
             linkedColumnInfo: {
-              sourceGridId: '6244901dc9d0823617041966',
-              destinationGridId: '62448f82c9d0822ec669f83b',
-              sourceColumnName: 'Source Column',
-              destinationColumnName: 'Linked Column',
+              sourceGridId: LINKED_DATA_TAB_GRID_ID,
+              destinationGridId: TEST_GRID_ID,
+              sourceColumnName: "Source Column",
+              destinationColumnName: "Linked Column",
               queryInSourceGrid: null,
               linkedRelatedColumns: [
                 {
-                  destColName: 'Linked Related Column From Other Grid',
-                  srcColName: 'Linked Related Column',
+                  destColName: "Linked Related Column From Other Grid",
+                  srcColName: "Linked Related Column",
                 },
               ],
             },
           },
           {
-            columnName: 'Linked Related Column From Other Grid',
-            columnDesc: '',
-            dataType: 'STRING',
-            columnIndex: '7',
-            isLinkedColumn: true,
+            columnName: "Linked Related Column From Other Grid",
+            columnDesc: "",
+            dataType: "STRING",
+            columnIndex: "12",
+            islinkedColumn: true,
             isPrimaryLink: false,
-            srcColName: 'Linked Related Column',
+            srcColName: "Linked Related Column",
           },
           {
-            columnName: 'Formula Column',
-            columnDesc: '',
-            dataType: 'STRING',
-            columnIndex: '8',
+            columnName: "Formula Column",
+            columnDesc: "",
+            dataType: "NUMBER",
+            columnIndex: "13",
             columnDataSource: {
-              functionType: 'SUM',
-              columnNames: ['Number Column', 'Number 2 Column'],
+              functionType: "SUM",
+              columnNames: ["Number Column", "Number 2 Column"],
             },
-            isLinkedColumn: false,
+            islinkedColumn: false,
             isPrimaryLink: false,
           },
           {
-            columnName: 'Empty Column',
-            columnDesc: '',
-            dataType: 'String',
-            columnIndex: '9',
-            isLinkedColumn: false,
+            columnName: "Empty Column",
+            columnDesc: "",
+            dataType: "STRING",
+            columnIndex: "14",
+            islinkedColumn: false,
             isPrimaryLink: false,
           },
         ],
@@ -121,29 +122,22 @@ describe('Get Headers', () => {
         sortByIndex: {},
         sortArray: [],
         sortByIndexArray: [],
-        fileId: '62448f7ec9d0822ec669f834',
-        fileExtension: 'csv',
+        // Also contains fileId
+        fileExtension: null,
         fileSource: null,
         imageInfo: null,
-        gridType: 'USER',
+        gridType: "USER",
         defaultSyncPref: null,
         saveType: null,
         lastExtSrcSyncDateTime: null,
-        auditGridId: '62448f82c9d0822ec669f83a',
+        auditGridId: null,
         originalGridId: null,
-        lastUpdatedTimeInBigParser: 1648661234129,
-        lastUpdatedBy: 'Jonathan Keegan',
+        // Also contains lastUpdatedTimeInBigParser
+        // Also contains lastUpdatedBy
         defaultSaveFilter: null,
-        filters: {
-          isRecent: true,
-          isFavorite: null,
-          lastVisitedDateTime: 1648661217889,
-          lastFavoriteDateTime: null,
-          deletedDateTime: null,
-          deletedBy: null,
-        },
+        filters: null,
         tabDescription: null,
-        tabName: 'Test Tab',
+        tabName: "Test Tab",
         showRowId: false,
         owner: true,
         multisheet: true,
@@ -152,7 +146,7 @@ describe('Get Headers', () => {
 
       // When
       const getGridMetadataPromise = getGridMetadata(TEST_GRID_ID);
-      mockAxios.mockResponse({ data: gridResponse });
+      mockAxios.mockResponse({ data: response });
       const { data, error } = await getGridMetadataPromise;
 
       // Then
@@ -165,7 +159,7 @@ describe('Get Headers', () => {
         }
       );
       expect(error).toEqual(undefined);
-      expect(data).toEqual(gridResponse);
+      expect(data).toEqual(response);
     });
   });
   describe('Negative Test Cases', () => {

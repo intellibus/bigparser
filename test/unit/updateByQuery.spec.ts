@@ -32,8 +32,8 @@ describe('Update By Query', () => {
   describe('Positive Test Cases', () => {
     it('Returns Number of Rows Updated', async () => {
       // Given
-      const gridResponse = {
-        noOfRowsUpdated: 1,
+      const response = {
+        noOfRowsUpdated: 2,
       };
 
       // When
@@ -42,7 +42,7 @@ describe('Update By Query', () => {
         TEST_GRID_ID
       );
       mockAxios.mockResponse({
-        data: gridResponse,
+        data: response,
       });
       const { data, error } = await updateByQueryPromise;
 
@@ -56,7 +56,7 @@ describe('Update By Query', () => {
           },
         }
       );
-      expect(data).toEqual(gridResponse);
+      expect(data).toEqual(response);
       expect(error).toEqual(undefined);
     });
   });

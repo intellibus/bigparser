@@ -21,7 +21,7 @@ describe('Add Column', () => {
   describe('Positive Test Cases', () => {
     it('Returns Number of Columns Created', async () => {
       // Given
-      const gridResponse = {
+      const response = {
         insertColumns: [
           {
             noOfColumnsUpdated: 1,
@@ -35,7 +35,7 @@ describe('Add Column', () => {
         TEST_GRID_ID
       );
       mockAxios.mockResponse({
-        data: gridResponse,
+        data: response,
       });
       const { data, error } = await addColumnPromise;
 
@@ -50,7 +50,7 @@ describe('Add Column', () => {
         }
       );
       expect(error).toEqual(undefined);
-      expect(data).toEqual(gridResponse);
+      expect(data).toEqual(response);
     });
   });
   describe('Negative Test Cases', () => {

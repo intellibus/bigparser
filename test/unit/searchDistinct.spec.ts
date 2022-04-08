@@ -31,7 +31,7 @@ describe('Search Distinct', () => {
   describe('Positive Test Cases', () => {
     it('Returns List of Distinct Values as Result of Query', async () => {
       // Given
-      const gridResponse = {
+      const response = {
         matchingValues: ['Example String'],
       };
 
@@ -41,7 +41,7 @@ describe('Search Distinct', () => {
         TEST_GRID_ID
       );
       mockAxios.mockResponse({
-        data: gridResponse,
+        data: response,
       });
       const { data, error } = await searchDistinctPromise;
 
@@ -55,7 +55,7 @@ describe('Search Distinct', () => {
           },
         }
       );
-      expect(data).toEqual(gridResponse);
+      expect(data).toEqual(response);
       expect(error).toEqual(undefined);
     });
   });

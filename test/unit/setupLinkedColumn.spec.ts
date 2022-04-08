@@ -29,14 +29,14 @@ describe('Set Up Linked Column', () => {
   describe('Positive Test Cases', () => {
     it('Returns Metadata of Configured Linked Columns', async () => {
       // Given
-      const gridResponse = {};
+      const response = '';
 
       // When
       const setupLinkedColumnPromise = setupLinkedColumn<TestGrid, TestGrid2>(
         setupLinkedColumnObject
       );
       mockAxios.mockResponse({
-        data: gridResponse,
+        data: response,
       });
       const { data, error } = await setupLinkedColumnPromise;
 
@@ -51,7 +51,7 @@ describe('Set Up Linked Column', () => {
         }
       );
       expect(error).toEqual(undefined);
-      expect(data).toEqual(gridResponse);
+      expect(data).toEqual(response);
     });
   });
   describe('Negative Test Cases', () => {

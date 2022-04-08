@@ -16,7 +16,7 @@ describe('Delete Tab', () => {
       // When
       const deleteTabPromise = deleteTab(TEST_GRID_ID);
       mockAxios.mockResponse({
-        data: {},
+        data: '',
       });
       const { data, error } = await deleteTabPromise;
 
@@ -30,7 +30,7 @@ describe('Delete Tab', () => {
         }
       );
       expect(error).toEqual(undefined);
-      expect(data).toEqual({});
+      expect(data).toEqual('');
     });
   });
   describe('Negative Test Cases', () => {

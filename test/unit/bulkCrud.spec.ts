@@ -71,7 +71,7 @@ const bulkCrudObject: BulkCrudObject<TestGrid> = {
   },
 };
 
-describe('Add Column', () => {
+describe('Bulk CRUD', () => {
   beforeEach(() => {
     jest.resetModules();
   });
@@ -81,17 +81,32 @@ describe('Add Column', () => {
   describe('Positive Test Cases', () => {
     it('Returns Number of Successful Bulk Operations', async () => {
       // Given
-      const gridResponse = {
+      const response = {
         insertRows: [
           {
-            noOfRowsUpdated: 1,
+            createdRows: {
+              0: '62505000c9d082361707accc'
+            },
+            failedRows: {},
+            noOfRowsCreated: 1,
+            noOfRowsFailed: 0
           },
         ],
         updateRows: {
+          updatedRows: [
+            '62505000c9d082361707accc',
+          ],
+          failedRows: {},
           noOfRowsUpdated: 1,
+          noOfRowsFailed: 0
         },
         deleteRows: {
-          noOfRowsUpdated: 1,
+          deletedRows: [
+            '62505000c9d082361707accd'
+          ],
+          failedRows: {},
+          noOfRowsDeleted: 1,
+          noOfRowsFailed: 0
         },
         insertColumns: [
           {
@@ -109,7 +124,7 @@ describe('Add Column', () => {
       // When
       const bulkCrudPromise = bulkCrud<TestGrid>(bulkCrudObject, TEST_GRID_ID);
       mockAxios.mockResponse({
-        data: gridResponse,
+        data: response,
       });
       const { data, error } = await bulkCrudPromise;
 
@@ -124,7 +139,7 @@ describe('Add Column', () => {
         }
       );
       expect(error).toEqual(undefined);
-      expect(data).toEqual(gridResponse);
+      expect(data).toEqual(response);
     });
   });
   describe('Negative Test Cases', () => {

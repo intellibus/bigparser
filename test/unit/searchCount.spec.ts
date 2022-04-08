@@ -18,12 +18,12 @@ describe('Search Count', () => {
   describe('Positive Test Cases', () => {
     it('Returns Total Number of Rows as Result of Query', async () => {
       // Given
-      const gridResponse = { totalRowCount: 1 };
+      const response = { totalRowCount: 1 };
 
       // When
       const searchPromise = searchCount<TestGrid>(queryObject, TEST_GRID_ID);
       mockAxios.mockResponse({
-        data: gridResponse,
+        data: response,
       });
       const { data, error } = await searchPromise;
 
@@ -38,7 +38,7 @@ describe('Search Count', () => {
         }
       );
       expect(error).toEqual(undefined);
-      expect(data).toEqual(gridResponse);
+      expect(data).toEqual(response);
     });
   });
   describe('Negative Test Cases', () => {

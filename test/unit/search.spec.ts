@@ -21,7 +21,7 @@ describe('Search', () => {
   describe('Positive Test Cases', () => {
     it('Returns Grid Data from Production', async () => {
       // Given
-      const gridData = {
+      const response = {
         totalRowCount: 1,
         rows: [
           {
@@ -43,7 +43,7 @@ describe('Search', () => {
       // When
       const searchPromise = search<TestGrid>(queryObject, TEST_GRID_ID);
       mockAxios.mockResponse({
-        data: gridData,
+        data: response,
       });
       const { data, error } = await searchPromise;
 
@@ -58,11 +58,11 @@ describe('Search', () => {
         }
       );
       expect(error).toEqual(undefined);
-      expect(data).toEqual(gridData);
+      expect(data).toEqual(response);
     });
     it('Returns Grid Data from QA', async () => {
       // Given
-      const gridData = {
+      const response = {
         totalRowCount: 1,
         rows: [
           {
@@ -86,7 +86,7 @@ describe('Search', () => {
         qa: true,
       });
       mockAxios.mockResponse({
-        data: gridData,
+        data: response,
       });
       const { data, error } = await searchPromise;
 
@@ -101,7 +101,7 @@ describe('Search', () => {
         }
       );
       expect(error).toEqual(undefined);
-      expect(data).toEqual(gridData);
+      expect(data).toEqual(response);
     });
   });
   describe('Negative Test Cases', () => {

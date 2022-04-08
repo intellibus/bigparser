@@ -27,7 +27,7 @@ describe('Update By Row Id', () => {
   describe('Positive Test Cases', () => {
     it('Returns Number of Rows & Row Ids of Rows Updated', async () => {
       // Given
-      const gridResponse = {
+      const response = {
         noOfRowsUpdated: 1,
         noOfRowsFailed: 0,
         updatedRows: ['6243cd4ec9d082361703ea4e'],
@@ -40,7 +40,7 @@ describe('Update By Row Id', () => {
         TEST_GRID_ID
       );
       mockAxios.mockResponse({
-        data: gridResponse,
+        data: response,
       });
       const { data, error } = await updateByRowIdPromise;
 
@@ -55,7 +55,7 @@ describe('Update By Row Id', () => {
         }
       );
       expect(error).toEqual(undefined);
-      expect(data).toEqual(gridResponse);
+      expect(data).toEqual(response);
     });
   });
   describe('Negative Test Cases', () => {

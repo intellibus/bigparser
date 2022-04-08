@@ -29,7 +29,7 @@ describe('Update Column Data Source', () => {
   describe('Positive Test Cases', () => {
     it('Returns Metadata of Updated Column', async () => {
       // Given
-      const gridResponse = {};
+      const response = '';
 
       // When
       const updateColumnDataSourcePromise = updateColumnDataSource<TestGrid>(
@@ -37,7 +37,7 @@ describe('Update Column Data Source', () => {
         TEST_GRID_ID
       );
       mockAxios.mockResponse({
-        data: gridResponse,
+        data: response,
       });
       const { data, error } = await updateColumnDataSourcePromise;
 
@@ -52,7 +52,7 @@ describe('Update Column Data Source', () => {
         }
       );
       expect(error).toEqual(undefined);
-      expect(data).toEqual(gridResponse);
+      expect(data).toEqual(response);
     });
   });
   describe('Negative Test Cases', () => {

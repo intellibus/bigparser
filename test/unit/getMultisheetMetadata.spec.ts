@@ -3,6 +3,7 @@ import { getMultisheetMetadata } from '../../src/index';
 
 const { BP_AUTH } = process.env;
 const TEST_GRID_ID = 'VALID_GRID_ID';
+const LINKED_DATA_TAB_GRID_ID = 'VALID_GRID_ID_2';
 
 describe('Get Multisheet Metadata', () => {
   beforeEach(() => {
@@ -14,19 +15,19 @@ describe('Get Multisheet Metadata', () => {
   describe('Positive Test Cases', () => {
     it('Returns Metadata for Tabs of Grid', async () => {
       // Given
-      const gridResponse = {
+      const response = {
         grids: [
           {
-            gridId: '62448f82c9d0822ec669f83b',
-            name: 'Test Tab',
-            tabName: 'Test Tab',
+            gridId: TEST_GRID_ID,
+            name: "Test Tab",
+            tabName: "Test Tab",
             tabDescription: null,
             pinned: false,
           },
           {
-            gridId: '6244901dc9d0823617041966',
-            name: 'Linked Data Tab',
-            tabName: 'Linked Data Tab',
+            gridId: LINKED_DATA_TAB_GRID_ID,
+            name: "Linked Data Tab",
+            tabName: "Linked Data Tab",
             tabDescription: null,
             pinned: false,
           },
@@ -35,7 +36,7 @@ describe('Get Multisheet Metadata', () => {
 
       // When
       const getMultisheetMetadataPromise = getMultisheetMetadata(TEST_GRID_ID);
-      mockAxios.mockResponse({ data: gridResponse });
+      mockAxios.mockResponse({ data: response });
       const { data, error } = await getMultisheetMetadataPromise;
 
       // Then
@@ -48,7 +49,7 @@ describe('Get Multisheet Metadata', () => {
         }
       );
       expect(error).toEqual(undefined);
-      expect(data).toEqual(gridResponse);
+      expect(data).toEqual(response);
     });
   });
   describe('Negative Test Cases', () => {

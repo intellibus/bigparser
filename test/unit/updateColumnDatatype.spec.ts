@@ -26,7 +26,7 @@ describe('Update Column Datatype', () => {
   describe('Positive Test Cases', () => {
     it('Returns Job Id of Data Fix Job to Update Column Datatype', async () => {
       // Given
-      const gridResponse = {
+      const response = {
         dataFixId: '6245fd56c9d082361704bdd3',
         message:
           "Please use 'fix_data_type_of_existing_data/status'" +
@@ -39,7 +39,7 @@ describe('Update Column Datatype', () => {
         TEST_GRID_ID
       );
       mockAxios.mockResponse({
-        data: gridResponse,
+        data: response,
       });
       const { data, error } = await updateColumnDatatypePromise;
 
@@ -54,7 +54,7 @@ describe('Update Column Datatype', () => {
         }
       );
       expect(error).toEqual(undefined);
-      expect(data).toEqual(gridResponse);
+      expect(data).toEqual(response);
     });
   });
   describe('Negative Test Cases', () => {

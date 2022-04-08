@@ -30,8 +30,8 @@ describe('Delete By Query', () => {
   describe('Positive Test Cases', () => {
     it('Returns Number of Rows Deleted', async () => {
       // Given
-      const gridResponse = {
-        noOfRowsDeleted: 1,
+      const response = {
+        noOfRowsDeleted: 2,
       };
 
       // When
@@ -40,7 +40,7 @@ describe('Delete By Query', () => {
         TEST_GRID_ID
       );
       mockAxios.mockResponse({
-        data: gridResponse,
+        data: response,
       });
       const { data, error } = await deleteByQueryPromise;
 
@@ -55,7 +55,7 @@ describe('Delete By Query', () => {
         }
       );
       expect(error).toEqual(undefined);
-      expect(data).toEqual(gridResponse);
+      expect(data).toEqual(response);
     });
   });
   describe('Negative Test Cases', () => {

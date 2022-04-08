@@ -18,14 +18,14 @@ describe('Create Tab', () => {
   describe('Positive Test Cases', () => {
     it('Returns Grid Id of Tab Created', async () => {
       // Given
-      const gridResponse = {
+      const response = {
         gridId: '624c67b1c9d0823617062b01',
       };
 
       // When
       const createTabPromise = createTab(createTabObject, TEST_GRID_ID);
       mockAxios.mockResponse({
-        data: gridResponse,
+        data: response,
       });
       const { data, error } = await createTabPromise;
 
@@ -40,7 +40,7 @@ describe('Create Tab', () => {
         }
       );
       expect(error).toEqual(undefined);
-      expect(data).toEqual(gridResponse);
+      expect(data).toEqual(response);
     });
   });
   describe('Negative Test Cases', () => {

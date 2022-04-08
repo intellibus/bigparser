@@ -25,7 +25,7 @@ describe('Insert', () => {
   describe('Positive Test Cases', () => {
     it('Returns Number of Rows & Row Ids of Rows Created', async () => {
       // Given
-      const gridResponse = {
+      const response = {
         noOfRowsCreated: 1,
         noOfRowsFailed: 0,
         createdRows: {
@@ -37,7 +37,7 @@ describe('Insert', () => {
       // When
       const insertPromise = insert<TestGrid>(insertObject, TEST_GRID_ID);
       mockAxios.mockResponse({
-        data: gridResponse,
+        data: response,
       });
       const { data, error } = await insertPromise;
 
@@ -52,7 +52,7 @@ describe('Insert', () => {
         }
       );
       expect(error).toEqual(undefined);
-      expect(data).toEqual(gridResponse);
+      expect(data).toEqual(response);
     });
   });
   describe('Negative Test Cases', () => {
