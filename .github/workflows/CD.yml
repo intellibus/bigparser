@@ -13,13 +13,6 @@ jobs:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
-      - name: Wait for Tests to Succeed
-        uses: lewagon/wait-on-check-action@v1.0.0
-        with:
-          ref: ${{ github.ref }}
-          check-name: 'Synthetic Monitoring'
-          repo-token: ${{ secrets.GH_TOKEN }}
-          wait-interval: 500
       - name: Checkout Code
         uses: actions/checkout@v3
       - name: pnpm Setup

@@ -8,8 +8,6 @@ on:
   repository_dispatch:
     types:
       - webhook
-  push:
-    branches: ['main']
 jobs:
   synthetic-monitoring:
     name:

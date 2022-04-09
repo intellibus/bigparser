@@ -37,3 +37,5 @@ jobs:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
         with:
           coverageCommand: pnpm run test:unit:ci
+      - name: Run Integration Tests
+        run: pnpm run test:integration:ci
