@@ -1,14 +1,25 @@
 name: Release
 
 on:
-  push:
+  workflow_run:
+    workflows: ['CI']
     branches: [main]
+    types:
+      - completed
 concurrency: release
 
 jobs:
   release:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
+      - name: Wait for tests to succeed
+        uses: lewagon/wait-on-check-action@v1.0.0
+        with:
+          ref: ${{ github.ref }}
+          check-name: 'Synthetic Monitoring'
+          repo-token: ${{ secrets.GH_TOKEN }}
+          wait-interval: 10
       - name: Checkout Code
         uses: actions/checkout@v3
       - name: pnpm Setup
@@ -28,25 +39,8 @@ jobs:
         run: echo $TEST_ENV_FILE | base64 --decode > .env.test.local
         env:
           TEST_ENV_FILE: ${{ secrets.TEST_DOTENV }}
-      - name: Run Unit Tests
-        uses: paambaati/codeclimate-action@v3.0.0
-        env:
-          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-        with:
-          coverageCommand: pnpm run test:unit:ci
-      - name: Run Integration Tests
-        run: pnpm run test:integration:ci
       - name: Publish
-        uses: cycjimmy/semantic-release-action@v3
-        with:
-          extra_plugins: |
-            @semantic-release/commit-analyzer
-            semantic-release-interval
-            @semantic-release/release-notes-generator
-            @semantic-release/git
-            @semantic-release/github
-            @semantic-release/npm
-            @googlemaps/semantic-release-config
+        run: pnpx semantic-release
         env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
