@@ -8,33 +8,33 @@ on:
   repository_dispatch:
     types:
       - webhook
-# jobs:
-#   synthetic-monitoring:
-#     name:
-#     runs-on: ubuntu-latest
-#     strategy:
-#       matrix:
-#         node-version: [14]
-#     steps:
-#       - name: Checkout Code
-#         uses: actions/checkout@v3
-#       - name: pnpm Setup
-#         uses: pnpm/action-setup@v2.2.1
-#         with:
-#           version: 6.32.4
-#       - name: Setup Node.js ${{ matrix.node-version }}
-#         uses: actions/setup-node@v3
-#         with:
-#           node-version: ${{ matrix.node-version }}
-#           cache: 'pnpm'
-#       - name: Install Dependencies
-#         run: pnpm install
-#         id: deployInstall
-#       - name: Build
-#         run: pnpm run build
-#       - name: Setup Environment
-#         run: echo $TEST_ENV_FILE | base64 --decode > .env.test.local
-#         env:
-#           TEST_ENV_FILE: ${{ secrets.TEST_DOTENV }}
+jobs:
+  synthetic-monitoring:
+    name:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14]
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+      - name: pnpm Setup
+        uses: pnpm/action-setup@v2.2.1
+        with:
+          version: 6.32.4
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+      - name: Install Dependencies
+        run: pnpm install
+        id: deployInstall
+      - name: Build
+        run: pnpm run build
+      - name: Setup Environment
+        run: echo $TEST_ENV_FILE | base64 --decode > .env.test.local
+        env:
+          TEST_ENV_FILE: ${{ secrets.TEST_DOTENV }}
 #       - name: Run Integration Tests
 #         run: pnpm run test:integration:ci
