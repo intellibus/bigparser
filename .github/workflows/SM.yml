@@ -2,7 +2,7 @@ name: Synthetic Monitoring
 
 on:
   schedule:
-    - cron: '* */1 * * *'
+    - cron: '0 */1 * * *'
   workflow_dispatch:
   # Allows external webhook trigger
   repository_dispatch:
