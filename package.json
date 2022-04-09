@@ -172,7 +172,7 @@
     "extends": [
       "@commitlint/config-conventional"
     ],
-    "body-max-line-length": "Infinity"
+    "body-max-line-length": 10000
   },
   "config": {
     "commitizen": {
