@@ -2,8 +2,8 @@
 name: Support request
 about: Need Help with Using BigParser APIs
 title: ''
-labels: 'triage me, type: question'
-assignees: ''
+labels: 'help wanted'
+assignees: 'a-n-u-b-i-s, jkeegan2'
 
 ---
 

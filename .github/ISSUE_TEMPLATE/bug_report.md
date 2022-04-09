@@ -2,8 +2,8 @@
 name: Bug report
 about: Create a report to help us improve
 title: ''
-labels: 'type: bug, triage me'
-assignees: ''
+labels: 'bug'
+assignees: 'a-n-u-b-i-s'
 
 ---
 
