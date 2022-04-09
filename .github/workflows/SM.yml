@@ -1,13 +1,13 @@
-# name: Synthetic Monitoring
+name: Synthetic Monitoring
 
-# on:
-#   schedule:
-#     - cron: '* */1 * * *'
-#   workflow_dispatch:
-#   # Allows external webhook trigger
-#   repository_dispatch:
-#     types:
-#       - webhook
+on:
+  schedule:
+    - cron: '* */1 * * *'
+  workflow_dispatch:
+  # Allows external webhook trigger
+  repository_dispatch:
+    types:
+      - webhook
 # jobs:
 #   synthetic-monitoring:
 #     name:
