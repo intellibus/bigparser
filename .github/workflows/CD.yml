@@ -16,6 +16,7 @@ jobs:
       - name: Wait for Tests to Succeed
         uses: lewagon/wait-on-check-action@v1.0.0
         with:
+          ref: ${{ github.ref }}
           check-name: 'Synthetic Monitoring'
           repo-token: ${{ secrets.GH_TOKEN }}
           wait-interval: 500
