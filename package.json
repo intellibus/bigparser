@@ -214,7 +214,7 @@
               "release": "patch"
             },
             {
-              "type": "refactor",
+              "type": "style",
               "release": "patch"
             },
             {
@@ -240,10 +240,6 @@
             {
               "type": "feat",
               "release": "minor"
-            },
-            {
-              "type": "build",
-              "release": "patch"
             },
             {
               "type": "feat",
