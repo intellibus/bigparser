@@ -1,0 +1,13 @@
+{
+  "testEnvironment": "node",
+  "setupFiles": ["dotenv/config"],
+  "roots": ["<rootDir>/test"],
+  "coverageThreshold": {
+    "global": {
+      "lines": 95
+    }
+  },
+  "transform": {
+    "^.+\\.ts?$": ["@swc-node/jest"]
+  }
+}

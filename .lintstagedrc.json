@@ -1,0 +1,6 @@
+{
+  "**/*.ts": [
+    "pretty-quick",
+    "eslint --cache --fix ./**/*.ts -f mo"
+  ]
+}

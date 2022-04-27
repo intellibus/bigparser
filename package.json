@@ -26,18 +26,18 @@
     "format": "prettier --write ./**/*.ts",
     "lint": "eslint ./**/*.ts -f mo",
     "lint:fix": "eslint --fix ./**/*.ts -f mo",
-    "test:all": "DOTENV_CONFIG_PATH=./.env.test.local jest --testPathPattern=test/",
-    "test:unit": "DOTENV_CONFIG_PATH=./.env.test.local jest --testPathPattern=test/unit",
-    "test:unit:coverage": "DOTENV_CONFIG_PATH=./.env.test.local jest --coverage --testPathPattern=test/unit",
-    "test:unit:ci": "DOTENV_CONFIG_PATH=./.env.test.local jest --ci --coverage --testPathPattern=test/unit",
-    "test:integration": "DOTENV_CONFIG_PATH=./.env.test.local jest --bail --testPathPattern=test/integration",
-    "test:integration:coverage": "DOTENV_CONFIG_PATH=./.env.test.local jest --bail --coverage --testPathPattern=test/integration",
-    "test:integration:ci": "DOTENV_CONFIG_PATH=./.env.test.local jest --bail --ci --coverage --testPathPattern=test/integration",
+    "test:all": "DOTENV_CONFIG_PATH=./.env.test.local jest --config=.jestrc.json --testPathPattern=test/",
+    "test:unit": "DOTENV_CONFIG_PATH=./.env.test.local jest --config=.jestrc.json --testPathPattern=test/unit",
+    "test:unit:coverage": "DOTENV_CONFIG_PATH=./.env.test.local jest --config=.jestrc.json --coverage --testPathPattern=test/unit",
+    "test:unit:ci": "DOTENV_CONFIG_PATH=./.env.test.local jest --config=.jestrc.json --ci --coverage --testPathPattern=test/unit",
+    "test:integration": "DOTENV_CONFIG_PATH=./.env.test.local jest --config=.jestrc.json --bail --testPathPattern=test/integration",
+    "test:integration:coverage": "DOTENV_CONFIG_PATH=./.env.test.local jest --config=.jestrc.json --bail --coverage --testPathPattern=test/integration",
+    "test:integration:ci": "DOTENV_CONFIG_PATH=./.env.test.local jest --config=.jestrc.json --bail --ci --coverage --testPathPattern=test/integration",
     "prepare": "husky install",
     "semantic-release": "semantic-release"
   },
   "dependencies": {
-    "axios": "^0.27.0"
+    "axios": "^0.27.2"
   },
   "devDependencies": {
     "@commitlint/cli": "16.2.3",
@@ -48,15 +48,16 @@
     "@semantic-release/github": "8.0.4",
     "@semantic-release/npm": "9.0.1",
     "@semantic-release/release-notes-generator": "10.0.3",
+    "@swc-node/jest": "^1.5.0",
     "@types/jest": "27.4.1",
-    "@types/node": "17.0.23",
-    "@typescript-eslint/eslint-plugin": "5.19.0",
-    "@typescript-eslint/parser": "5.19.0",
+    "@types/node": "17.0.29",
+    "@typescript-eslint/eslint-plugin": "5.21.0",
+    "@typescript-eslint/parser": "5.21.0",
     "commitizen": "4.2.4",
     "cz-conventional-changelog": "3.3.0",
     "dotenv": "16.0.0",
-    "esbuild": "0.14.36",
-    "eslint": "8.13.0",
+    "esbuild": "0.14.38",
+    "eslint": "8.14.0",
     "eslint-config-airbnb-base": "15.0.0",
     "eslint-config-airbnb-typescript": "17.0.0",
     "eslint-config-prettier": "8.5.0",
@@ -65,284 +66,14 @@
     "eslint-plugin-node": "11.1.0",
     "eslint-plugin-promise": "6.0.0",
     "husky": "7.0.4",
-    "jest": "27.5.1",
-    "jest-mock-axios": "4.5.0",
-    "lint-staged": "12.3.7",
+    "jest": "28.0.2",
+    "jest-mock-axios": "4.6.1",
+    "lint-staged": "12.4.1",
     "prettier": "2.6.2",
     "pretty-quick": "3.1.3",
     "semantic-release": "19.0.2",
-    "semantic-release-interval": "1.0.40",
-    "ts-jest": "27.1.4",
+    "semantic-release-interval": "1.0.42",
     "ts-node": "10.7.0",
     "typescript": "4.6.3"
-  },
-  "prettier": {
-    "singleQuote": true,
-    "trailingComma": "all",
-    "bracketSpacing": true,
-    "tabWidth": 2,
-    "useTabs": false,
-    "semi": true
-  },
-  "eslintConfig": {
-    "root": true,
-    "parser": "@typescript-eslint/parser",
-    "plugins": [
-      "@typescript-eslint"
-    ],
-    "extends": [
-      "eslint:recommended",
-      "plugin:@typescript-eslint/eslint-recommended",
-      "plugin:@typescript-eslint/recommended",
-      "plugin:node/recommended",
-      "plugin:promise/recommended",
-      "airbnb-base",
-      "airbnb-typescript/base",
-      "prettier"
-    ],
-    "parserOptions": {
-      "ecmaVersion": 12,
-      "sourceType": "module",
-      "project": [
-        "./tsconfig.json"
-      ]
-    },
-    "ignorePatterns": [
-      "**/dist/**"
-    ],
-    "env": {
-      "node": true
-    },
-    "overrides": [
-      {
-        "files": [
-          "**/*.spec.ts"
-        ],
-        "env": {
-          "jest": true
-        },
-        "rules": {
-          "node/no-unpublished-import": "off"
-        }
-      },
-      {
-        "files": [
-          "**/scripts/*.ts"
-        ],
-        "rules": {
-          "no-console": "off"
-        }
-      }
-    ],
-    "rules": {
-      "import/prefer-default-export": "off",
-      "no-underscore-dangle": "off",
-      "node/no-missing-import": [
-        "error",
-        {
-          "tryExtensions": [
-            ".ts",
-            ".js",
-            ".json"
-          ]
-        }
-      ],
-      "node/no-unpublished-import": [
-        "error",
-        {
-          "allowModules": [
-            "jest-mock-axios"
-          ],
-          "tryExtensions": [
-            ".js",
-            ".json",
-            ".ts"
-          ]
-        }
-      ]
-    }
-  },
-  "lint-staged": {
-    "**/*.ts": [
-      "pretty-quick",
-      "eslint --cache --fix ./**/*.ts -f mo"
-    ]
-  },
-  "commitlint": {
-    "extends": [
-      "@commitlint/config-conventional"
-    ],
-    "rules": {
-      "body-max-line-length": [
-        0
-      ]
-    }
-  },
-  "config": {
-    "commitizen": {
-      "path": "cz-conventional-changelog"
-    }
-  },
-  "jest": {
-    "preset": "ts-jest",
-    "testEnvironment": "node",
-    "setupFiles": [
-      "dotenv/config"
-    ],
-    "roots": [
-      "<rootDir>/test"
-    ],
-    "coverageThreshold": {
-      "global": {
-        "lines": 95
-      }
-    }
-  },
-  "release": {
-    "plugins": [
-      [
-        "@semantic-release/commit-analyzer",
-        {
-          "preset": "conventionalcommits",
-          "releaseRules": [
-            {
-              "type": "docs",
-              "release": "patch"
-            },
-            {
-              "type": "refactor",
-              "release": "patch"
-            },
-            {
-              "type": "style",
-              "release": "patch"
-            },
-            {
-              "type": "fix",
-              "release": "patch"
-            },
-            {
-              "type": "perf",
-              "release": "patch"
-            },
-            {
-              "type": "test",
-              "release": "patch"
-            },
-            {
-              "type": "build",
-              "release": "patch"
-            },
-            {
-              "type": "revert",
-              "release": "patch"
-            },
-            {
-              "type": "feat",
-              "release": "minor"
-            },
-            {
-              "type": "feat",
-              "scope": "major",
-              "release": "major"
-            }
-          ]
-        }
-      ],
-      [
-        "semantic-release-interval",
-        {
-          "duration": 1,
-          "units": "week"
-        }
-      ],
-      [
-        "@semantic-release/release-notes-generator",
-        {
-          "preset": "conventionalcommits",
-          "presetConfig": {
-            "types": [
-              {
-                "type": "feat",
-                "section": "Features"
-              },
-              {
-                "type": "feature",
-                "section": "Features"
-              },
-              {
-                "type": "fix",
-                "section": "Bug Fixes"
-              },
-              {
-                "type": "perf",
-                "section": "Performance Improvements"
-              },
-              {
-                "type": "revert",
-                "section": "Reverts"
-              },
-              {
-                "type": "docs",
-                "section": "Documentation",
-                "hidden": false
-              },
-              {
-                "type": "style",
-                "section": "Styles",
-                "hidden": false
-              },
-              {
-                "type": "chore",
-                "section": "Miscellaneous Chores",
-                "hidden": false
-              },
-              {
-                "type": "refactor",
-                "section": "Code Refactoring",
-                "hidden": false
-              },
-              {
-                "type": "test",
-                "section": "Tests",
-                "hidden": false
-              },
-              {
-                "type": "build",
-                "section": "Build System",
-                "hidden": false
-              },
-              {
-                "type": "ci",
-                "section": "Continuous Integration",
-                "hidden": false
-              }
-            ]
-          }
-        }
-      ],
-      "@semantic-release/github",
-      "@semantic-release/npm",
-      "@semantic-release/git"
-    ],
-    "options": {
-      "debug": true
-    },
-    "branches": [
-      "main",
-      {
-        "name": "beta",
-        "prerelease": true
-      },
-      {
-        "name": "alpha",
-        "prerelease": true
-      }
-    ]
-  },
-  "renovate": {
-    "extends": [
-      "github>semantic-release/.github"
-    ]
   }
 }

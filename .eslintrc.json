@@ -1,0 +1,58 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:node/recommended",
+    "plugin:promise/recommended",
+    "airbnb-base",
+    "airbnb-typescript/base",
+    "prettier"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 12,
+    "sourceType": "module",
+    "project": ["./tsconfig.json"]
+  },
+  "ignorePatterns": ["**/dist/**"],
+  "env": {
+    "node": true
+  },
+  "overrides": [
+    {
+      "files": ["**/*.spec.ts"],
+      "env": {
+        "jest": true
+      },
+      "rules": {
+        "node/no-unpublished-import": "off"
+      }
+    },
+    {
+      "files": ["**/scripts/*.ts"],
+      "rules": {
+        "no-console": "off"
+      }
+    }
+  ],
+  "rules": {
+    "import/prefer-default-export": "off",
+    "no-underscore-dangle": "off",
+    "node/no-missing-import": [
+      "error",
+      {
+        "tryExtensions": [".ts", ".js", ".json"]
+      }
+    ],
+    "node/no-unpublished-import": [
+      "error",
+      {
+        "allowModules": ["jest-mock-axios"],
+        "tryExtensions": [".js", ".json", ".ts"]
+      }
+    ]
+  }
+}
