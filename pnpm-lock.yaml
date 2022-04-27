@@ -33,7 +33,7 @@ specifiers:
   prettier: 2.6.2
   pretty-quick: 3.1.3
   semantic-release: 19.0.2
-  semantic-release-interval: 1.0.40
+  semantic-release-interval: 1.0.42
   ts-jest: 27.1.4
   ts-node: 10.7.0
   typescript: 4.6.3
@@ -73,7 +73,7 @@ devDependencies:
   prettier: 2.6.2
   pretty-quick: 3.1.3_prettier@2.6.2
   semantic-release: 19.0.2
-  semantic-release-interval: 1.0.40
+  semantic-release-interval: 1.0.42
   ts-jest: 27.1.4_7a821434921643f91a8909d0b48334c9
   ts-node: 10.7.0_ee885bc7281b682b6adbed6ae09ee090
   typescript: 4.6.3
@@ -5509,8 +5509,8 @@ packages:
       xmlchars: 2.2.0
     dev: true
 
-  /semantic-release-interval/1.0.40:
-    resolution: {integrity: sha512-uiy3voDg6mDUjkOcTcSM+sM3ZX3ehtgBFDGjmrohfDpA42lw1774Dya7v6xiAIKjYBPaAMwD4PH0OFxM4ca3zQ==}
+  /semantic-release-interval/1.0.42:
+    resolution: {integrity: sha512-ilEv59fVQJ7F9rB0110vlTbInAVV0ITdNAD+G7Dcb2uRUfto04uPxnkk3RRCP3fnDJL2bVYYp1BP3A0M3uDQbA==}
     dependencies:
       dayjs: 1.11.0
     dev: true
