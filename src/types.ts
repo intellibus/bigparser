@@ -261,4 +261,6 @@ export declare type MethodConfig = {
   qa?: boolean;
 };
 
-export { AxiosResponse, AxiosError };
+export type AxiosResponseType = AxiosResponse;
+
+export type AxiosErrorType = AxiosError;

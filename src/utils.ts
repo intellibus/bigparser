@@ -1,4 +1,9 @@
-import { APIResponse, AxiosResponse, AxiosError, MethodConfig } from './types';
+import {
+  APIResponse,
+  AxiosResponseType,
+  AxiosErrorType,
+  MethodConfig,
+} from './types';
 
 export const getBaseURL = (qa?: boolean) =>
   `https://${
@@ -44,12 +49,12 @@ export function getHTTPHeadersWithData<T>(data: T, config: MethodConfig) {
 }
 
 export async function to(
-  promise: Promise<AxiosResponse>,
+  promise: Promise<AxiosResponseType>,
 ): Promise<APIResponse> {
   return promise
-    .then((response: AxiosResponse) => ({
+    .then((response: AxiosResponseType) => ({
       ...response,
       error: undefined,
     }))
-    .catch((err: AxiosError) => ({ error: err, data: undefined }));
+    .catch((err: AxiosErrorType) => ({ error: err, data: undefined }));
 }
