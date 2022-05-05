@@ -48,7 +48,7 @@
     "@semantic-release/github": "8.0.4",
     "@semantic-release/npm": "9.0.1",
     "@semantic-release/release-notes-generator": "10.0.3",
-    "@swc-node/jest": "1.5.1",
+    "@swc-node/jest": "1.5.2",
     "@types/jest": "27.5.0",
     "@types/node": "17.0.29",
     "@typescript-eslint/eslint-plugin": "5.22.0",
