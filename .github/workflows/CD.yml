@@ -17,7 +17,7 @@ jobs:
       - name: pnpm Setup
         uses: pnpm/action-setup@v2.2.1
         with:
-          version: 6.32.11
+          version: 7.1.0
       - name: Setup Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
@@ -32,7 +32,7 @@ jobs:
         env:
           TEST_ENV_FILE: ${{ secrets.TEST_DOTENV }}
       - name: Publish
-        run: pnpx semantic-release
+        run: pnpm exec semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
