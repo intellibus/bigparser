@@ -19,7 +19,7 @@
     "grids"
   ],
   "scripts": {
-    "build": "tsc src/index.ts --declaration --outFile dist/index.js --module system --moduleResolution node",
+    "build": "tsc",
     "esbuild": "esbuild src/*.ts --minify --outdir=dist --platform=node --target=node14 --format=esm",
     "typedef": "tsc -d src/*.ts --declarationDir dist --emitDeclarationOnly",
     "prepublish": "pnpm run build",
