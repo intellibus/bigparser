@@ -8,7 +8,7 @@
     "removeComments": true,
     "allowSyntheticDefaultImports": true,
     "target": "es6",
-    "module": "commonjs",
+    "module": "es6",
     "outDir": "dist",
     "sourceMap": true,
     "declaration": true,
