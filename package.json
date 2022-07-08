@@ -45,7 +45,7 @@
     "@commitlint/types": "17.0.0",
     "@semantic-release/commit-analyzer": "9.0.2",
     "@semantic-release/git": "10.0.1",
-    "@semantic-release/github": "8.0.4",
+    "@semantic-release/github": "8.0.5",
     "@semantic-release/npm": "9.0.1",
     "@semantic-release/release-notes-generator": "10.0.3",
     "@swc-node/jest": "1.5.2",
