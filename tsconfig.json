@@ -1,19 +1,21 @@
 {
   "compilerOptions": {
-    "module": "ESNext",
     "moduleResolution": "node",
     "esModuleInterop": true,
     "noEmit": false,
-    "emitDeclarationOnly": true,
     "pretty": true,
     "skipLibCheck": true,
-    "declaration": true,
     "removeComments": true,
     "allowSyntheticDefaultImports": true,
     "target": "es6",
+    "module": "es6",
+    "outDir": "dist",
     "sourceMap": true,
-    "outDir": "./dist",
-    "baseUrl": "./src",
-    "lib": ["es6", "dom"]
-  }
+    "declaration": true,
+    "declarationDir": "./dist",
+    "resolveJsonModule": true,
+    "lib": ["ESNext", "DOM"]
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "test"]
 }
