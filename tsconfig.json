@@ -14,7 +14,8 @@
     "declaration": true,
     "declarationDir": "./dist",
     "resolveJsonModule": true,
-    "lib": ["ESNext", "DOM"]
+    "lib": ["ESNext", "DOM"],
+    "composite": true
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules", "test"]
