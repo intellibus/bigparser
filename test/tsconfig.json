@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "noEmit": false,
+    "pretty": true,
+    "skipLibCheck": true,
+    "removeComments": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "es6",
+    "module": "es6",
+    "resolveJsonModule": true,
+    "lib": ["ESNext", "DOM"]
+  },
+  "references": [
+    {"path": ".."}
+  ]
+}
