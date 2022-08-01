@@ -11,6 +11,7 @@ jest.disableAutomock();
 jest.unmock('axios');
 jest.setTimeout(10000);
 
+const {env} = process;
 let TEST_GRID_ID: string;
 let FIRST_ROW_ID: string;
 
@@ -32,6 +33,7 @@ const queryObject: QueryObject<TestGrid> = {
 
 const beforeEachRun = async () => {
   jest.resetModules();
+  process.env = { ...env };
   const { testGridId, firstRowId } = await bootstrapIntegrationTests();
   TEST_GRID_ID = testGridId;
   FIRST_ROW_ID = firstRowId;
@@ -39,6 +41,7 @@ const beforeEachRun = async () => {
 
 const afterEachRun = async () => {
   await cleanupIntegrationTests(TEST_GRID_ID);
+  process.env = env;
 };
 
 describe('Search', () => {
