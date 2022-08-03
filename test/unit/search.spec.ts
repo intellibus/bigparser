@@ -9,7 +9,6 @@ const mockReadFileSync = fs.readFileSync as jest.MockedFunction<
 >;
 
 const { env } = process;
-const { BP_AUTH, BP_AUTH_QA, CREDENTIALS } = process.env;
 const TEST_GRID_ID = 'VALID_GRID_ID';
 const queryObject = {
   query: {
@@ -17,6 +16,13 @@ const queryObject = {
     showColumnNamesInResponse: true,
   },
 };
+const credentials = `
+[default]
+www = "VALID_AUTH_ID_CREDFILE"
+qa = "VALID_AUTH_ID_CREDFILE_2"
+[profile1]
+www = "VALID_AUTH_ID_CREDFILE_3"
+`;
 
 describe('Search', () => {
   beforeEach(() => {
@@ -33,6 +39,7 @@ describe('Search', () => {
   describe('Positive Test Cases', () => {
     it('Returns Grid Data from Production', async () => {
       // Given
+      process.env.BP_AUTH = 'VALID_AUTH_ID';
       const response = {
         totalRowCount: 1,
         rows: [
@@ -65,7 +72,7 @@ describe('Search', () => {
         queryObject,
         {
           headers: {
-            authId: BP_AUTH,
+            authId: 'VALID_AUTH_ID',
           },
         },
       );
@@ -96,7 +103,7 @@ describe('Search', () => {
       };
 
       // When
-      mockReadFileSync.mockReturnValueOnce(Buffer.from(CREDENTIALS, 'base64'));
+      mockReadFileSync.mockReturnValueOnce(Buffer.from(credentials, 'utf-8'));
       const searchPromise = search<TestGrid>(queryObject, TEST_GRID_ID);
       mockAxios.mockResponse({
         data: response,
@@ -109,7 +116,52 @@ describe('Search', () => {
         queryObject,
         {
           headers: {
-            authId: BP_AUTH,
+            authId: 'VALID_AUTH_ID_CREDFILE',
+          },
+        },
+      );
+      expect(error).toEqual(undefined);
+      expect(data).toEqual(response);
+    });
+    it('Returns Grid Data from Production (Reading From .bigparser/credentials using BP_PROFILE Environment Variable)', async () => {
+      // Given
+      process.env.BP_AUTH = null;
+      process.env.BP_QA = null;
+      process.env.BP_PROFILE = 'profile1';
+      const response = {
+        totalRowCount: 1,
+        rows: [
+          {
+            _id: '6243cd4ec9d082361703ea4e',
+            'String Column': 'Example String',
+            'Number Column': 1337,
+            'Number 2 Column': 1234.5678,
+            'Boolean Column': true,
+            'Date Column':
+              'Tue Mar 29 2022 23:20:30 GMT-0400 (Eastern Daylight Time)',
+            'Linked Column': '20171',
+            'Linked Related Column From Other Grid': 'Related Column Value 4',
+            'Formula Column': null,
+            'Empty Column': '',
+          },
+        ],
+      };
+
+      // When
+      mockReadFileSync.mockReturnValueOnce(Buffer.from(credentials, 'utf-8'));
+      const searchPromise = search<TestGrid>(queryObject, TEST_GRID_ID);
+      mockAxios.mockResponse({
+        data: response,
+      });
+      const { data, error } = await searchPromise;
+
+      // Then
+      expect(mockAxios.post).toHaveBeenCalledWith(
+        `https://www.bigparser.com/api/v2/grid/${TEST_GRID_ID}/search`,
+        queryObject,
+        {
+          headers: {
+            authId: 'VALID_AUTH_ID_CREDFILE_3',
           },
         },
       );
@@ -118,6 +170,7 @@ describe('Search', () => {
     });
     it('Returns Grid Data from QA (Using BP_QA Environment Variable)', async () => {
       // Given
+      process.env.BP_AUTH = 'VALID_AUTH_ID';
       process.env.BP_QA = 'true';
       const response = {
         totalRowCount: 1,
@@ -151,7 +204,7 @@ describe('Search', () => {
         queryObject,
         {
           headers: {
-            authId: BP_AUTH,
+            authId: 'VALID_AUTH_ID',
           },
         },
       );
@@ -160,6 +213,7 @@ describe('Search', () => {
     });
     it('Returns Grid Data from QA', async () => {
       // Given
+      process.env.BP_AUTH = 'VALID_AUTH_ID';
       const response = {
         totalRowCount: 1,
         rows: [
@@ -194,7 +248,7 @@ describe('Search', () => {
         queryObject,
         {
           headers: {
-            authId: BP_AUTH,
+            authId: 'VALID_AUTH_ID',
           },
         },
       );
@@ -225,7 +279,7 @@ describe('Search', () => {
       };
 
       // When
-      mockReadFileSync.mockReturnValueOnce(Buffer.from(CREDENTIALS, 'base64'));
+      mockReadFileSync.mockReturnValueOnce(Buffer.from(credentials, 'utf-8'));
       const searchPromise = search<TestGrid>(queryObject, TEST_GRID_ID, {
         qa: true,
       });
@@ -240,7 +294,7 @@ describe('Search', () => {
         queryObject,
         {
           headers: {
-            authId: BP_AUTH_QA,
+            authId: 'VALID_AUTH_ID_CREDFILE_2',
           },
         },
       );
@@ -251,6 +305,7 @@ describe('Search', () => {
   describe('Negative Test Cases', () => {
     it('Rejects Invalid Grid Id', async () => {
       // Given
+      process.env.BP_AUTH = 'VALID_AUTH_ID';
       const errorObject = {
         err: {
           message: 'Invalid Grid Id',
@@ -269,7 +324,7 @@ describe('Search', () => {
         queryObject,
         {
           headers: {
-            authId: BP_AUTH,
+            authId: 'VALID_AUTH_ID',
           },
         },
       );
@@ -278,6 +333,7 @@ describe('Search', () => {
     });
     it('Rejects Invalid Share Id', async () => {
       // Given
+      process.env.BP_AUTH = 'VALID_AUTH_ID';
       const errorObject = {
         err: {
           message: 'Invalid Share Id',
@@ -298,7 +354,7 @@ describe('Search', () => {
         queryObject,
         {
           headers: {
-            authId: BP_AUTH,
+            authId: 'VALID_AUTH_ID',
           },
         },
       );

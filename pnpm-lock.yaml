@@ -4,6 +4,7 @@ specifiers:
   '@commitlint/cli': 17.0.3
   '@commitlint/config-conventional': 17.0.3
   '@commitlint/types': 17.0.0
+  '@ltd/j-toml': ^1.30.0
   '@semantic-release/commit-analyzer': 9.0.2
   '@semantic-release/git': 10.0.1
   '@semantic-release/github': 8.0.5
@@ -40,6 +41,7 @@ specifiers:
   typescript: 4.7.4
 
 dependencies:
+  '@ltd/j-toml': 1.30.0
   ajv: 8.11.0
   axios: 0.27.2
 
@@ -1076,6 +1078,10 @@ packages:
       '@jridgewell/resolve-uri': 3.1.0
       '@jridgewell/sourcemap-codec': 1.4.14
     dev: true
+
+  /@ltd/j-toml/1.30.0:
+    resolution: {integrity: sha512-RMylvTbZiU9B5bx+bZmPtacKobjMJOJBDxn3TPraEe4bz/gG0ZpVKCedDqLgrDYIlCSxUutoFan1IJ2EHxvo3Q==}
+    dev: false
 
   /@node-rs/xxhash-android-arm-eabi/1.2.1:
     resolution: {integrity: sha512-wvx3/7zBlsUnwWS9ZHBuPqubKaotMNDcyyroEMt5ZV+28/hF4HjNZQgOk6uHdOdlMKAXThqc6AHzwGOK1XXYmw==}

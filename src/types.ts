@@ -264,3 +264,10 @@ export declare type MethodConfig = {
 export type AxiosResponseType = AxiosResponse;
 
 export type AxiosErrorType = AxiosError;
+
+export type Credentials = {
+  [profile: string]: {
+    www?: string;
+    qa?: string;
+  };
+};

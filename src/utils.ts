@@ -1,22 +1,27 @@
 import fs from 'fs';
+import * as TOML from '@ltd/j-toml';
 import { homedir } from 'os';
 import {
   APIResponse,
   AxiosResponseType,
   AxiosErrorType,
   MethodConfig,
+  Credentials,
 } from './types';
 
 const getAuth = (qa: boolean) => {
   if (!process.env.BP_AUTH) {
     let credentials;
     try {
-      credentials = JSON.parse(
+      credentials = TOML.parse(
         fs
           .readFileSync(`${homedir()}/.bigparser/credentials`)
           .toString('utf-8'),
-      );
-      return credentials[qa ? 'qa' : 'www'].authId as string;
+      ) as Credentials;
+      const profile = process.env.BP_PROFILE ?? 'default';
+      if (credentials[profile]) {
+        return credentials[profile][qa ? 'qa' : 'www'];
+      }
     } catch (e) {
       // empty
     }
@@ -24,7 +29,7 @@ const getAuth = (qa: boolean) => {
   return process.env.BP_AUTH ?? undefined;
 };
 
-export const getBaseURL = (qa: boolean | undefined) =>
+const getBaseURL = (qa: boolean | undefined) =>
   `https://${
     (qa != null && qa) ||
     (process.env.BP_QA != null && process.env.BP_QA === 'true')
