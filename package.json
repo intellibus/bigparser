@@ -28,10 +28,10 @@
     "lint:fix": "eslint --fix ./**/*.ts -f mo",
     "test:all": "DOTENV_CONFIG_PATH=./.env.test.local jest --config=.jestrc.json --testPathPattern=test/",
     "test:unit": "DOTENV_CONFIG_PATH=./.env.test.local jest --config=.jestrc.json --testPathPattern=test/unit",
-    "test:unit:coverage": "jest --config=.jestrc.json --coverage --testPathPattern=test/unit",
+    "test:unit:coverage": "DOTENV_CONFIG_PATH=./.env.test.local jest --config=.jestrc.json --coverage --testPathPattern=test/unit",
     "test:unit:ci": "DOTENV_CONFIG_PATH=./.env.test.local jest --config=.jestrc.json --ci --coverage --testPathPattern=test/unit",
     "test:integration": "DOTENV_CONFIG_PATH=./.env.test.local jest --config=.jestrc.json --bail --testPathPattern=test/integration",
-    "test:integration:coverage": "jest --config=.jestrc.json --bail --coverage --testPathPattern=test/integration",
+    "test:integration:coverage": "DOTENV_CONFIG_PATH=./.env.test.local jest --config=.jestrc.json --bail --coverage --testPathPattern=test/integration",
     "test:integration:ci": "DOTENV_CONFIG_PATH=./.env.test.local jest --config=.jestrc.json --bail --ci --coverage --testPathPattern=test/integration",
     "prepare": "husky install",
     "semantic-release": "semantic-release"
