@@ -210,6 +210,16 @@ export declare type AddColumnObject<GridDataModel> = (
   newColumnName: string;
 };
 
+// TODO: Get full documentation for endpoint
+export declare type AddColumnsObject<GridDataModel> = (
+  | AfterColumnObject<ColumnPosition<GridDataModel>>
+  | BeforeColumnObject<ColumnPosition<GridDataModel>>
+) & {
+  newColumns: Array<{
+    columnName: string;
+  }>;
+};
+
 export declare type BulkDeleteColumns<GridDataModel> = {
   columns: Array<ColumnPosition<GridDataModel>>;
 };
