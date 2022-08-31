@@ -23,7 +23,7 @@ specifiers:
   eslint-config-airbnb-base: 15.0.0
   eslint-config-airbnb-typescript: 17.0.0
   eslint-config-prettier: 8.5.0
-  eslint-formatter-mo: 1.1.1
+  eslint-formatter-mo: 1.2.0
   eslint-plugin-import: 2.26.0
   eslint-plugin-node: 11.1.0
   eslint-plugin-promise: 6.0.1
@@ -63,7 +63,7 @@ devDependencies:
   eslint-config-airbnb-base: 15.0.0_faomjyrlgqmwswvqymymzkxcqi
   eslint-config-airbnb-typescript: 17.0.0_nwt6qmnsbmuicuvak5hafgwebq
   eslint-config-prettier: 8.5.0_eslint@8.23.0
-  eslint-formatter-mo: 1.1.1
+  eslint-formatter-mo: 1.2.0
   eslint-plugin-import: 2.26.0_wyxuyzvlfep3lsyoibc4fosfq4
   eslint-plugin-node: 11.1.0_eslint@8.23.0
   eslint-plugin-promise: 6.0.1_eslint@8.23.0
@@ -3373,8 +3373,8 @@ packages:
       eslint: 8.23.0
     dev: true
 
-  /eslint-formatter-mo/1.1.1:
-    resolution: {integrity: sha512-fQyfIqs9r43+T83azjFraww1OqeaLBuihm336VbmpI+hKQCAWEnR9LYleCIB1XIY4xyXNzgI+G7v9opYedU+jg==}
+  /eslint-formatter-mo/1.2.0:
+    resolution: {integrity: sha512-j/1oWwwIZWlpziMlPGmP2ZA/9LmcDzKcSHx0q9hqnOxAYy42NAoGD0YErU27crRX+sp64w+PfAd57YoxTtjvAQ==}
     dependencies:
       chalk: 3.0.0
       emphasize: 4.2.0
