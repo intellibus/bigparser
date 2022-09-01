@@ -27,6 +27,21 @@
       "env": {
         "jest": true
       },
+      "parserOptions": {
+        "project": ["test/tsconfig.json"]
+      },
+      "rules": {
+        "node/no-unpublished-import": "off"
+      }
+    },
+    {
+      "files": ["**/*.test.ts"],
+      "env": {
+        "jest": true
+      },
+      "parserOptions": {
+        "project": ["test/tsconfig.json"]
+      },
       "rules": {
         "node/no-unpublished-import": "off"
       }

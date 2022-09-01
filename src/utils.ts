@@ -1,13 +1,40 @@
+import fs from 'fs';
+import * as TOML from '@ltd/j-toml';
+import { homedir } from 'os';
 import {
   APIResponse,
   AxiosResponseType,
   AxiosErrorType,
   MethodConfig,
+  Credentials,
 } from './types';
 
-export const getBaseURL = (qa?: boolean) =>
+const getAuth = (qa: boolean) => {
+  if (!process.env.BP_AUTH) {
+    let credentials;
+    try {
+      credentials = TOML.parse(
+        fs
+          .readFileSync(`${homedir()}/.bigparser/credentials`)
+          .toString('utf-8'),
+      ) as Credentials;
+      const profile = process.env.BP_PROFILE ?? 'default';
+      if (credentials[profile]) {
+        return credentials[profile][qa ? 'qa' : 'www'];
+      }
+    } catch (e) {
+      // empty
+    }
+  }
+  return process.env.BP_AUTH ?? undefined;
+};
+
+const getBaseURL = (qa: boolean | undefined) =>
   `https://${
-    (qa != null && qa) || process.env.BP_QA ? 'qa' : 'www'
+    (qa != null && qa) ||
+    (process.env.BP_QA != null && process.env.BP_QA === 'true')
+      ? 'qa'
+      : 'www'
   }.bigparser.com/api/v2`;
 
 export function getGridURL(
@@ -32,20 +59,21 @@ export function getV1APIURL(action: string, config: MethodConfig): string {
   )}/${action}`;
 }
 
-export const HEADERS = {
-  headers: {
-    authId: process.env.BP_AUTH,
-  },
-};
-
 export function getHTTPHeaders(config: MethodConfig) {
-  const { authId } = config;
-  return authId != null ? { headers: { authId } } : HEADERS;
+  return {
+    headers: {
+      authId:
+        config.authId ??
+        getAuth(
+          (config.qa != null && config.qa) ||
+            (process.env.BP_QA != null && process.env.BP_QA === 'true'),
+        ),
+    },
+  };
 }
 
 export function getHTTPHeadersWithData<T>(data: T, config: MethodConfig) {
-  const { authId } = config;
-  return authId != null ? { headers: { authId }, data } : { ...HEADERS, data };
+  return { ...getHTTPHeaders(config), data };
 }
 
 export async function to(

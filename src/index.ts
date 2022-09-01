@@ -1,4 +1,5 @@
 export { addColumn } from './addColumn';
+export { addColumns } from './addColumns';
 export { bulkCrud } from './bulkCrud';
 export { createGrid } from './createGrid';
 export { createTab } from './createTab';
