@@ -15,7 +15,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
       - name: pnpm Setup
-        uses: pnpm/action-setup@v2.2.3
+        uses: pnpm/action-setup@v2.2.4
         with:
           version: 7.1.0
       - name: Setup Node.js ${{ matrix.node-version }}
