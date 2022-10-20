@@ -33,7 +33,7 @@ jobs:
         env:
           TEST_ENV_FILE: ${{ secrets.TEST_DOTENV }}
       - name: Run Unit Tests
-        uses: paambaati/codeclimate-action@v3.1.0
+        uses: paambaati/codeclimate-action@v3.1.1
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
         with:
