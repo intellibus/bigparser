@@ -1,4 +1,4 @@
-name: Synthetic Monitoring
+# name: Synthetic Monitoring
 # on:
 #   schedule:
 #     - cron: '0 */1 * * *'
