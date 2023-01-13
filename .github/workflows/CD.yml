@@ -11,6 +11,9 @@ jobs:
   release:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18]
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3

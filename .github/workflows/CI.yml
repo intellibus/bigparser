@@ -6,11 +6,10 @@ on:
 
 jobs:
   continuous-integration:
-    name:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [14]
+        node-version: [18]
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
