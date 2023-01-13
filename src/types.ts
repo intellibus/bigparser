@@ -229,22 +229,21 @@ export declare type BulkRenameColumns<GridDataModel> = {
   columns: Array<BulkRenameColumn<GridDataModel>>;
 };
 
-export declare type BulkInsertRow = {
-  [column: string]: string | number | boolean;
+export declare type BulkInsert<GridDataModel> = {
+  rows: Array<Partial<GridDataModel>>;
 };
 
-export declare type BulkInsert = {
-  rows: Array<BulkInsertRow>;
-};
-
-export declare type BulkInsertRows = (AfterRowIdObject | BeforeRowIdObject) &
-  BulkInsert;
+export declare type BulkInsertRows<GridDataModel> = (
+  | AfterRowIdObject
+  | BeforeRowIdObject
+) &
+  BulkInsert<GridDataModel>;
 
 export declare type BulkCrudObject<GridDataModel> = {
   insertColumns?: Array<BulkInsertColumns<GridDataModel>>;
   deleteColumns?: BulkDeleteColumns<GridDataModel>;
   renameColumns?: BulkRenameColumns<GridDataModel>;
-  insertRows?: Array<BulkInsertRows>;
+  insertRows?: Array<BulkInsertRows<GridDataModel>>;
   updateRows?: UpdateRowIds<GridDataModel>;
   deleteRows?: DeleteRowIds;
 };

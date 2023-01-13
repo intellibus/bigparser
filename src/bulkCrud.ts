@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getGridURL, getHTTPHeaders, to } from './utils';
+import { getGridURLShareIdQueryParam, getHTTPHeaders, to } from './utils';
 import { APIResponse, BulkCrudObject, MethodConfig } from './types';
 
 export async function bulkCrud<GridDataModel>(
@@ -9,7 +9,7 @@ export async function bulkCrud<GridDataModel>(
 ): Promise<APIResponse> {
   return to(
     axios.post(
-      getGridURL('rows_columns/bulk_crud', gridId, config),
+      getGridURLShareIdQueryParam('rows_columns/bulk_crud', gridId, config),
       bulkCrudObj,
       getHTTPHeaders(config),
     ),

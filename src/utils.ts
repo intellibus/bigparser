@@ -21,6 +21,17 @@ export function getGridURL(
   }/${action}`;
 }
 
+export function getGridURLShareIdQueryParam(
+  action: string,
+  gridId: string,
+  config: MethodConfig,
+): string {
+  const { shareId, qa } = config;
+  return `${getBaseURL(qa)}/grid/${gridId}/${action}${
+    shareId ? `?shareId=${shareId}` : ''
+  }`;
+}
+
 export function getAPIURL(action: string, config: MethodConfig): string {
   return `${getBaseURL(config.qa)}/grid/${action}`;
 }
