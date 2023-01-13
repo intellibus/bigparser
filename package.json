@@ -19,7 +19,7 @@
     "grids"
   ],
   "scripts": {
-    "build": "tsc && fix-esm-import-path dist/index.js",
+    "build": "tsc && fix-esm-import-path dist/*.js",
     "esbuild": "esbuild src/*.ts --minify --outdir=dist --platform=node --target=node14 --format=esm",
     "typedef": "tsc -d src/*.ts --declarationDir dist --emitDeclarationOnly",
     "prepublish": "pnpm run build",
