@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "bigparser",
-  "version": "0.7.2",
+  "version": "0.7.3",
   "description": "BigParser API NPM Module",
   "license": "MIT",
   "homepage": "https://github.com/intellibus/bigparser#readme",
