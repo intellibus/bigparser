@@ -17,7 +17,7 @@
     "sourceType": "module",
     "project": ["./tsconfig.json"]
   },
-  "ignorePatterns": ["**/dist/**"],
+  "ignorePatterns": ["**/dist/**", "**/test/**"],
   "env": {
     "node": true
   },

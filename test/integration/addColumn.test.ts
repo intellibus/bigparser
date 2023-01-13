@@ -72,7 +72,7 @@ describe('Add Column', () => {
 
       // Then
       expect(data).toEqual(undefined);
-      expect((error as AxiosError).response.data).toEqual(errorObject);
+      expect((error as AxiosError).response?.data).toEqual(errorObject);
     });
     it('Should Reject Invalid Share Id', async () => {
       // Given
@@ -93,7 +93,7 @@ describe('Add Column', () => {
       );
       // Then
       expect(data).toEqual(undefined);
-      expect((error as AxiosError).response.data).toEqual(errorObject);
+      expect((error as AxiosError).response?.data).toEqual(errorObject);
     });
     it('Should Reject Invalid Auth Id in Production', async () => {
       // Given
@@ -115,7 +115,7 @@ describe('Add Column', () => {
 
       // Then
       expect(data).toEqual(undefined);
-      expect((error as AxiosError).response.data).toEqual(errorObject);
+      expect((error as AxiosError).response?.data).toEqual(errorObject);
     });
     it('Should Reject Invalid Auth Id in QA', async () => {
       // Given
@@ -138,7 +138,7 @@ describe('Add Column', () => {
 
       // Then
       expect(data).toEqual(undefined);
-      expect((error as AxiosError).response.data).toEqual(errorObject);
+      expect((error as AxiosError).response?.data).toEqual(errorObject);
     });
   });
 });
