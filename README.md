@@ -36,24 +36,24 @@ npm install bigparser
 
 ## Usage 🔭
 
-Set the `BP_AUTH` environment variable to your BigParser Auth Id.
+Set the `BP_AUTH_TOKEN` environment variable to your BigParser Auth Id.
 
 This can be done in the terminal
 
 ```sh
-export BP_AUTH=YOUR_AUTH_ID
+export BP_AUTH_TOKEN=YOUR_AUTH_TOKEN
 ```
 
 OR using a .env file
 
 ```txt
-BP_AUTH=YOUR_AUTH_ID
+BP_AUTH_TOKEN=YOUR_AUTH_TOKEN
 ```
 
 OR using process.env
 
 ```typescript
-process.env.BP_AUTH = 'YOUR_AUTH_ID'
+process.env.BP_AUTH_TOKEN = 'YOUR_AUTH_TOKEN'
 ```
 
 Optionally you can also set the `BP_QA` environment variable to `true` to use `qa.bigparser.com` instead of `www.bigparser.com`
