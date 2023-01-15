@@ -63,9 +63,8 @@ export function getHTTPHeaders(config: MethodConfig) {
 
 export function getHTTPHeadersWithData<T>(data: T, config: MethodConfig) {
   if (config.authToken) {
-    return {
-      headers: { Authorization: `Bearer ${config.authToken}`, data },
-    };
+    const Authorization = `Bearer ${config.authToken}`;
+    return { headers: { Authorization }, data };
   }
   const { authId } = config;
   return authId != null ? { headers: { authId }, data } : { ...HEADERS, data };
