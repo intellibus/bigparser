@@ -258,6 +258,7 @@ export declare type APIResponse =
 export declare type MethodConfig = {
   shareId?: string;
   authId?: string;
+  authToken?: string;
   qa?: boolean;
 };
 

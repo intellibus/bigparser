@@ -43,18 +43,30 @@ export function getV1APIURL(action: string, config: MethodConfig): string {
   )}/${action}`;
 }
 
-export const HEADERS = {
-  headers: {
-    authId: process.env.BP_AUTH,
-  },
-};
+export const HEADERS = process.env.BP_AUTH_TOKEN
+  ? { headers: { Authorization: `Bearer ${process.env.BP_AUTH_TOKEN}` } }
+  : {
+      headers: {
+        authId: process.env.BP_AUTH,
+      },
+    };
 
 export function getHTTPHeaders(config: MethodConfig) {
+  if (config.authToken) {
+    return {
+      headers: { Authorization: `Bearer ${config.authToken}` },
+    };
+  }
   const { authId } = config;
   return authId != null ? { headers: { authId } } : HEADERS;
 }
 
 export function getHTTPHeadersWithData<T>(data: T, config: MethodConfig) {
+  if (config.authToken) {
+    return {
+      headers: { Authorization: `Bearer ${config.authToken}`, data },
+    };
+  }
   const { authId } = config;
   return authId != null ? { headers: { authId }, data } : { ...HEADERS, data };
 }
