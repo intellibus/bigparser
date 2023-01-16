@@ -21,7 +21,8 @@ export declare type ColumnFilterOperator =
   | 'LT'
   | 'LTE'
   | 'IN'
-  | 'DISTINCT';
+  | 'DISTINCT'
+  | 'BLANK';
 
 export declare type GlobalFilter = {
   operator?: GlobalFilterOperator;
