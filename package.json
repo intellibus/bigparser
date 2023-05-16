@@ -50,7 +50,7 @@
     "@semantic-release/release-notes-generator": "11.0.1",
     "@swc-node/jest": "1.5.2",
     "@types/jest": "29.5.1",
-    "@types/node": "18.16.10",
+    "@types/node": "18.16.12",
     "@typescript-eslint/eslint-plugin": "5.59.6",
     "@typescript-eslint/parser": "5.59.6",
     "commitizen": "4.3.0",
