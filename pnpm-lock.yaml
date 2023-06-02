@@ -17,7 +17,7 @@ specifiers:
   axios: ^1.0.0
   commitizen: 4.3.0
   cz-conventional-changelog: 3.3.0
-  dotenv: 16.0.3
+  dotenv: 16.1.3
   esbuild: 0.17.19
   eslint: 8.41.0
   eslint-config-airbnb-base: 15.0.0
@@ -58,7 +58,7 @@ devDependencies:
   '@typescript-eslint/parser': 5.59.8_opaykosi7ysrbskpnffskmbrki
   commitizen: 4.3.0
   cz-conventional-changelog: 3.3.0
-  dotenv: 16.0.3
+  dotenv: 16.1.3
   esbuild: 0.17.19
   eslint: 8.41.0
   eslint-config-airbnb-base: 15.0.0_bwfkg7osvbtezdkshju7lqq44q
@@ -2919,8 +2919,8 @@ packages:
       is-obj: 2.0.0
     dev: true
 
-  /dotenv/16.0.3:
-    resolution: {integrity: sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ==}
+  /dotenv/16.1.3:
+    resolution: {integrity: sha512-FYssxsmCTtKL72fGBSvb1K9dRz0/VZeWqFme/vSb7r7323x4CRaHu4LvQ5JG3+s6yt2YPbBrkpiEODktfyjI9A==}
     engines: {node: '>=12'}
     dev: true
 
