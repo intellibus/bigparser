@@ -4,11 +4,11 @@ specifiers:
   '@commitlint/cli': 17.6.5
   '@commitlint/config-conventional': 17.6.5
   '@commitlint/types': 17.4.4
-  '@semantic-release/commit-analyzer': 10.0.0
+  '@semantic-release/commit-analyzer': 10.0.1
   '@semantic-release/git': 10.0.1
   '@semantic-release/github': 9.0.2
   '@semantic-release/npm': 10.0.3
-  '@semantic-release/release-notes-generator': 11.0.2
+  '@semantic-release/release-notes-generator': 11.0.3
   '@swc-node/jest': 1.5.2
   '@types/jest': 29.5.2
   '@types/node': 18.16.16
@@ -46,11 +46,11 @@ devDependencies:
   '@commitlint/cli': 17.6.5
   '@commitlint/config-conventional': 17.6.5
   '@commitlint/types': 17.4.4
-  '@semantic-release/commit-analyzer': 10.0.0_semantic-release@21.0.3
+  '@semantic-release/commit-analyzer': 10.0.1_semantic-release@21.0.3
   '@semantic-release/git': 10.0.1_semantic-release@21.0.3
   '@semantic-release/github': 9.0.2_semantic-release@21.0.3
   '@semantic-release/npm': 10.0.3_semantic-release@21.0.3
-  '@semantic-release/release-notes-generator': 11.0.2_semantic-release@21.0.3
+  '@semantic-release/release-notes-generator': 11.0.3_semantic-release@21.0.3
   '@swc-node/jest': 1.5.2_typescript@5.1.3
   '@types/jest': 29.5.2
   '@types/node': 18.16.16
@@ -1427,15 +1427,15 @@ packages:
       config-chain: 1.1.13
     dev: true
 
-  /@semantic-release/commit-analyzer/10.0.0_semantic-release@21.0.3:
-    resolution: {integrity: sha512-/Uolz2+G+VRjP0eudAn0ldnC/VkSHzlctUdeEXL7ys7E6mLSFZdwdsR5pKDlTIgDJq4eYlshOZpwBNrmqrNajg==}
+  /@semantic-release/commit-analyzer/10.0.1_semantic-release@21.0.3:
+    resolution: {integrity: sha512-9ejHzTAijYs9z246sY/dKBatmOPcd0GQ7lH4MgLCkv1q4GCiDZRkjHJkaQZXZVaK7mJybS+sH3Ng6G8i3pYMGQ==}
     engines: {node: '>=18'}
     peerDependencies:
       semantic-release: '>=20.1.0'
     dependencies:
-      conventional-changelog-angular: 5.0.13
-      conventional-commits-filter: 2.0.7
-      conventional-commits-parser: 3.2.4
+      conventional-changelog-angular: 6.0.0
+      conventional-commits-filter: 3.0.0
+      conventional-commits-parser: 4.0.0
       debug: 4.3.4
       import-from: 4.0.0
       lodash-es: 4.17.21
@@ -1519,16 +1519,16 @@ packages:
       tempy: 3.0.0
     dev: true
 
-  /@semantic-release/release-notes-generator/11.0.2_semantic-release@21.0.3:
-    resolution: {integrity: sha512-B+Aa82uciufoaoJulnzq7ezqH36nrHOO15ubJmg2hZitzCpPAa6X0pOtkffG+30HLdck5Ky2uJC4uAm/YylbOw==}
+  /@semantic-release/release-notes-generator/11.0.3_semantic-release@21.0.3:
+    resolution: {integrity: sha512-NU77dWKQf+QcZrv/Hcp3DPeSxglPu8hYKCipGxAPpeaneLkg6S0zfTVug4tg4mfDhZHC6RtoI7ljQDK8VoJ2Dw==}
     engines: {node: '>=18'}
     peerDependencies:
       semantic-release: '>=20.1.0'
     dependencies:
-      conventional-changelog-angular: 5.0.13
-      conventional-changelog-writer: 5.0.1
-      conventional-commits-filter: 2.0.7
-      conventional-commits-parser: 3.2.4
+      conventional-changelog-angular: 6.0.0
+      conventional-changelog-writer: 6.0.0
+      conventional-commits-filter: 3.0.0
+      conventional-commits-parser: 4.0.0
       debug: 4.3.4
       get-stream: 7.0.0
       import-from: 4.0.0
@@ -2644,6 +2644,13 @@ packages:
       q: 1.5.1
     dev: true
 
+  /conventional-changelog-angular/6.0.0:
+    resolution: {integrity: sha512-6qLgrBF4gueoC7AFVHu51nHL9pF9FRjXrH+ceVf7WmAfH3gs+gEYOkvxhjMPjZu57I4AGUGoNTY8V7Hrgf1uqg==}
+    engines: {node: '>=14'}
+    dependencies:
+      compare-func: 2.0.0
+    dev: true
+
   /conventional-changelog-conventionalcommits/5.0.0:
     resolution: {integrity: sha512-lCDbA+ZqVFQGUj7h9QBKoIpLhl8iihkO0nCTyRNzuXtcd7ubODpYB04IFy31JloiJgG0Uovu8ot8oxRzn7Nwtw==}
     engines: {node: '>=10'}
@@ -2653,29 +2660,27 @@ packages:
       q: 1.5.1
     dev: true
 
-  /conventional-changelog-writer/5.0.1:
-    resolution: {integrity: sha512-5WsuKUfxW7suLblAbFnxAcrvf6r+0b7GvNaWUwUIk0bXMnENP/PEieGKVUQrjPqwPT4o3EPAASBXiY6iHooLOQ==}
-    engines: {node: '>=10'}
+  /conventional-changelog-writer/6.0.0:
+    resolution: {integrity: sha512-8PyWTnn7zBIt9l4hj4UusFs1TyG+9Ulu1zlOAc72L7Sdv9Hsc8E86ot7htY3HXCVhXHB/NO0pVGvZpwsyJvFfw==}
+    engines: {node: '>=14'}
     hasBin: true
     dependencies:
-      conventional-commits-filter: 2.0.7
+      conventional-commits-filter: 3.0.0
       dateformat: 3.0.3
       handlebars: 4.7.7
       json-stringify-safe: 5.0.1
-      lodash: 4.17.21
       meow: 8.1.2
       semver: 6.3.0
       split: 1.0.1
-      through2: 4.0.2
     dev: true
 
   /conventional-commit-types/3.0.0:
     resolution: {integrity: sha512-SmmCYnOniSsAa9GqWOeLqc179lfr5TRu5b4QFDkbsrJ5TZjPJx85wtOr3zn+1dbeNiXDKGPbZ72IKbPhLXh/Lg==}
     dev: true
 
-  /conventional-commits-filter/2.0.7:
-    resolution: {integrity: sha512-ASS9SamOP4TbCClsRHxIHXRfcGCnIoQqkvAzCSbZzTFLfcTqJVugB0agRgsEELsqaeWgsXv513eS116wnlSSPA==}
-    engines: {node: '>=10'}
+  /conventional-commits-filter/3.0.0:
+    resolution: {integrity: sha512-1ymej8b5LouPx9Ox0Dw/qAO2dVdfpRFq28e5Y0jJEU8ZrLdy0vOSkkIInwmxErFGhg6SALro60ZrwYFVTUDo4Q==}
+    engines: {node: '>=14'}
     dependencies:
       lodash.ismatch: 4.4.0
       modify-values: 1.0.1
@@ -2692,6 +2697,17 @@ packages:
       meow: 8.1.2
       split2: 3.2.2
       through2: 4.0.2
+    dev: true
+
+  /conventional-commits-parser/4.0.0:
+    resolution: {integrity: sha512-WRv5j1FsVM5FISJkoYMR6tPk07fkKT0UodruX4je86V4owk451yjXAKzKAPOs9l7y59E2viHUS9eQ+dfUA9NSg==}
+    engines: {node: '>=14'}
+    hasBin: true
+    dependencies:
+      JSONStream: 1.3.5
+      is-text-path: 1.0.1
+      meow: 8.1.2
+      split2: 3.2.2
     dev: true
 
   /convert-source-map/1.8.0:
@@ -6157,11 +6173,11 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
     dependencies:
-      '@semantic-release/commit-analyzer': 10.0.0_semantic-release@21.0.3
+      '@semantic-release/commit-analyzer': 10.0.1_semantic-release@21.0.3
       '@semantic-release/error': 3.0.0
       '@semantic-release/github': 9.0.2_semantic-release@21.0.3
       '@semantic-release/npm': 10.0.3_semantic-release@21.0.3
-      '@semantic-release/release-notes-generator': 11.0.2_semantic-release@21.0.3
+      '@semantic-release/release-notes-generator': 11.0.3_semantic-release@21.0.3
       aggregate-error: 4.0.1
       cosmiconfig: 8.0.0
       debug: 4.3.4
