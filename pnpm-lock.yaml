@@ -6,7 +6,7 @@ specifiers:
   '@commitlint/types': 17.4.4
   '@semantic-release/commit-analyzer': 10.0.1
   '@semantic-release/git': 10.0.1
-  '@semantic-release/github': 9.0.2
+  '@semantic-release/github': 9.0.3
   '@semantic-release/npm': 10.0.3
   '@semantic-release/release-notes-generator': 11.0.3
   '@swc-node/jest': 1.5.2
@@ -48,7 +48,7 @@ devDependencies:
   '@commitlint/types': 17.4.4
   '@semantic-release/commit-analyzer': 10.0.1_semantic-release@21.0.3
   '@semantic-release/git': 10.0.1_semantic-release@21.0.3
-  '@semantic-release/github': 9.0.2_semantic-release@21.0.3
+  '@semantic-release/github': 9.0.3_semantic-release@21.0.3
   '@semantic-release/npm': 10.0.3_semantic-release@21.0.3
   '@semantic-release/release-notes-generator': 11.0.3_semantic-release@21.0.3
   '@swc-node/jest': 1.5.2_typescript@5.1.3
@@ -1450,6 +1450,11 @@ packages:
     engines: {node: '>=14.17'}
     dev: true
 
+  /@semantic-release/error/4.0.0:
+    resolution: {integrity: sha512-mgdxrHTLOjOddRVYIYDo0fR3/v61GNN1YGkfbrjuIKg/uMgCd+Qzo3UAXJ+woLQQpos4pl5Esuw5A7AoNlzjUQ==}
+    engines: {node: '>=18'}
+    dev: true
+
   /@semantic-release/git/10.0.1_semantic-release@21.0.3:
     resolution: {integrity: sha512-eWrx5KguUcU2wUPaO6sfvZI0wPafUKAMNC18aXY4EnNcrZL86dEmpNVnC9uMpGZkmZJ9EfCVJBQx4pV4EMGT1w==}
     engines: {node: '>=14.17'}
@@ -1469,8 +1474,8 @@ packages:
       - supports-color
     dev: true
 
-  /@semantic-release/github/9.0.2_semantic-release@21.0.3:
-    resolution: {integrity: sha512-FDwR9Tkz14MR/HF6srbHDuqLPUI0GmPgn4tkjfPi45/1oZedqEXC3TqSHK3+ykJmWj1sXgs94zwGI10VR5o6kg==}
+  /@semantic-release/github/9.0.3_semantic-release@21.0.3:
+    resolution: {integrity: sha512-X6gq4USKVlCxPwIIyXb99jU7gwVWlnsKOevs+OyABRdoqc+OIRITbFmrrYU3eE1vGMGk+Qu/GAoLUQQQwC3YOA==}
     engines: {node: '>=18'}
     peerDependencies:
       semantic-release: '>=20.1.0'
@@ -1479,7 +1484,7 @@ packages:
       '@octokit/plugin-paginate-rest': 7.0.0_@octokit+core@4.2.1
       '@octokit/plugin-retry': 5.0.0_@octokit+core@4.2.1
       '@octokit/plugin-throttling': 6.0.0_@octokit+core@4.2.1
-      '@semantic-release/error': 3.0.0
+      '@semantic-release/error': 4.0.0
       aggregate-error: 4.0.1
       debug: 4.3.4
       dir-glob: 3.0.1
@@ -6175,7 +6180,7 @@ packages:
     dependencies:
       '@semantic-release/commit-analyzer': 10.0.1_semantic-release@21.0.3
       '@semantic-release/error': 3.0.0
-      '@semantic-release/github': 9.0.2_semantic-release@21.0.3
+      '@semantic-release/github': 9.0.3_semantic-release@21.0.3
       '@semantic-release/npm': 10.0.3_semantic-release@21.0.3
       '@semantic-release/release-notes-generator': 11.0.3_semantic-release@21.0.3
       aggregate-error: 4.0.1
