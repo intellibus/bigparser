@@ -7,7 +7,7 @@ specifiers:
   '@semantic-release/commit-analyzer': 10.0.4
   '@semantic-release/git': 10.0.1
   '@semantic-release/github': 9.0.6
-  '@semantic-release/npm': 10.0.6
+  '@semantic-release/npm': 11.0.0
   '@semantic-release/release-notes-generator': 11.0.7
   '@swc-node/jest': 1.5.2
   '@types/jest': 29.5.5
@@ -49,7 +49,7 @@ devDependencies:
   '@semantic-release/commit-analyzer': 10.0.4_semantic-release@21.1.2
   '@semantic-release/git': 10.0.1_semantic-release@21.1.2
   '@semantic-release/github': 9.0.6_semantic-release@21.1.2
-  '@semantic-release/npm': 10.0.6_semantic-release@21.1.2
+  '@semantic-release/npm': 11.0.0_semantic-release@21.1.2
   '@semantic-release/release-notes-generator': 11.0.7_semantic-release@21.1.2
   '@swc-node/jest': 1.5.2_typescript@5.2.2
   '@types/jest': 29.5.5
@@ -1846,6 +1846,28 @@ packages:
       nerf-dart: 1.0.0
       normalize-url: 8.0.0
       npm: 9.6.2
+      rc: 1.2.8
+      read-pkg: 8.0.0
+      registry-auth-token: 5.0.1
+      semantic-release: 21.1.2
+      semver: 7.5.4
+      tempy: 3.0.0
+    dev: true
+
+  /@semantic-release/npm/11.0.0_semantic-release@21.1.2:
+    resolution: {integrity: sha512-ozNCiPUp14Xp2rgeY7j96yFTEhDncLSWOJr0IAUr888+ax6fH5xgYkNVv08vpkV8C5GIXBgnGd9coRiOCD6oqQ==}
+    engines: {node: ^18.17 || >=20}
+    peerDependencies:
+      semantic-release: '>=20.1.0'
+    dependencies:
+      '@semantic-release/error': 4.0.0
+      aggregate-error: 5.0.0
+      execa: 8.0.1
+      fs-extra: 11.0.0
+      lodash-es: 4.17.21
+      nerf-dart: 1.0.0
+      normalize-url: 8.0.0
+      npm: 10.1.0
       rc: 1.2.8
       read-pkg: 8.0.0
       registry-auth-token: 5.0.1
@@ -6545,6 +6567,81 @@ packages:
     dependencies:
       path-key: 4.0.0
     dev: true
+
+  /npm/10.1.0:
+    resolution: {integrity: sha512-pZ2xybXzNGbJFZEKNbPoEXsE38Xou9VTnxxBk+B3pz0ndsGCs7iWHoUCPSsISU2hjmkWfDkJo3bYKE8RDOg4eg==}
+    engines: {node: ^18.17.0 || >=20.5.0}
+    hasBin: true
+    dev: true
+    bundledDependencies:
+      - '@isaacs/string-locale-compare'
+      - '@npmcli/arborist'
+      - '@npmcli/config'
+      - '@npmcli/fs'
+      - '@npmcli/map-workspaces'
+      - '@npmcli/package-json'
+      - '@npmcli/promise-spawn'
+      - '@npmcli/run-script'
+      - '@sigstore/tuf'
+      - abbrev
+      - archy
+      - cacache
+      - chalk
+      - ci-info
+      - cli-columns
+      - cli-table3
+      - columnify
+      - fastest-levenshtein
+      - fs-minipass
+      - glob
+      - graceful-fs
+      - hosted-git-info
+      - ini
+      - init-package-json
+      - is-cidr
+      - json-parse-even-better-errors
+      - libnpmaccess
+      - libnpmdiff
+      - libnpmexec
+      - libnpmfund
+      - libnpmhook
+      - libnpmorg
+      - libnpmpack
+      - libnpmpublish
+      - libnpmsearch
+      - libnpmteam
+      - libnpmversion
+      - make-fetch-happen
+      - minimatch
+      - minipass
+      - minipass-pipeline
+      - ms
+      - node-gyp
+      - nopt
+      - npm-audit-report
+      - npm-install-checks
+      - npm-package-arg
+      - npm-pick-manifest
+      - npm-profile
+      - npm-registry-fetch
+      - npm-user-validate
+      - npmlog
+      - p-map
+      - pacote
+      - parse-conflict-json
+      - proc-log
+      - qrcode-terminal
+      - read
+      - semver
+      - ssri
+      - supports-color
+      - tar
+      - text-table
+      - tiny-relative-date
+      - treeverse
+      - validate-npm-package-name
+      - which
+      - write-file-atomic
 
   /npm/9.6.2:
     resolution: {integrity: sha512-TnXoXhlFkH/9wI4+aXSq0aPLwKG7Ge17t1ME4/rQt+0DZWQCRk9PwhBuX/shqdUiHeKicSLSkzWx+QZgTRE+/A==}
