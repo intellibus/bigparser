@@ -6,7 +6,7 @@ specifiers:
   '@commitlint/types': 17.4.4
   '@semantic-release/commit-analyzer': 11.0.0
   '@semantic-release/git': 10.0.1
-  '@semantic-release/github': 9.0.7
+  '@semantic-release/github': 9.1.0
   '@semantic-release/npm': 11.0.0
   '@semantic-release/release-notes-generator': 12.0.0
   '@swc-node/jest': 1.5.2
@@ -48,7 +48,7 @@ devDependencies:
   '@commitlint/types': 17.4.4
   '@semantic-release/commit-analyzer': 11.0.0_semantic-release@22.0.5
   '@semantic-release/git': 10.0.1_semantic-release@22.0.5
-  '@semantic-release/github': 9.0.7_semantic-release@22.0.5
+  '@semantic-release/github': 9.1.0_semantic-release@22.0.5
   '@semantic-release/npm': 11.0.0_semantic-release@22.0.5
   '@semantic-release/release-notes-generator': 12.0.0_semantic-release@22.0.5
   '@swc-node/jest': 1.5.2_typescript@5.2.2
@@ -1467,8 +1467,8 @@ packages:
       - supports-color
     dev: true
 
-  /@semantic-release/github/9.0.7_semantic-release@22.0.5:
-    resolution: {integrity: sha512-SU3ayJ4/0TeIVyfCMLmuKoa4KvLclarPCmwY/zippm7sK95SwgWoFd8aFfAJIPGCRYnP3rfHRdYzphsrrNI3Cg==}
+  /@semantic-release/github/9.1.0_semantic-release@22.0.5:
+    resolution: {integrity: sha512-RKhS43OpNnQr9rA9Z72EbG8wM/UmWoCpop2z6G++ulRu7t8MuYS2v6TR2SoOFhcDPa2wY91v5VPouCWtDjz4+Q==}
     engines: {node: '>=18'}
     peerDependencies:
       semantic-release: '>=20.1.0'
@@ -6359,7 +6359,7 @@ packages:
     dependencies:
       '@semantic-release/commit-analyzer': 11.0.0_semantic-release@22.0.5
       '@semantic-release/error': 4.0.0
-      '@semantic-release/github': 9.0.7_semantic-release@22.0.5
+      '@semantic-release/github': 9.1.0_semantic-release@22.0.5
       '@semantic-release/npm': 11.0.0_semantic-release@22.0.5
       '@semantic-release/release-notes-generator': 12.0.0_semantic-release@22.0.5
       aggregate-error: 5.0.0
