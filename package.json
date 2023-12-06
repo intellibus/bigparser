@@ -75,6 +75,6 @@
     "semantic-release": "22.0.10",
     "semantic-release-interval": "1.0.46",
     "ts-node": "10.9.1",
-    "typescript": "5.3.2"
+    "typescript": "5.3.3"
   }
 }
