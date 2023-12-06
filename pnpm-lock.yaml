@@ -27,7 +27,7 @@ specifiers:
   eslint-plugin-import: 2.29.0
   eslint-plugin-node: 11.1.0
   eslint-plugin-promise: 6.1.1
-  fix-esm-import-path: 1.4.2
+  fix-esm-import-path: 1.5.0
   husky: 8.0.3
   jest: 29.7.0
   jest-mock-axios: 4.7.3
@@ -68,7 +68,7 @@ devDependencies:
   eslint-plugin-import: 2.29.0_x3zdmzeuhewbzfdefhlyk566mu
   eslint-plugin-node: 11.1.0_eslint@8.55.0
   eslint-plugin-promise: 6.1.1_eslint@8.55.0
-  fix-esm-import-path: 1.4.2
+  fix-esm-import-path: 1.5.0
   husky: 8.0.3
   jest: 29.7.0_an45s3m5kbpxigs5g3244dsmai
   jest-mock-axios: 4.7.3_an45s3m5kbpxigs5g3244dsmai
@@ -3713,8 +3713,8 @@ packages:
       resolve-dir: 1.0.1
     dev: true
 
-  /fix-esm-import-path/1.4.2:
-    resolution: {integrity: sha512-w30Fnn/jEeuXNBgnhHLWai2pUn91VQ5lLaiOHDZx2FErtm5yZQt69MN0r5MXQObaR0cNmqBAlfcQ5DqH621G3w==}
+  /fix-esm-import-path/1.5.0:
+    resolution: {integrity: sha512-GZRlEDW2rRfz1bQrEMrGhkEfnkfgH1ryBYV2WJGDFhj7KH3C7iwUWuja3Q+tO4ungBmufLHPPGI3VINCqgQDdw==}
     hasBin: true
     dependencies:
       debug: 4.3.4
