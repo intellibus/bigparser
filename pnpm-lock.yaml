@@ -10,7 +10,7 @@ specifiers:
   '@semantic-release/npm': 11.0.1
   '@semantic-release/release-notes-generator': 12.1.0
   '@swc-node/jest': 1.5.2
-  '@types/jest': 29.5.10
+  '@types/jest': 29.5.11
   '@types/node': 20.10.3
   '@typescript-eslint/eslint-plugin': 6.13.2
   '@typescript-eslint/parser': 6.13.2
@@ -52,7 +52,7 @@ devDependencies:
   '@semantic-release/npm': 11.0.1_semantic-release@22.0.9
   '@semantic-release/release-notes-generator': 12.1.0_semantic-release@22.0.9
   '@swc-node/jest': 1.5.2_typescript@5.3.2
-  '@types/jest': 29.5.10
+  '@types/jest': 29.5.11
   '@types/node': 20.10.3
   '@typescript-eslint/eslint-plugin': 6.13.2_7tttfxh7kxoebuxieigkbisq5a
   '@typescript-eslint/parser': 6.13.2_gvxfkgnhba3ramrjrewhsl7ftu
@@ -1829,8 +1829,8 @@ packages:
       '@types/istanbul-lib-report': 3.0.0
     dev: true
 
-  /@types/jest/29.5.10:
-    resolution: {integrity: sha512-tE4yxKEphEyxj9s4inideLHktW/x6DwesIwWZ9NN1FKf9zbJYsnhBoA9vrHA/IuIOKwPa5PcFBNV4lpMIOEzyQ==}
+  /@types/jest/29.5.11:
+    resolution: {integrity: sha512-S2mHmYIVe13vrm6q4kN6fLYYAka15ALQki/vgDC3mIukEOx8WJlv0kQPM+d4w8Gp6u0uSdKND04IlTXBv0rwnQ==}
     dependencies:
       expect: 29.7.0
       pretty-format: 29.7.0
@@ -2148,11 +2148,6 @@ packages:
   /ansi-styles/5.2.0:
     resolution: {integrity: sha512-Cxwpt2SfTzTtXcfOlzGEee8O+c+MmUgGrNiBcXnuWxuFJHe6a5Hz7qwhwe5OgaSYI0IJvkLqWX1ASG+cJOkEiA==}
     engines: {node: '>=10'}
-    dev: true
-
-  /ansi-styles/6.1.1:
-    resolution: {integrity: sha512-qDOv24WjnYuL+wbwHdlsYZFy+cgPtrYw0Tn7GLORicQp9BkQLzrgI3Pm4VyR9ERZ41YTn7KlMPuL1n05WdZvmg==}
-    engines: {node: '>=12'}
     dev: true
 
   /ansi-styles/6.2.1:
@@ -6459,7 +6454,7 @@ packages:
     resolution: {integrity: sha512-FC+lgizVPfie0kkhqUScwRu1O/lF6NOgJmlCgK+/LYxDCTk8sGelYaHDhFcDN+Sn3Cv+3VSa4Byeo+IMCzpMgQ==}
     engines: {node: '>=12'}
     dependencies:
-      ansi-styles: 6.1.1
+      ansi-styles: 6.2.1
       is-fullwidth-code-point: 4.0.0
     dev: true
 
